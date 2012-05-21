@@ -1,0 +1,26 @@
+Discontinuous diffusion synthetic acceleration for Sn transport on arbitrary polygonal meshes
+
+- Introduction
+Explain the advantages of using DSA, arbitrary polygons and algebraic multigrid to solve the DSA.
+
+
+- MIP for PWLD
+Introduce the PWLD basis functions (conference papers) and MIP for PWLD (see MIP paper)
+
+
+- Algebraic multigrid
+Explain how algebraic multigrid works (AGMG and ML ?). Advantages of algebraic multigrid over geometric multigrid.
+
+Results:
+ - Fourier Analysis 
+	- vary c and Sn
+	- vary optical thickness and Sn
+	- vary aspect ratio and Sn
+
+ - Numerical Results: Comparison of CG, CG-SSOR, CG-AMG
+	- homogeneous, rectangle with random point disturbances and arbitrary polygons based on Triangle
+	- iron-water, rectangle and arbitrary polygons with fake AMR
+       
+
+ - Conclusions	
+
