@@ -10,7 +10,8 @@
 \usepackage{marvosym} % permet d'avoir le symbol pour le nucleaire
 \usepackage{moreverb} % permet d'utiliser verbatimtab : conservation la tabulation
 \usepackage{stmaryrd} % permet d'utiliser \llbrackedt et \rrbracket : double crochet
-
+\usepackage{subfig}
+\usepackage[noabbrev]{cleveref} % permet d'utiliser cref and Cref
 
 \setlength {\textwidth}{16cm}
 \setlength {\textheight}{21cm}
@@ -28,47 +29,38 @@
 \newcommand\rdb{\}\!\!\}}
 \newcommand\llb{\llbracket}
 \newcommand\rrb{\rrbracket}
+\newcommand\mc{\mathcal}
 
 \renewcommand{\(}{\left(}
 \renewcommand{\)}{\right)}
 \renewcommand{\[}{\left[}
 \renewcommand{\]}{\right]}
 
+\newtheorem{algorithm}{Algorithm}[section]
+
 
 \begin{document}
 \title{Discontinuous Diffusion Synthetic Acceleration for Sn transport on
 arbitrary polygonal meshes}
-\author{Bruno Turcksin} 
+\author{} 
 \date{}
 \maketitle
 
-\section{Introduction}
-Explain the advantages of using DSA, arbitrary polygons and algebraic
-multigrid to solve the DSA.
+\input{introduction}
 
-\section{MIP for PWLD}
-Introduce the PWLD basis functions (conference papers) and MIP for PWLD (see
-MIP paper)
+\input{mip}
 
-\section{Algebraic Multigrid}
-Explain how algebraic multigrid works (AGMG and ML ?). Advantages of algebraic
-multigrid over geometric multigrid.
+\input{algebraic_multigrid}
 
-\section{Results}
-\subsection{Fourier Analysis}
-\begin{itemize}
-\item vary $c$ and $S_n$
-\item vary optical thickness and $S_n$
-\item vary aspect ratio and $S_n$
-\end{itemize}
-\subsection{Numerical Results: Comparison of $CG$, $CG-SSOR$ and $CG-AMG$}
-\begin{itemize}
-\item homogeneous, rectangle with random point disturbances and arbitrary
-polygons based on Triangle
-\item iron-water, rectangle and arbitrary polygons with fake AMR
-\end{itemize}
+\input{results}
 
 \section{Conclusions}
+
+\input{appendix}
+
+% bibliography
+\bibliographystyle{unsrt}
+\bibliography{biblio}
 
 \end{document}
 
