@@ -2,6 +2,8 @@ pdf : MIP_on_arbitrary_mesh.tex\
 	introduction.tex\
 	mip.tex\
 	algebraic_multigrid.tex\
+	conclusions.tex\
+	appendix.tex\
 	biblio.bib
 	pdflatex MIP_on_arbitrary_mesh
 	bibtex MIP_on_arbitrary_mesh
@@ -11,5 +13,5 @@ pdf : MIP_on_arbitrary_mesh.tex\
 .PHONY : clean
 
 clean : 
-	-rm main.pdf
+	-rm MIP_on_arbitrary_mesh.pdf
 	-rm *.log *.aux *.bbl *.blg
