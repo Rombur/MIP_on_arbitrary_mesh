@@ -39,3 +39,35 @@ M = \frac{A}{12}
 \end{pmatrix}
 \end{equation}
 where $A$ is the area of the ``side'' sub-cell.
+\section{ML options}
+The options used to solve MIP with ML are \cite{ml_guide}:
+\begin{description}
+\item [Uncoupled:] Attempt to construct aggregates of optimal size ($3^d$
+nodes in $d$ dimensions). Each process works independently and aggregates
+cannot span processes.
+\item [MIS:] Uses maximal independent set techniques \cite{mis} to define
+aggregates. Aggregates can span processes. May provide better quality
+aggregates than \bf{Uncoupled}, but computationally more expensive because it
+requires matrix-matrix product.
+\item[Symmetric Gauss-Seidel]
+\item[Amesos-KLU:] Use \bf{KLU} through \bf{Amesos}. Coarse grid problem is
+shipped to proc 0, solved and solution is broadcast.
+\end{description}
+The MultiLevelPreconditioner class provides default values for five different
+preconditioner types, including classical smoothed aggregation for symmetric
+positive definite or nearly symmetric definite systems.
+\begin{description}
+\item [option name:] SA
+\item [max levels:] 10
+\item [prec type:] V-cycle
+\item [aggregation type:] Uncoupled-MIS
+\item [aggregation dumping factor:] 4/3
+\item [eigen-analysis type:] cg
+\item [eigen-analysis iterations:] 10
+\item [smoother sweeps:] 2
+\item [smoother damping factor:] 1.0
+\item [smoother pre or post:] both
+\item [smoother type:] symmetric Gauss-Seidel
+\item [coarse type:] Amesos-KLU
+\item [coarse max size:] 128
+\end{description}

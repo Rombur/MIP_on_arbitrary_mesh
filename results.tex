@@ -1,70 +1,65 @@
 \section{Results} \label{sec_res}
+In this section, we show two Fourier analysis: one where the $S_n$ order is
+varied and one where the aspect ratio is varied. We also compare different
+methods to solve MIP: congugate gradient (CG), conjugate gradient
+preconditioned with symmetric Gauss-Seidel (PCG-SGS), conjugate gradient
+preconditioned with ML using uncoupled aggregation (PCG-ML-Uncoupled),
+conjugate gradient preconditioned with ML using mis aggregation (PCG-ML-MIS)
+and AGMG.
 \subsection{Fourier Analysis}
-\begin{itemize}
-\item vary $c$ and $S_n$
-\item vary optical thickness and $S_n$
-\item vary aspect ratio and $S_n$
-\end{itemize}
-\subsection{Numerical Results: Comparison of $CG$, $CG-SSOR$ and $CG-AMG$}
-\begin{itemize}
-\item homogeneous, rectangle with random point disturbances and arbitrary
-polygons based on Triangle
-\item iron-water, rectangle and arbitrary polygons with fake AMR
-\end{itemize}
-Pris de \cite{ml_guide}\\
-\begin{description}
-\item [Uncoupled:] Attempt to construct aggregates of optimal size ($3^d$
-nodes in $d$ dimensions). Each process works independently and aggregates
-cannot span processes.
-\item [MIS:] Uses maximal independent set techniques \cite{mis} to define
-aggregates. Aggregates can span processes. May provide better quality
-aggregates than \bf{Uncoupled}, but computationally more expensive because it
-requires matrix-matrix product.
-\item[Symmetric Gauss-Seidel]
-\item[Amesos-KLU:] Use \bf{KLU} through \bf{Amesos}. Coarse grid problem is
-shipped to proc 0, solved and solution is broadcast.
-\end{description}
-The MultiLevelPreconditioner class provides default values for five different
-preconditioner types, including classical smoothed aggregation for symmetric
-positive definite or nearly symmetric definite systems.
-\begin{description}
-\item [option name:] SA
-\item [max levels:] 10
-\item [prec type:] V-cycle
-\item [aggregation type:] Uncoupled-MIS
-\item [aggregation dumping factor:] 4/3
-\item [eigen-analysis type:] cg
-\item [eigen-analysis iterations:] 10
-\item [smoother sweeps:] 2
-\item [smoother damping factor:] 1.0
-\item [smoother pre or post:] both
-\item [smoother type:] symmetric Gauss-Seidel
-\item [coarse type:] Amesos-KLU
-\item [coarse max size:] 128
-\end{description}
+Fourier analysis is customary used to analyse Source Iteration accelerated
+with DSA \cite{larsen_dsa,consistent_p1}. In a Fourier analysis, the error is
+decomposed into modes that are characterized by a Fourier wave numbers. The
+damping of these error modes during one step of Source Iteration + DSA
+provides insight into the effectiveness of the acceleration method. The
+largest damping factor over all wave numbers corresponds to the spectral
+radius of the method. The smaller the spectral radius, the faster the
+iterations will converge. If the spectral radius is greater than one, the
+scheme is unstable. Next we present two Fourier analysis. In the first one,
+the $S_n$ order is varied whereas in the second one, the aspect ratio of the 
+cell is modified.
+\subsubsection{$S_n$ order varied}
+This Fourier analysis was carried on a square cell, using a
+Gauss-Legendre-Chebyshev quadrature. The medium is homogeneous, the scattering
+ratio  and periodic boundary conditions are used. The $x-$axis is the mesh
+size in mean free path and the $y-$axis is the spectral radius. There are four
+curves corresponding to different $S_n$ order: $S_2$, $S_4$, $S_8$ and
+$S_{16}$.
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.5\textwidth]{sn_order}
+\caption{Fourier analysis as a function of the mesh optical thickness,
+homogeneous infinite medium case.}
+\end{figure}
+MIP is stable for all the cell size. The spectral radius is always less than
+0.5, except for $S_2$ where it is about 0.7.
+\subsubsection{Aspect ratio varied}
 
 \subsection{Homogeneous medium}
-Medium: 10cm $times$ 10cm, cells: 100 $times$ 100, $S_8$,
-Gauss-Legendre-Chebyshev, vacuum boundary condition, intensity of the source
-1, $\Sigma_t =1$, $\Sigma_s=0.99$, SI solver, relative tolerance $10^{-8}$,
-relative tolerance DSA $10^{-10}$.
+Next we compare different solvers for MIP on a homogeneous medium (10cm $\times$
+10cm, $\Sigma_t=1$cm$^{-1}$ and $\Sigma_s=0.99$cm$^{-1}$), with vacuum boundary 
+conditions and a source of intensity 1cm$^{-3}$s$^{-1}$. We use a $S_8$
+Gauss-Legendre-Chebyshev quadrature, a Source Iteration solver with relative
+tolerance of $10^{-8}$ and a relative tolerance for MIP of $10^{-10}$.
 \subsubsection{Quadrilateral cells}
-Number of cells: 9990, number of dof: 39960
+In this example, the mesh is composed of 9990 quadrilateral cells that corresponds 
+to 39960 degrees of freedom. The solution is:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{homog_quad_crop}
 \caption{Quadrilateral cells.}
 \end{figure}
+In the next table, the different solvers are compared:
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
- & No-DSA & CG & PCG-SGS & PSGS-ML-Uncoupled & PCG-ML-MIS & AGMG\\
+ & No-DSA & CG & PCG-SGS & PCG-ML-Uncoupled & PCG-ML-MIS & AGMG\\
 \hline
 SI iterations & 268 & 27 & 27 & 27 & 27 & 27 \\
 Precond init (s) & NA & NA & 0.0142572 & 0.381872 & 1.21095 & 0.068\\
 MIP calculation (s) & NA & 138.379 & 177.556 & 46.1957 & 44.7837 & 6.9311\\
-CG iteration & NA & 35419 & 11414 & 729 & 702 & 674\\
+CG iterations & NA & 35419 & 11414 & 729 & 702 & 674\\
 Total calculation (s) & 309.395 & 172.181 & 211.933 & 80.1548 & 80.0387 &
 40.827\\
 \hline
@@ -72,32 +67,43 @@ Total calculation (s) & 309.395 & 172.181 & 211.933 & 80.1548 & 80.0387 &
 \caption{Comparison of preconditioners with quadrilateral cells.}
 \end{center}
 \end{table}
+In this Table, SI iterations is the number iteration of Source Iteration
+needed to solve the problem, Precond init is the time in seconds needed to
+initialize the preconditioner used by CG, MIP calculation is the total time in
+seconds spent solving DSA during the calculation, CG iterations is the total number 
+of CG iterations used to solve MIP, and Total calculation is the time in
+seconds needed to solve the problem.
+
+Using MIP decreases significantly the number of SI iterations and the
+calculation time. Using PCG-SGS decreases by a factor three the number of
+CG iterations compared to CG but the time needed to solve MIP is higher. With
+ML, the number of CG iterations is reduced by a factor 50 and the MIP
+calculation time is divided by three. AGMG is by far the most efficient
+solver, the number of CG iteration is slightly lower than PCG-ML but the MIP
+calculation time is 20 times lower than CG.
 
 \subsubsection{Polygonal cells}
-Number of cells:16844, number of dof: 58442\\
-\begin{description}
-\item[Triangles:] 13654
-\item[Quadrilaterals:] 250
-\item[Pentagons:] 1400
-\item[Hexagons:] 1306
-\item[Heptagons:] 228
-\item[Octagons:] 6
-\end{description}
+In this problem the mesh is composed of 13654 triangles, 250 quadrilaterals,
+1400 pentagons, 1306 hexagons, 228 heptagons, and 6 octagons, for a total of
+16844 cells and 58442 degrees of freedoms. This example will allow us to test
+MIP and the different preconditioners on a mesh composed of different types of
+cell. The solution and the mesh are:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{homog_poly_crop}
 \caption{Polygonal cells.}
 \end{figure}
+The different solvers are compared in the next Table:
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
- & No-DSA & CG & PCG-SGS & PSGS-ML-Uncoupled & PCG-ML-MIS & AGMG\\
+ & No-DSA & CG & PCG-SGS & PCG-ML-Uncoupled & PCG-ML-MIS & AGMG\\
 \hline
 SI iterations & 268 & 27 & 27 & 27 & 27 & 27\\
 Precond init (s) & NA & NA & 0.0201421 & 0.482845 & 2.09054 & 0.097\\
 MIP calculation (s) & NA & 210.128 & 303.423 & 78.0993 & 71.4493 & 11.0419\\
-CG iteration & NA & 36352 & 13370 & 840 & 784 & 674\\
+CG iterations & NA & 36352 & 13370 & 840 & 784 & 674\\
 Total calculation (s) & 458.132 & 265.026 & 358.745 & 134.434 & 128.731 &
 66.0207\\
 \hline
@@ -105,46 +111,53 @@ Total calculation (s) & 458.132 & 265.026 & 358.745 & 134.434 & 128.731 &
 \caption{Comparison of preconditioners with polygonal cells.}
 \end{center}
 \end{table}
+We see that using different types of cells in the same mesh does not affect
+the performance of MIP or of the preconditioners. 
 
-\subsection{Hexagonal cells}
-$S_{16}$, GLC, reflective boundary conditions, relative tolerance$ = 10^{-8}$,
-MIP tolerance$ = 10^{-10}$
-\begin{description}
+\subsection{Heterogeneous medium}
+In this example, we use a heterogeneous medium composed of 64 triangles, 440
+quadrilaterals and 331 hexagons for a total of 835 cells and 3938 degrees of
+freedom. Reflective boundary conditions are used. The quadrature is a $S_{16}$
+Gauss-Legendre-Chebyshev quadrature. The SI solver has a relative tolerance of 
+$10^{-8}$ and the relative tolerance for MIP is $10^{-10}$. The domain is
+composed of three zones:
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{source_crop}
-\caption{Hexagonal cells.}
+\includegraphics[width=0.4\textwidth]{source_crop}
+\caption{Zones of the domain.}
 \end{figure}
-\item[Green zone]: $\Sigma_t =1cm^{-1}$, $\Sigma_s = 0.9cm^{-1}$, source$ =
-1cm^{-3}s^{-1}$
-\item[Red zone]: $\Sigma_t = 1.5cm$, $\Sigma_s = 1.44cm^{-1}$, no source
-\item[Blue zone]: $\Sigma_t = 1cm^{-1}$, $\Sigma_s = 0.3cm^{-1}$, no source
-\end{description}
-Number of cells: 835, number of dof: 3938
+The properties of the different zones are:
 \begin{description}
-\item[Triangles:] 64
-\item[Quadrilaterals:] 440
-\item[Hexagons:] 331
+\item[Green zone:] $\Sigma_t =1$cm$^{-1}$, $\Sigma_s = 0.9$cm$^{-1}$, source$ =
+1$cm$^{-3}$s$^{-1}$
+\item[Red zone:] $\Sigma_t = 1.5$cm$^{-1}$, $\Sigma_s = 1.44$cm$^{-1}$, no source
+\item[Blue zone:] $\Sigma_t = 1$cm$^{-1}$, $\Sigma_s = 0.3$cm$^{-1}$, no source
 \end{description}
+The scalar flux for this problem is:
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{heter_hexag_crop}
+\includegraphics[width=0.6\textwidth]{heter_hexag_crop}
 \caption{Hexagonal cells.}
 \end{figure}
+The different solvers are compared in the next Table:
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
- & No-DSA & CG & PCG-SGS & PSGS-ML-Uncoupled & PCG-ML-MIS & AGMG\\
+ & No-DSA & CG & PCG-SGS & PCG-ML-Uncoupled & PCG-ML-MIS & AGMG\\
 \hline
 SI iterations & 110 & 18 & 18 & 18 & 18 & 18\\
 Precond init (s) & NA & NA &  0.00198889 & 0.049206 & 0.1407501 & 0.008\\
 MIP calculation (s) & NA & 2.37668 & 5.98264 & 3.09196 & 3.00155 & 0.288559\\
-CG iteration & NA & 4323 & 2747 & 355 & 341 & 245\\
+CG iterations & NA & 4323 & 2747 & 355 & 341 & 245\\
 Total calculation (s) & 30.7466 & 8.20233 & 11.5965 & 8.57338 & 8.67269 &
 6.23169\\
 \hline
 \end{tabular}
-\caption{Comparison of preconditioners with hexagonal cells.}
+\caption{Comparison of preconditioners with heterogeneous medium.}
 \end{center}
 \end{table}
+We can see on this problem that MIP is effective even in heterogeneous
+problem. However, because this problem is much smaller than the previous ones,
+the preconditioner are not as effective than before. AGMG is the only MIP solver
+faster than CG.

@@ -1,1 +1,11 @@
 \section{Conclusions} \label{sec_conc}
+We have adapted the MIP-DSA to PieceWise Linear Discontinuous finite elements.
+This allows to use this DSA on arbitrary polygonal meshes. The advantage of
+using arbitrary polygonal mesh is the potential reduction of the numbers of
+unknowns and the possibility to use adaptive mesh refinement without have to
+treat hanging nodes. We have shown on a Fourier analysis than MIP on rectangular 
+cell is always stable. We have also shown numerical examples that MIP is efficient 
+even on highly unstructured meshes composed of different types of cell. We have also
+compared different preconditioner for CG to solve MIP. Algebraic multigrid
+methods were found to be the best preconditioner, AGMG being up to 20 times
+faster than CG without preconditioning.
