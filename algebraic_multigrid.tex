@@ -6,186 +6,136 @@ will compare the calculation time using PCG-SSOR with the time needed by CG
 preconditioned with an algebraic multigrid method. In \cite{amg_pn}, the authors 
 used an algebraic multigrid method to precondition the Krylov solver for the 
 even-parity finite element-spherical harmonics (FE-$P_N$) method. The AMG 
-preconditioner resulted in a 60\% reduction in the solution time as compared to 
-ILU(0) preconditioning and even more as compared to SSOR preconditioning. We will 
-be using the ML package \cite{ml_guide} from the Trilinos library and the AGMG
-code \cite{agmg_guide}. ML is a multigrid preconditioning package that
-uses a smoothed aggregation algebraic multigrid to build a preconditioner for
-a Krylov method. AGMG is an aggregation-based algebraic multigrid code.
+preconditioner resulted in a 60\% reduction in the solution time compared to 
+ILU(0) preconditioning and even more compared to SSOR preconditioning. In this
+paper, rather than writing our own AMG code, we will be testing the ML package 
+\cite{ml_guide} from the Trilinos library and the AGMG code\cite{agmg_guide}. 
+ML is a multigrid preconditioning package that uses a smoothed aggregation 
+algebraic multigrid to build a preconditioner for a Krylov method. AGMG is an 
+aggregation-based algebraic multigrid code written in Fortran 90.
 
-The first multigrid methods were geometric multigrid developed as stand-alone
-solvers. In many applications, they achieve the so-called ``textbook multigrid
-efficiency'', where a system of equations is solved by a
-computational work which is a small (less than 10) multiple of the operation
-count int the discretized system of equations (residual evaluations)
-\cite{k_cycle}. However, in many applications, multigrid methods, and
-especially algebraic multigrid methods, cannot achieve such efficiency. In
-such cases, they can be used as preconditioner for Krylov subspace methods;
-for instance as preconditioner for the conjugate gradient method (CG) if the
-matrix is SPD.\\ 
+Before explaining the differences between ML and AGMG, we need to explain the
+how the algebraic multigrid methods work. The first multigrid methods
+developed, were geometric multigrid used as stand-alone solvers. In many 
+applications, they achieve the so-called ``textbook multigrid
+efficiency'', i.e. ``the solution to the governing system of equations [is
+attained] in a computational work that is a small multiple of the operation
+counts associated with discretizing the system'' \cite{textbook_eff}. However, 
+in many other applications, multigrid methods, and particularly algebraic 
+multigrid methods, cannot achieve such efficiency \cite{k_cycle}. In
+such cases, they are often used as preconditioner for Krylov subspace methods. 
 
-To solve the system:
+Before solving a system of equations with a general multigrid method, we
+explain how to solve it using a two-grid method. We want to
+solve the following system:
 \begin{equation}
-\bs{A}u=f
+  \bs{A}_f u_f = b_f
 \end{equation}
-with a multigrid method, we must first use an initial guess and smooth the error 
-using Jacobi, Gauss-Seidel, or ILU. After a couple of smoothing steps, a smooth 
-correction must be added to the approximate solution:
-\begin{equation}
-u^{(i+1)} = u^{(i)}+\bs{P}v_{H}
-\end{equation}
-The coarse grid correction $v_H$ is the solution of a linear system $\bs{A}_H
-v_H = d_H$ on a coarse grid $\bo_H$.
+define on the grid $\Gamma_f$ and that $\Gamma_c \subset \Gamma_f$. The 
+two-grid algorithm is given by :
+\begin{enumerate}
+  \item $\nu_1$ pre-smoothing iterations using a smoother (Jacobi,
+    Gauss-Seidel or ILU) and an initial guess $u_0$: $u = S^{\nu_1}(u_0,b_f)$
+  \item Compute the residual on the fine grid $\Gamma_c$ and restrict it to
+    the coarse grid $\Gamma_f$: $r_c = \bs{R}(b_f-\bs{A}_f u)$
+  \item Solve the system on the coarse grid: $v=\bs{A}_c^{-1}*r_c$
+  \item Interpolate the coarse grid correction to the fine grid and add the
+    correction to $u$: $u=u+\bs{P}v$
+  \item $\nu_2$ post-smoothing iterations: $u = S^{\nu_2}(u,b_f)$
+\end{enumerate}
+Solving the system $\bs{A}_c v = r_c$ on the coarse grid is generally very
+expansive. Therefore, this step is recursively replaced by $\gamma$ two-grid
+methods until the system can be efficiently inverted with a direct solver.
+This yields the multigrid method. When $\gamma = 1$, respectively $\gamma =
+2$, the multigrid method is said to use a $V-$cycle, respectively a $W-$cycle.
 
-In general, there are two possibilities for the choice of the matrix
-$\bs{A}_H$ on the coarse grid. One option is to discretize the partial
-differential equation on the coarse grid with the same method which has been
-applied on the finest grid. The second possibility is called Galerkin 
-approximation \cite{amg_course}:
-\begin{equation}
-\bs{A}_H = \bs{R}\bs{A}_H \bs{P}
-\end{equation}
-The combination of a smoothing procedure and a coarse grid correction leads to 
-the two-grid method. The smoothing procedure $S^{\nu}(u_h,f_h)$ returns an 
-improved solution for the right hand side $f_h$ starting with $u_h$ and 
-computing $\nu$ steps.
-
-Since the exact solution of the coarse grid system $\bs{A}_H v_H = d_H$ is 
-usually very time consuming, it is recursively replaced by $\gamma$ two-grid 
-iteration steps. This yields the multigrid algorithm:
-\begin{algorithm}
-Let a hierarchy of grids $\bo_0 \subset \bo_1 \subset \hdots \subset
-\bo_{l_{\max}}$, prolongation and restriction operators $P_{l,l-1}$,
-$R_{l-1,l}$ between these grids, matrices $\bs{A}_l$ and smoothing iterations
-$\bs{S}_l$ on these grids be given. Then, the algorithm
-$MG(u_{l_{\max}},f_{l_{\max}},l_{l_{\max}})$ defines the approximate inverse
-$M_{MG}^{-1}$ on the finest grid $\bo_{l_{\max}}$.
-\begin{itemize}
-\item[] if $(l=0)$
-\begin{itemize}
-\item[] $u_l = \bs{A}_l^{-1} f_l$
-\end{itemize}
-\item[] else
-\item[] \{
-\begin{itemize}
-\item[] $u_l=S_l^{\nu_1}(u_l,f_l)$
-\item[] $d_{l-1} = R_{l-1,l}(f_l-\bs{A}_l u_l)$
-\item[] $v_{l-1} = 0$
-\item[] for $(j=0; j<\gamma;++j)$
-\begin{itemize}
-\item[] $MG (v_{l-1},d_{l-1},l-1)$
-\end{itemize}
-\item[] $u_l=u_l+P_{l,l-1} v_{l-1}$
-\item[] $u_l=S_l^{\nu_2}(u_l,f_l)$
-\end{itemize}
-\item[] \}
-\end{itemize}
-\label{2_1_1}
-\end{algorithm}
-For $\gamma = 1$ or $\gamma = 2$, the method is called $V(\nu_1,\nu_2)-$cycle
-or $W(\nu_1,\nu_2)-$cycle respectively. 
-
-There are three main different types of algebraic multigrid: the classical 
-Ruge-Stueben AMG, the plain aggregation AMG and the
+The main difference between geometric and algebraic multigrid is in the method
+to coarsen the grid. Algebraic multigrid method only use the properties of the
+matrix. Among the algebraic multigrid methods, there are three main different 
+types: the classical Ruge-Stueben AMG, the plain aggregation AMG and the
 smoothed aggregation AMG. ML uses smoothed aggregation AMG and AGMG
-uses plain aggregation AMG. Next we will briefly explain the principles of ML
-and then of AGMG.
+uses plain aggregation AMG. Next, we briefly explain the coarsening step in
+ML and AGMG. The coarsening step is the most important 
+step because if the coarsening is too fast, the convergence rates will 
+decrease. However, if the coarsening is too slow, a lot of memory may be 
+required to solve the problem. 
 
 \subsection{ML}
-First a graph of the matrix is constructed by associating a vertex with each
-equation. An edge between two vertices $i$ and $j$ is added if there is a
-nonzero in the $(i,j)^{th}$ or $(j,i)^{th}$ entry. The vertices of this
-graph are aggregated together to form the next coarser mesh \cite{ml_guide}. 
-The aggregation schemes in ML use a fixed ratio of coarsening between levels. 
-This stage is very delicate because if the coarsening is too quick, the convergence 
-of the scheme will suffer. However, if the coarsening is too slow, the number
-of grids will increase which will increase the memory needed to solve the problem.
-
-The smoothed interpolation operators, $\bs{P}_k$, that transfer the solution from a 
-fine mesh to a coarser one, are the key parts that must be determined 
-automatically. $\bs{P}_k$ are built in two steps: the first step consists of
-forming the aggregates in the graph; during the second step, a tentative 
-prolongator matrix $\tilde{\bs{P}}_k$ is built and then smoothed $\bs{P}_k =
-\tilde{\bs{S}}_k \tilde{\bs{P}}_k$ \cite{mis}. A simple $\tilde{\bs{P}}_k$ 
-would be:
-\begin{equation}
-\tilde{\bs{P}}_k(i,j) = \left\{
-\begin{aligned}
-&1 &\textrm{if }i^{th}\textrm{ point is contained in }j^{th}\textrm{
-  aggregate}\\
-& 0 &\textrm{otherwise}
-\end{aligned}
-\right.
-\end{equation}
-This tentative prolongator corresponds to a piecewise constant interpolation.
-It can be used as is but smoothing it will increase the robustness of the method
-\cite{mis}. An example of smoother $\tilde{\bs{S}}_K$ is the damped Jacobi
-smoother:
-\begin{equation}
-\tilde{\bs{S}}_k = \bs{I} - \omega \bs{D}_k^{-1} \bs{A}_k
-\end{equation}
-where $\omega$ is a parameter and $\bs{D}_k$ is the diagonal of $\bs{A}_k$.
-
-When using ML on one processor, two aggregation schemes can be used, namely
-the uncoupled scheme and the maximally independent sets (mis) scheme. The
-uncoupled basic aggregation procedure is as follows:
+When using a smoothed aggregation scheme, the smoothed interpolation operators,
+$\bs{P}_k$ are the transpose of the coarsening operators,
+$\bs{R}_k=\bs{P}_k^T$. Therefore, when the $\bs{P}_k$ are built, the
+coarsening is known. First, the graph of the matrix is constructed: if the element
+$(i,j)$ or $(j,i)$ of the matrix is non-zero, an edge is built between the
+vertex $i$ and the vertex $j$ \cite{ml_guide}. Next, the vertices are
+aggregated. When using ML on a single processor, two aggregation schemes can
+be used: the uncoupled scheme or the maximally independent sets (MIS) scheme. 
+The uncoupled scheme tries to build aggregates of size $3^d$ where $d$ is the
+dimension of the problem. The algorithm works as follows \cite{mis}:
 \begin{description}
-\item[Phase 1:] repeat until all unaggregated points are adjacent to an
-aggregate:
-\begin{enumerate}
-\item pick a root point not adjacent to any existing aggregate
-\item define a new aggregate as a root point plus all its neighbors
-\end{enumerate}
-\item[Phase 2:] sweep unaggregated points into existing aggregates or use them
-to form new aggregates.
+  \item[Step 1:] As long as there are points adjacent to an aggregate:
+    \begin{enumerate}
+      \item Chose as root point a point which is not an adjacent to an
+        aggregate
+      \item Define a new aggregate as the root point and its neighbors 
+    \end{enumerate}
+  \item[Step 2:] Add all the points left to the existing aggregates or form a
+    new aggregates with them
 \end{description}
-The maximally independent sets scheme tries to form a set of aggregates
-with as many points as possible. If the degree of each point (number of
-adjacent edges) is approximately the same, this is equivalent to finding as
-many aggregates as possible.
+The MIS scheme used in ML applied the MIS algorithm \cite{graph_coloring} to
+the graph produced by the square of the matrix $\bs{A}$. The goal is that all
+the points belong to an aggregate without having to do the step of the
+previous algorithm. These two coarsening schemes use a fixed ratio of 
+coarsening between levels. Once the aggregation is done, a tentative
+prolongator matrix, $\bs{\tilde{P}}_k$ is constructed \cite{mis}. A example of
+$\bs{\tilde{P}}_k$ is given by:
+\begin{equation}
+  \bs{\tilde{P}}_k(i,j) = \left\{
+  \begin{aligned}
+    &1 &\textrm{if }i^{th}\textrm{ point is contained in }j^{th}\textrm{
+    aggregate}\\
+    & 0 &\textrm{otherwise}
+  \end{aligned}
+  \right.
+\end{equation}
+This tentative prolongator could be used as prolongator but smoothing it
+allows to have a more robust scheme. Let $\bs{S}_k$ be a smoother, for example
+damped Jacobi, the prolongator matrix is given by:
+\begin{equation}
+  \bs{P}_k = \bs{\tilde{S}}_k \bs{\tilde{P}}_k
+\end{equation}
 
 \subsection{AGMG}
-The AGMG code uses a ``plain'' or ``unsmoothed'' aggregation method. In this 
-approach, the hierarchy of coarse systems is obtained from a mere aggregation 
-of the unknowns. The advantage of this scheme is that has a cheap setup stage 
-and low memory requirements \cite{agmg2}. In AGMG, the spectral radius of the
-two-grid method is bounded using for each aggregate a local quantity which measure 
-its quality, where the bound is determined by the worst aggregate's quality. 
-Since automatic aggregation algorithms tends to always produce a limited number 
-of badly shaped aggregates and that the convergence bound is determined by the 
-quality of the worst aggregate, even a few bad aggregates can significantly impact 
-the resulting bound. In AGMG, the aggregation algorithm has as main input
-parameter the upper bound on the two-grid condition number that the aggregates
-must satisfy. Obviously, this approach increases the complexity of the
-algorithm which increases the cost of each iteration (the goal being that the
-cost of each iteration does not grow faster than linearly with the number of the
-unknowns). Since the two-grid method has to be used recursively, the number of 
-unknowns must decrease sufficiently fast from one level to the next. Unlike
-other algorithms, the aggregation algorithm in AGMG has difficulties to
-control the coarsening speed. One may form aggregates of a given size but
-there is no guarantee that they will satisfy the quality criterion that allows
-to control the condition number. However, the advantage of controlling the
-condition number over the complexity outweighs is disadvantage. As previously
-mentioned, a ``complexity oriented'' aggregation algorithm will form a few bad
-aggregates which can affect the convergence a lot. On the other hand, a
-``condition number oriented'' aggregation algorithm will not create these bad
-aggregates and will have a few aggregates smaller than the target size. The
-impact of these aggregates on the efficiency will be very limited
-\cite{agmg2}. In AGMG, the aggregation is done by a few passes of a pairwise
-aggregation algorithm. This allows the computation of the quality factor to
-remain very simple and to keep the cost per iteration low.  
-
-The advantage of controlling the condition becomes even more important when a
-K-cycle is used instead of the more common V- or W-cycles. K-cycle or
-Krylov-based cycle is based on the recursive use of two-grid method,
-but the coarse-grid solve is defined by a few steps of a Krylov subspace
-solver using coarser level as preconditioner \cite{k_cycle}. This scheme is 
-nonlinear and requires, when the system is SPD, to use flexible CG 
-\cite{fcg,fcg_2,fcg_3,fcg_4}. When V-cycle is slow, K-cycle can be more
-effective than W-cycle. K-cycle is more robust than W-cycle and can exhibit
-convergence properties independent of the number of levels even when the
-condition number of the two-grid method is relatively large \cite{k_cycle}.
-The greater robustness of the K-cycle is almost free since the K-cycle has
-roughly the same computational complexity as the W-cycle. If the number of
-unknowns does not decrease sufficiently from one level to the next, the
-K-cycle at one level can be replace with a V-cycle at this level.
+Unlike ML, in AGMG the prolongator is not smoothed. This allows to have a
+cheaper setup and to decrease the memory required \cite{agmg2}. However, like
+said previously, the scheme is less robust. To counteract this weakness, the
+aggregation scheme is more complicated. Coarsening algorithms which control
+the size of the aggregates tends to produce a few badly shaped aggregates.
+Unfortunately, the convergence of AMG is bounded by the worst aggregate and
+thus, even a small number of badly shaped aggregates can have a huge impact on
+the convergence. In AGMG, the aggregation algorithm has as input the upper
+bound of the two-grid condition number. When the aggregates are constructed,
+their quality is checked. Obviously, this increases the cost of the coarsening
+and it is therefore important that the coarsening is fast enough. Since the 
+algorithm does not control the size of the aggregates, it is difficult to 
+control the speed of the coarsening. However, controlling the condition number
+is much more interesting than controlling the coarsening speed. If the algorithm 
+controls the condition number, it will no create bad aggregates but instead, it 
+may creates a few aggregates with a size below the target size. This obviously 
+does not affect the efficiency of the method in an noticeable way\cite{agmg2}. 
+In AGMG, the aggregation is done by a few passes of a pairwise aggregation 
+algorithm. This allows the computation of the aggregate quality to remain very 
+simple and to keep the cost per iteration low. The advantage of controlling the 
+condition becomes even more important when a $K-$cycle or Krylov-cycle is used 
+instead of the more common $V-$ or $W-$cycles. The difference between the 
+$K-$cycle and the $V-$ or $W-$cycle is that the $K-$cycle uses recursively a 
+few iterations of a Krylov solver preconditioned by a coarser grid to solve 
+the coarse grid problem in the two-grid algorithm \cite{k_cycle}. This scheme 
+is nonlinear and requires, when the system is SPD, to use flexible CG 
+\cite{fcg,fcg2,fcg3,fcg4} as Krylov solver. The advantage of the $K-$cycle is 
+an increased robustness compared to $V-$ and $W-$cycle. Even when the condition 
+number of the two-grid method is large, the convergence properties of the 
+$K-$cycle can be independent of the number of levels \cite{k_cycle}. The 
+computational cost of $K-$cycle is about the same than the cost of the 
+$W-$cycle. If the number of unknowns does not decrease sufficiently from one 
+level to the next, the $K-$cycle at one level is replaced by a $V-$cycle at 
+this level.
