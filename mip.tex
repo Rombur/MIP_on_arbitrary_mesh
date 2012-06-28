@@ -34,16 +34,16 @@ Discontinuous (LD) basis functions if $\alpha_j = \frac{1}{3}$. Given the
 definition of the PWLD finite elements, it may seem complicated to build the 
 mass matrix or the gradient matrix on an arbitrary polygonal cells. The 
 construction of such matrices can be greatly simplified using ``side'' sub-cells. 
-A ``side'' sub-cell is a triangle cell made from two adjacent vertices and the 
+A ``side'' sub-cell is a triangular cell made from two adjacent vertices and the 
 point $c$. On each ``side'' sub-cells the mass matrix, for example, can be build
 using LD finite elements. The coefficients in the matrix correspondent to the 
 point $c$ are shared among the basis function in the cell. For instance the
-mass matrix associated to a quadrilateral cell, we will be built as follows:\\
-First let us define the 
-mass matrix $M_{PWLD}$ and the mass matrix on a ``side'' sub-cell $M$. We assume 
-that the third basis function is associated to the middle point of the cell. 
-The first (respectively second) basis function on the cell correspond to the 
-first (respectively second) basis function of the ``side'' sub-cell.
+mass matrix associated to a quadrilateral cell can be built as follows:\\
+First let us define the mass matrix, $\bs{M}_{PWLD}$, and the mass matrix on a 
+``side'' sub-cell $\bs{M}_S$. We assume that the third basis function is associated 
+to the middle point of the cell. The first (respectively second) basis function on 
+the cell correspond to the first (respectively second) basis function of the 
+``side'' sub-cell.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.3\textwidth]{mass_matrix}
@@ -51,26 +51,26 @@ first (respectively second) basis function of the ``side'' sub-cell.
 \end{figure}
 {\allowdisplaybreaks
 \begin{align}
-& M_{PWLD}(0,0) =  M(0,0) + \alpha M(0,2) + \alpha M(2,0) + 
-\alpha^2M(2,2)\\
-& M_{PWLD}(0,1) =  M(0,1) + \alpha M(0,2) + \alpha M(2,1) + 
-\alpha^2M(2,2)\\
-& M_{PWLD}(0,2) =  \alpha M(0,2) + \alpha^2 M(2,2)\\
-& M_{PWLD}(0,3) =  \alpha M(0,2) + \alpha^2M(2,2)\\
-& M_{PWLD}(1,0) =  M(1,0) + \alpha M(1,2) + \alpha M(2,0) + 
-\alpha^2M(2,2)\\
-& M_{PWLD}(1,1) =  M(1,1) + \alpha M(1,2) + \alpha M(2,1) + 
-\alpha^2M(2,2)\\
-& M_{PWLD}(1,2) =  \alpha M(1,2) + \alpha^2M(2,2)\\
-& M_{PWLD}(1,3) =  \alpha M(1,2) + \alpha^2M(2,2)\\
-& M_{PWLD}(2,0) =  \alpha M(2,0) + \alpha^2M(2,2)\\
-& M_{PWLD}(2,1) =  \alpha M(2,1) + \alpha^2M(2,2)\\
-& M_{PWLD}(2,2) =  \alpha^2M(2,2)\\
-& M_{PWLD}(2,3) =  \alpha^2M(2,2)\\
-& M_{PWLD}(3,0) =  \alpha M(2,0) + \alpha^2M(2,2)\\
-& M_{PWLD}(3,1) =  \alpha M(2,1) + \alpha^2M(2,2)\\
-& M_{PWLD}(3,2) =  \alpha^2M(2,2)\\
-& M_{PWLD}(3,3) =  \alpha^2M(2,2)
+  & \bs{M}_{PWLD}(0,0) =  \bs{M}_S(0,0) + \alpha \bs{M}_S(0,2) + \alpha
+  \bs{M}_S(2,0) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(0,1) =  \bs{M}_S(0,1) + \alpha \bs{M}_S(0,2) + \alpha
+  \bs{M}_S(2,1) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(0,2) =  \alpha \bs{M}_S(0,2) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(0,3) =  \alpha \bs{M}_S(0,2) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(1,0) =  \bs{M}_S(1,0) + \alpha \bs{M}_S(1,2) + \alpha
+  \bs{M}_S(2,0) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(1,1) =  \bs{M}_S(1,1) + \alpha \bs{M}_S(1,2) + \alpha
+  \bs{M}_S(2,1) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(1,2) =  \alpha \bs{M}_S(1,2) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(1,3) =  \alpha \bs{M}_S(1,2) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(2,0) =  \alpha \bs{M}_S(2,0) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(2,1) =  \alpha \bs{M}_S(2,1) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(2,2) =  \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(2,3) =  \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(3,0) =  \alpha \bs{M}_S(2,0) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(3,1) =  \alpha \bs{M}_S(2,1) + \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(3,2) =  \alpha^2 \bs{M}_S(2,2)\\
+  & \bs{M}_{PWLD}(3,3) =  \alpha^2 \bs{M}_S(2,2)
 \end{align}}    
 By looping over all the ``side'' sub-cell of a cell, the mass matrix of the 
 cell can be built easily.
@@ -178,8 +178,8 @@ gives only a correction for the scalar flux but by assuming that the angular
 dependence satisfies a diffusion expansion, the angular correction can be 
 computed using the scalar flux correction:
 \begin{equation}
-  \delta \psi_m^{(l)} = \frac{1}{4\pi} \(\delta \phi^{(l)} - 3\mathrm{D} 
-  \bo_m\cdot \bn \delta \phi^{(l)}\)
+  \delta \psi_m^{(k)} = \frac{1}{4\pi} \(\delta \phi^{(k)} - 3\mathrm{D} 
+  \bo_m\cdot \bn \delta \phi^{(k)}\)
 \end{equation}
 This correction can be used when some of the boundary conditions are periodic
 or reflective.

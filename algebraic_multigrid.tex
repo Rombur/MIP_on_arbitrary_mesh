@@ -15,7 +15,7 @@ algebraic multigrid to build a preconditioner for a Krylov method. AGMG is an
 aggregation-based algebraic multigrid code written in Fortran 90.
 
 Before explaining the differences between ML and AGMG, we need to explain the
-how the algebraic multigrid methods work. The first multigrid methods
+how algebraic multigrid methods work. The first multigrid methods
 developed, were geometric multigrid used as stand-alone solvers. In many 
 applications, they achieve the so-called ``textbook multigrid
 efficiency'', i.e. ``the solution to the governing system of equations [is
@@ -38,7 +38,7 @@ two-grid algorithm is given by :
     Gauss-Seidel or ILU) and an initial guess $u_0$: $u = S^{\nu_1}(u_0,b_f)$
   \item Compute the residual on the fine grid $\Gamma_c$ and restrict it to
     the coarse grid $\Gamma_f$: $r_c = \bs{R}(b_f-\bs{A}_f u)$
-  \item Solve the system on the coarse grid: $v=\bs{A}_c^{-1}*r_c$
+  \item Solve the system on the coarse grid: $v=\bs{A}_c^{-1} r_c$
   \item Interpolate the coarse grid correction to the fine grid and add the
     correction to $u$: $u=u+\bs{P}v$
   \item $\nu_2$ post-smoothing iterations: $u = S^{\nu_2}(u,b_f)$
@@ -62,7 +62,7 @@ required to solve the problem.
 
 \subsection{ML}
 When using a smoothed aggregation scheme, the smoothed interpolation operators,
-$\bs{P}_k$ are the transpose of the coarsening operators,
+$\bs{P}_k$, are the transpose of the coarsening operators,
 $\bs{R}_k=\bs{P}_k^T$. Therefore, when the $\bs{P}_k$ are built, the
 coarsening is known. First, the graph of the matrix is constructed: if the element
 $(i,j)$ or $(j,i)$ of the matrix is non-zero, an edge is built between the
@@ -83,7 +83,7 @@ dimension of the problem. The algorithm works as follows \cite{mis}:
 \end{description}
 The MIS scheme used in ML applied the MIS algorithm \cite{graph_coloring} to
 the graph produced by the square of the matrix $\bs{A}$. The goal is that all
-the points belong to an aggregate without having to do the step of the
+the points belong to an aggregate without having to perform Step 2 of the
 previous algorithm. These two coarsening schemes use a fixed ratio of 
 coarsening between levels. Once the aggregation is done, a tentative
 prolongator matrix, $\bs{\tilde{P}}_k$ is constructed \cite{mis}. A example of
@@ -110,8 +110,8 @@ cheaper setup and to decrease the memory required \cite{agmg2}. However, like
 said previously, the scheme is less robust. To counteract this weakness, the
 aggregation scheme is more complicated. Coarsening algorithms which control
 the size of the aggregates tends to produce a few badly shaped aggregates.
-Unfortunately, the convergence of AMG is bounded by the worst aggregate and
-thus, even a small number of badly shaped aggregates can have a huge impact on
+Since the convergence of AMG is bounded by the worst aggregate, even a small 
+number of badly shaped aggregates can have a huge impact on
 the convergence. In AGMG, the aggregation algorithm has as input the upper
 bound of the two-grid condition number. When the aggregates are constructed,
 their quality is checked. Obviously, this increases the cost of the coarsening
@@ -121,17 +121,17 @@ control the speed of the coarsening. However, controlling the condition number
 is much more interesting than controlling the coarsening speed. If the algorithm 
 controls the condition number, it will no create bad aggregates but instead, it 
 may creates a few aggregates with a size below the target size. This obviously 
-does not affect the efficiency of the method in an noticeable way\cite{agmg2}. 
+does not affect the efficiency of the method in an noticeable way \cite{agmg2}. 
 In AGMG, the aggregation is done by a few passes of a pairwise aggregation 
 algorithm. This allows the computation of the aggregate quality to remain very 
 simple and to keep the cost per iteration low. The advantage of controlling the 
-condition becomes even more important when a $K-$cycle or Krylov-cycle is used 
-instead of the more common $V-$ or $W-$cycles. The difference between the 
+condition number becomes even more important when a $K-$cycle or Krylov-cycle is 
+used instead of the more common $V-$ or $W-$cycles. The difference between the 
 $K-$cycle and the $V-$ or $W-$cycle is that the $K-$cycle uses recursively a 
 few iterations of a Krylov solver preconditioned by a coarser grid to solve 
 the coarse grid problem in the two-grid algorithm \cite{k_cycle}. This scheme 
 is nonlinear and requires, when the system is SPD, to use flexible CG 
-\cite{fcg,fcg2,fcg3,fcg4} as Krylov solver. The advantage of the $K-$cycle is 
+\cite{fcg,fcg_2,fcg_3,fcg_4} as Krylov solver. The advantage of the $K-$cycle is 
 an increased robustness compared to $V-$ and $W-$cycle. Even when the condition 
 number of the two-grid method is large, the convergence properties of the 
 $K-$cycle can be independent of the number of levels \cite{k_cycle}. The 

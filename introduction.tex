@@ -23,7 +23,7 @@ the two cells on the right are quadrilaterals:
 \includegraphics[width=0.3\textwidth]{amr}
 \caption{AMR mesh.}
 \end{figure}
-Among the different discretization scheme for polygonal meshes, the PieceWise 
+Among the different discretization schemes for polygonal meshes, the PieceWise 
 Linear Discontinuous (PWLD) finite elements \cite{pwld_2d,pwld_3d} have been 
 successfully used to solve the transport equation. Another variant of the
 PieceWise Linear finite elements, the PieceWise Linear Continuous (PWLC) finite 
@@ -37,7 +37,7 @@ Modified Interior Penalty (MIP) DSA developed in \cite{mip} for triangular
 cells to PWLD finite elements. It will allow the DSA scheme to work on arbitrary 
 polygonal cells. Since MIP produces SPD equations, it has usually 
 been solved using conjugate gradient (CG) preconditioned by SSOR. In this
-article, the effectiveness of algebraic multigrid methods (AMG) to precondition 
+paper, the effectiveness of algebraic multigrid methods (AMG) to precondition 
 the Krylov solver \cite{amg,amg_course} will be tested. Algebraic multigrid methods 
 allow to use multigrid techniques when there is no grid or when the mesh is 
 unstructured. Instead of using a succession of grids based on the geometry of the 
