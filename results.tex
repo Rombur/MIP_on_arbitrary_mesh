@@ -1,17 +1,18 @@
 \section{Results} \label{sec_res}
 In this section, we show two Fourier analysis: one where the $S_n$ order is
 varied and one where the aspect ratio is varied. We also compare different
-methods to solve MIP: congugate gradient (CG), conjugate gradient
+methods to solve MIP: conjugate gradient (CG), conjugate gradient
 preconditioned with symmetric Gauss-Seidel (PCG-SGS), conjugate gradient
 preconditioned with ML using uncoupled aggregation (PCG-ML-Uncoupled),
-conjugate gradient preconditioned with ML using mis aggregation (PCG-ML-MIS)
+conjugate gradient preconditioned with ML using mis aggregation (PCG-ML-MIS),
 and AGMG. The options used for ML can be found in the Appendix.
 \subsection{Fourier Analysis}
 Analysing Source Iteration accelerated with DSA is often performed thanks to
 Fourier analysis \cite{larsen_dsa,consistent_p1}. When a Fourier analysis is
-done, the error is decomposed into different modes. By inspecting the damping of
-the different error modes, the effectiveness of the DSA scheme can be studied.
-The largest damping factor is the spectral radius of the method. The smaller
+performed, the error is decomposed into different modes and by inspecting the 
+damping of the different error modes, the effectiveness of the DSA scheme can 
+be studied. The largest damping factor is the spectral radius of the method. 
+The smaller
 the spectral radius is, the faster the scheme converges. If the spectral
 radius is greater than one, the method is unstable. Next, we present two Fourier 
 analysis. In the first one, the $S_n$ order is varied whereas in the second one, 
@@ -29,7 +30,7 @@ $S_{16}$.
 \caption{Fourier analysis as a function of the mesh optical thickness,
 homogeneous infinite medium case.}
 \end{figure}
-MIP is stable for all the cell size. The spectral radius is always less than
+MIP is stable for every cell size. The spectral radius is always less than
 0.5, except for $S_2$ where it is about 0.7.
 \subsubsection{Aspect ratio varied}
 For this Fourier analysis, we use a $S_{16}$ GLC quadrature, an homogeneous
@@ -44,12 +45,12 @@ $\frac{Y}{X}=4$ and $\frac{Y}{X}=16$.
 \caption{Fourier analysis as a function of the mesh optical thickness,
 homogeneous infinite medium case for different aspect ratios.}
 \end{figure}
-MIP is stable for all the aspect ratio and the maximum of the spectral radius
+MIP is stable for every the aspect ratio and the maximum of the spectral radius
 is at about 0.5
 
 \subsection{Homogeneous medium}
 Next we compare different solvers for MIP on a homogeneous medium, 10cm $\times$
-10cm, $\Sigma_t=1$cm$^{-1}$ and $\Sigma_s=0.99$cm$^{-1}$, with vacuum boundary 
+10cm, $\Sigma_t=1$cm$^{-1}$ and $\Sigma_s=0.99$cm$^{-1}$ with vacuum boundary 
 conditions and a source of intensity 1cm$^{-3}$s$^{-1}$. We use a $S_8$
 Gauss-Legendre-Chebyshev quadrature, a Source Iteration solver with relative
 tolerance of $10^{-8}$ and a relative tolerance for MIP of $10^{-10}$.

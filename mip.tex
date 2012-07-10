@@ -32,7 +32,7 @@ $\alpha_{j}=0.25\ \forall j$, the basis functions are given in Figure (\ref{pwld
 On triangular cells, the PWLD basis functions reduces to the standard Linear
 Discontinuous (LD) basis functions if $\alpha_j = \frac{1}{3}$. Given the 
 definition of the PWLD finite elements, it may seem complicated to build the 
-mass matrix or the gradient matrix on an arbitrary polygonal cells. The 
+mass matrix or the gradient matrix on an arbitrary polygonal cells but the 
 construction of such matrices can be greatly simplified using ``side'' sub-cells. 
 A ``side'' sub-cell is a triangular cell made from two adjacent vertices and the 
 point $c$. On each ``side'' sub-cells the mass matrix, for example, can be build
@@ -73,8 +73,8 @@ the cell correspond to the first (respectively second) basis function of the
   & \bs{M}_{PWLD}(3,3) =  \alpha^2 \bs{M}_S(2,2)
 \end{align}}    
 By looping over all the ``side'' sub-cell of a cell, the mass matrix of the 
-cell can be built easily.
-\subsection{MIP}
+cell can be easily built.
+\subsection{Modified Interior Penalty DSA}
 The transport equation can be written in a compact form using operators:
 \begin{align}
   &\bs{L} \psi = \bs{M}\bs{\Sigma} \phi + Q \label{transport}\\
@@ -174,8 +174,8 @@ where $c(p)$ is given by $c(p) = 2p (p+1)$, $p$ is the polynomial order ($p=1$
 in this paper) and $h_{\bot}$ is the length of the cell in the direction
 orthogonal to the edge $e$. On triangular cells, $h_{\bot}$ equals $\frac{2A}{L_e}$
 where $A$ is the area of the triangle and $L_e$ is the length of the edge $e$. MIP
-gives only a correction for the scalar flux but by assuming that the angular 
-dependence satisfies a diffusion expansion, the angular correction can be 
+yields only a correction for the scalar flux but by assuming that the angular 
+dependence satisfies a diffusion expansion. The angular correction can be 
 computed using the scalar flux correction:
 \begin{equation}
   \delta \psi_m^{(k)} = \frac{1}{4\pi} \(\delta \phi^{(k)} - 3\mathrm{D} 
@@ -186,7 +186,7 @@ or reflective.
 
 If PWLD finite elements are used instead of LD finite elements, the weak form 
 of MIP is not modified. However when the cells are not triangular, there is no 
-simple way to compute $h_{\bot}$. To simplify the calculation of $h_{\bot}$, we 
+simple way to compute $h_{\bot}$. To simplify this, we 
 assume that the polygonal cells are not too far from being regular polygonal 
 cells. In such cases, if the cell has an even number of edges, the orthogonal 
 length equals two times the apothem, i.e. two times the segment between the 

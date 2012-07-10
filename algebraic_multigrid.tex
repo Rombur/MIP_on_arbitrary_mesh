@@ -7,22 +7,22 @@ preconditioned with an algebraic multigrid method. In \cite{amg_pn}, the authors
 used an algebraic multigrid method to precondition the Krylov solver for the 
 even-parity finite element-spherical harmonics (FE-$P_N$) method. The AMG 
 preconditioner resulted in a 60\% reduction in the solution time compared to 
-ILU(0) preconditioning and even more compared to SSOR preconditioning. In this
-paper, rather than writing our own AMG code, we will be testing the ML package 
-\cite{ml_guide} from the Trilinos library and the AGMG code\cite{agmg_guide}. 
+ILU(0) preconditioning and even more reduction compared to SSOR preconditioning. 
+Rather than writing our own AMG code, we will be testing the ML package 
+\cite{ml_guide} from the Trilinos library and the AGMG code \cite{agmg_guide}. 
 ML is a multigrid preconditioning package that uses a smoothed aggregation 
 algebraic multigrid to build a preconditioner for a Krylov method. AGMG is an 
 aggregation-based algebraic multigrid code written in Fortran 90.
 
 Before explaining the differences between ML and AGMG, we need to explain the
 how algebraic multigrid methods work. The first multigrid methods
-developed, were geometric multigrid used as stand-alone solvers. In many 
+developed were geometric multigrid used as stand-alone solvers. In many 
 applications, they achieve the so-called ``textbook multigrid
 efficiency'', i.e. ``the solution to the governing system of equations [is
 attained] in a computational work that is a small multiple of the operation
 counts associated with discretizing the system'' \cite{textbook_eff}. However, 
 in many other applications, multigrid methods, and particularly algebraic 
-multigrid methods, cannot achieve such efficiency \cite{k_cycle}. In
+multigrid methods, cannot achieve such efficiency \cite{k_cycle} and in
 such cases, they are often used as preconditioner for Krylov subspace methods. 
 
 Before solving a system of equations with a general multigrid method, we
@@ -44,7 +44,7 @@ two-grid algorithm is given by :
   \item $\nu_2$ post-smoothing iterations: $u = S^{\nu_2}(u,b_f)$
 \end{enumerate}
 Solving the system $\bs{A}_c v = r_c$ on the coarse grid is generally very
-expansive. Therefore, this step is recursively replaced by $\gamma$ two-grid
+expansive, therefore this step is recursively replaced by $\gamma$ two-grid
 methods until the system can be efficiently inverted with a direct solver.
 This yields the multigrid method. When $\gamma = 1$, respectively $\gamma =
 2$, the multigrid method is said to use a $V-$cycle, respectively a $W-$cycle.
@@ -52,7 +52,7 @@ This yields the multigrid method. When $\gamma = 1$, respectively $\gamma =
 The main difference between geometric and algebraic multigrid is in the method
 to coarsen the grid. Algebraic multigrid method only use the properties of the
 matrix. Among the algebraic multigrid methods, there are three main different 
-types: the classical Ruge-Stueben AMG, the plain aggregation AMG and the
+types: the classical Ruge-Stueben AMG, the plain aggregation AMG, and the
 smoothed aggregation AMG. ML uses smoothed aggregation AMG and AGMG
 uses plain aggregation AMG. Next, we briefly explain the coarsening step in
 ML and AGMG. The coarsening step is the most important 
@@ -66,7 +66,7 @@ $\bs{P}_k$, are the transpose of the coarsening operators,
 $\bs{R}_k=\bs{P}_k^T$. Therefore, when the $\bs{P}_k$ are built, the
 coarsening is known. First, the graph of the matrix is constructed: if the element
 $(i,j)$ or $(j,i)$ of the matrix is non-zero, an edge is built between the
-vertex $i$ and the vertex $j$ \cite{ml_guide}. Next, the vertices are
+vertex $i$ and the vertex $j$ \cite{ml_guide}. Second, the vertices are
 aggregated. When using ML on a single processor, two aggregation schemes can
 be used: the uncoupled scheme or the maximally independent sets (MIS) scheme. 
 The uncoupled scheme tries to build aggregates of size $3^d$ where $d$ is the
@@ -74,8 +74,8 @@ dimension of the problem. The algorithm works as follows \cite{mis}:
 \begin{description}
   \item[Step 1:] As long as there are points adjacent to an aggregate:
     \begin{enumerate}
-      \item Chose as root point a point which is not an adjacent to an
-        aggregate
+      \item Choose a point which is not an adjacent to an
+        aggregate. This point is a new root point.
       \item Define a new aggregate as the root point and its neighbors 
     \end{enumerate}
   \item[Step 2:] Add all the points left to the existing aggregates or form a
@@ -105,9 +105,9 @@ damped Jacobi, the prolongator matrix is given by:
 \end{equation}
 
 \subsection{AGMG}
-Unlike ML, in AGMG the prolongator is not smoothed. This allows to have a
-cheaper setup and to decrease the memory required \cite{agmg2}. However, like
-said previously, the scheme is less robust. To counteract this weakness, the
+Unlike ML, in AGMG the prolongator is not smoothed which results in a
+cheaper setup and a decrease of required memory \cite{agmg2}. However, as
+explained previously, the scheme is less robust. To counteract this weakness, the
 aggregation scheme is more complicated. Coarsening algorithms which control
 the size of the aggregates tends to produce a few badly shaped aggregates.
 Since the convergence of AMG is bounded by the worst aggregate, even a small 
@@ -119,11 +119,11 @@ and it is therefore important that the coarsening is fast enough. Since the
 algorithm does not control the size of the aggregates, it is difficult to 
 control the speed of the coarsening. However, controlling the condition number
 is much more interesting than controlling the coarsening speed. If the algorithm 
-controls the condition number, it will no create bad aggregates but instead, it 
-may creates a few aggregates with a size below the target size. This obviously 
+controls the condition number, it will not create bad aggregates but instead, it 
+may create a few aggregates below the target size. This obviously 
 does not affect the efficiency of the method in an noticeable way \cite{agmg2}. 
 In AGMG, the aggregation is done by a few passes of a pairwise aggregation 
-algorithm. This allows the computation of the aggregate quality to remain very 
+algorithm which allows the computation of the aggregate quality to remain very 
 simple and to keep the cost per iteration low. The advantage of controlling the 
 condition number becomes even more important when a $K-$cycle or Krylov-cycle is 
 used instead of the more common $V-$ or $W-$cycles. The difference between the 
@@ -138,4 +138,4 @@ $K-$cycle can be independent of the number of levels \cite{k_cycle}. The
 computational cost of $K-$cycle is about the same than the cost of the 
 $W-$cycle. If the number of unknowns does not decrease sufficiently from one 
 level to the next, the $K-$cycle at one level is replaced by a $V-$cycle at 
-this level.
+this same level.

@@ -1,20 +1,20 @@
 \section{Introduction}
 Several discretization methods haven been developed for arbitrary polygonal
 meshes \cite{pwld_2d,pwld_3d,pwl_diffusion,palmer_ane,palmer_proc,palmer_fe,
-wachspress,cell_centered_diff,mimetic}.  Using polygonal
-cells can be advantageous because the number of unknowns can be reduced while
-maintaining symmetry within the mesh. This potential reduction in 
-number of unknowns can be seen by comparing a hexagonal cell with a triangular
-discretization of the same area:
+wachspress,cell_centered_diff,mimetic}. Polygonal cells can be advantageous 
+because the number of unknowns can be reduced while maintaining symmetry 
+within the mesh. This potential reduction in the number of unknowns can be 
+seen by comparing a hexagonal cell with a triangular discretization of the 
+same area:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.5\textwidth]{hex_tri_cells}
 \caption{Hexagonal cell versus triangle cells.}
 \end{figure}
 If there is one unknown per vertex, the hexagonal cell will have only six
-unknowns compared to the 12 unknowns of the triangular discretization. Another 
-advantage of polygonal cells is that they can be used for adaptive mesh refinement 
-(AMR) \cite{amr_rad,amr_block,amr_unstruc} without having to
+unknowns compared to the twelve unknowns of the triangular discretization. 
+Another advantage of polygonal cells is that they can be used for adaptive 
+mesh refinement (AMR) \cite{amr_rad,amr_block,amr_unstruc} without having to
 deal with hanging nodes \cite{arbitrary_hanging_nodes,dealII_hanging_nodes,
 locally_hanging_nodes}. On the figure below, the left cell is a pentagon whereas 
 the two cells on the right are quadrilaterals:
@@ -34,12 +34,12 @@ matrix contrarily to others discretization for arbitrary polygonal meshes
 \cite{dsa_ref,larsen_dsa,consistent_p1,mip} was developed using either PWLD or
 PWLC finite elements. In this work, we will remedy this lack by adapting the 
 Modified Interior Penalty (MIP) DSA developed in \cite{mip} for triangular 
-cells to PWLD finite elements. It will allow the DSA scheme to work on arbitrary 
+cells to PWLD finite elements which will allow the DSA scheme to work on arbitrary 
 polygonal cells. Since MIP produces SPD equations, it has usually 
 been solved using conjugate gradient (CG) preconditioned by SSOR. In this
 paper, the effectiveness of algebraic multigrid methods (AMG) to precondition 
 the Krylov solver \cite{amg,amg_course} will be tested. Algebraic multigrid methods 
-allow to use multigrid techniques when there is no grid or when the mesh is 
+allow the use of multigrid techniques when there is no grid or when the mesh is 
 unstructured. Instead of using a succession of grids based on the geometry of the 
 problems, the grids are based on properties of the matrix.
 

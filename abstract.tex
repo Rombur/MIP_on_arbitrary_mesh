@@ -4,13 +4,14 @@
   This allows MIP to be used on arbitrary polygonal meshes. Arbitrary
   polygonal meshes can be used to decrease the number of unknowns or to use
   adaptive mesh refinement without having hanging nodes. Fourier analysis is
-  performed on the new MIP and shown that this scheme is always stable if the 
-  scattering is isotropic and the mesh uses rectangular cells. The method is 
-  tested on three different unstructured meshes and is shown to be efficient 
-  on all these meshes. The system of equations being produced by the MIP being
-  Symmetric and Positive Definite (SPD), it was customary to solve it using
-  Conjugate Gradient (CG) preconditioned with SSOR. In this research, we compare
-  CG preconditioned with SGS with CG preconditioned by Algebraic MultiGrid
+  performed on the new MIP and it is shown that this scheme is always stable 
+  if the scattering is isotropic and the mesh uses rectangular cells. The 
+  method is tested on three different unstructured meshes and is shown to be 
+  efficient on all these meshes. The system of equations produced by the MIP 
+  are Symmetric and Positive Definite (SPD) and is customary solved using
+  Conjugate Gradient (CG) preconditioned with Symmetric Successive
+  OverRelaxation (SSOR). In this research, we compare CG preconditioned with 
+  Symmetric Gauss-Seidel (SGS) and CG preconditioned by Algebraic MultiGrid
   methods (AMG). AMG preconditioning is shown to be much more effective and
   efficient than SGS preconditioning.
 \end{abstract}
