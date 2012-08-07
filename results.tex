@@ -4,7 +4,7 @@ varied and one where the aspect ratio is varied. We also compare different
 methods to solve MIP: conjugate gradient (CG), conjugate gradient
 preconditioned with symmetric Gauss-Seidel (PCG-SGS), conjugate gradient
 preconditioned with ML using uncoupled aggregation (PCG-ML-Uncoupled),
-conjugate gradient preconditioned with ML using mis aggregation (PCG-ML-MIS),
+conjugate gradient preconditioned with ML using MIS aggregation (PCG-ML-MIS),
 and AGMG. The options used for ML can be found in the Appendix.
 \subsection{Fourier Analysis}
 Analysing Source Iteration accelerated with DSA is often performed thanks to
@@ -33,7 +33,7 @@ homogeneous infinite medium case.}
 MIP is stable for every cell size. The spectral radius is always less than
 0.5, except for $S_2$ where it is about 0.7.
 \subsubsection{Aspect ratio varied}
-For this Fourier analysis, we use a $S_{16}$ GLC quadrature, an homogeneous
+For this Fourier analysis, we use a $S_{16}$ GLC quadrature, a homogeneous
 medium, $c=0.9999$ and periodic boundary conditions. The $x-$axis is the mesh
 size in mean free path in the $x$ direction and the $y-$axis is the spectral
 radius. There are five curves corresponding to five different aspect ratio:
@@ -96,7 +96,7 @@ the most efficient solver, the number of CG iteration is slightly lower
 than PCG-ML but the MIP calculation is 20 times faster than CG.
 
 \subsubsection{Polygonal cells}
-In this problem the mesh is composed of 13654 triangles, 250 quadrilaterals,
+In this problem, the mesh is composed of 13654 triangles, 250 quadrilaterals,
 1400 pentagons, 1306 hexagons, 228 heptagons, and 6 octagons, for a total of
 16844 cells and 58442 degrees of freedoms. This example will allow us to test
 MIP and the different preconditioners on a mesh composed of different types of

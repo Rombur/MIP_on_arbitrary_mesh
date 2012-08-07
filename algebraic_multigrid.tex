@@ -2,7 +2,8 @@
 \subsection{Introduction}
 As mentioned earlier, the most common way to solve a SPD system is to use
 conjugate gradient preconditioned with SSOR (PCG-SSOR). In this research, we
-will compare the calculation time using PCG-SSOR with the time needed by CG 
+will compare the calculation time using PCG-SGS, which is a particular version
+of PCG-SSOR, with the time needed by CG 
 preconditioned with an algebraic multigrid method. In \cite{amg_pn}, the authors 
 used an algebraic multigrid method to precondition the Krylov solver for the 
 even-parity finite element-spherical harmonics (FE-$P_N$) method. The AMG 
@@ -14,16 +15,15 @@ ML is a multigrid preconditioning package that uses a smoothed aggregation
 algebraic multigrid to build a preconditioner for a Krylov method. AGMG is an 
 aggregation-based algebraic multigrid code written in Fortran 90.
 
-Before explaining the differences between ML and AGMG, we need to explain the
-how algebraic multigrid methods work. The first multigrid methods
-developed were geometric multigrid used as stand-alone solvers. In many 
-applications, they achieve the so-called ``textbook multigrid
-efficiency'', i.e. ``the solution to the governing system of equations [is
-attained] in a computational work that is a small multiple of the operation
-counts associated with discretizing the system'' \cite{textbook_eff}. However, 
-in many other applications, multigrid methods, and particularly algebraic 
-multigrid methods, cannot achieve such efficiency \cite{k_cycle} and in
-such cases, they are often used as preconditioner for Krylov subspace methods. 
+The first multigrid methods developed were geometric multigrid used as 
+stand-alone solvers. In many applications, they achieve the so-called 
+``textbook multigrid efficiency'', i.e. ``the solution to the governing 
+system of equations [is attained] in a computational work that is a small 
+multiple of the operation counts associated with discretizing the system'' 
+\cite{textbook_eff}. However, in many other applications, multigrid methods, 
+and particularly algebraic multigrid methods, cannot achieve such efficiency 
+\cite{k_cycle} and in such cases, they are often used as preconditioner for 
+Krylov subspace methods. 
 
 Before solving a system of equations with a general multigrid method, we
 explain how to solve it using a two-grid method. We want to
@@ -31,26 +31,38 @@ solve the following system:
 \begin{equation}
   \bs{A}_f u_f = b_f
 \end{equation}
-define on the grid $\Gamma_f$ and that $\Gamma_c \subset \Gamma_f$. The 
-two-grid algorithm is given by :
+define on the grid $\Gamma_f$. The two-grid algorithm is given by :
 \begin{enumerate}
   \item $\nu_1$ pre-smoothing iterations using a smoother (Jacobi,
     Gauss-Seidel or ILU) and an initial guess $u_0$: $u = S^{\nu_1}(u_0,b_f)$
-  \item Compute the residual on the fine grid $\Gamma_c$ and restrict it to
-    the coarse grid $\Gamma_f$: $r_c = \bs{R}(b_f-\bs{A}_f u)$
+  \item Compute the residual on the fine grid $\Gamma_f$ and restrict it to
+    the coarse grid $\Gamma_c$: $r_c = \bs{R}(b_f-\bs{A}_f u)$
   \item Solve the system on the coarse grid: $v=\bs{A}_c^{-1} r_c$
   \item Interpolate the coarse grid correction to the fine grid and add the
     correction to $u$: $u=u+\bs{P}v$
   \item $\nu_2$ post-smoothing iterations: $u = S^{\nu_2}(u,b_f)$
 \end{enumerate}
+When using AMG, the matrix $\bs{A}_c$ on the coarse grid is given by the
+Galerkin approximation:
+\begin{equation}
+  \bs{A}_c = \bs{R} \bs{A}_f \bs{P}
+\end{equation}
+where $\bs{P}$ is a prolongation matrix and $\bs{R}$ is a restriction matrix. 
 Solving the system $\bs{A}_c v = r_c$ on the coarse grid is generally very
 expansive, therefore this step is recursively replaced by $\gamma$ two-grid
 methods until the system can be efficiently inverted with a direct solver.
 This yields the multigrid method. When $\gamma = 1$, respectively $\gamma =
-2$, the multigrid method is said to use a $V-$cycle, respectively a $W-$cycle.
+2$, the multigrid method is said to use a $V-$cycle, respectively a $W-$cycle: 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{v_w_cycles}
+  \caption{$V-$ and $W-$cycles.}
+\end{figure}
+A dot represents a smoothing operation and a square a direct inversion. The
+grid transfer operators are symbolized by lines.
 
 The main difference between geometric and algebraic multigrid is in the method
-to coarsen the grid. Algebraic multigrid method only use the properties of the
+to coarsen the grid. Algebraic multigrid methods only use the properties of the
 matrix. Among the algebraic multigrid methods, there are three main different 
 types: the classical Ruge-Stueben AMG, the plain aggregation AMG, and the
 smoothed aggregation AMG. ML uses smoothed aggregation AMG and AGMG
@@ -72,7 +84,7 @@ be used: the uncoupled scheme or the maximally independent sets (MIS) scheme.
 The uncoupled scheme tries to build aggregates of size $3^d$ where $d$ is the
 dimension of the problem. The algorithm works as follows \cite{mis}:
 \begin{description}
-  \item[Step 1:] As long as there are points adjacent to an aggregate:
+  \item[Step 1:] As long as there are points not adjacent to an aggregate:
     \begin{enumerate}
       \item Choose a point which is not an adjacent to an
         aggregate. This point is a new root point.
@@ -82,12 +94,11 @@ dimension of the problem. The algorithm works as follows \cite{mis}:
     new aggregates with them
 \end{description}
 The MIS scheme used in ML applied the MIS algorithm \cite{graph_coloring} to
-the graph produced by the square of the matrix $\bs{A}$. The goal is that all
-the points belong to an aggregate without having to perform Step 2 of the
-previous algorithm. These two coarsening schemes use a fixed ratio of 
-coarsening between levels. Once the aggregation is done, a tentative
-prolongator matrix, $\bs{\tilde{P}}_k$ is constructed \cite{mis}. A example of
-$\bs{\tilde{P}}_k$ is given by:
+the graph produced by the square of the matrix $\bs{A}$. These two coarsening 
+schemes use a fixed ratio of coarsening between levels. 
+
+Once the aggregation is done, a tentative prolongator matrix, $\bs{\tilde{P}}_k$ 
+is constructed \cite{mis}. A example of $\bs{\tilde{P}}_k$ is given by:
 \begin{equation}
   \bs{\tilde{P}}_k(i,j) = \left\{
   \begin{aligned}
@@ -101,7 +112,7 @@ This tentative prolongator could be used as prolongator but smoothing it
 allows to have a more robust scheme. Let $\bs{S}_k$ be a smoother, for example
 damped Jacobi, the prolongator matrix is given by:
 \begin{equation}
-  \bs{P}_k = \bs{\tilde{S}}_k \bs{\tilde{P}}_k
+  \bs{P}_k = \bs{S}_k \bs{\tilde{P}}_k
 \end{equation}
 
 \subsection{AGMG}

@@ -7,15 +7,15 @@ nodes in $d$ dimensions). Each process works independently and aggregates
 cannot span processes.
 \item [MIS:] Uses maximal independent set techniques \cite{mis} to define
 aggregates. Aggregates can span processes. May provide better quality
-aggregates than \bf{Uncoupled}, but computationally more expensive because it
+aggregates than {\bf Uncoupled}, but computationally more expensive because it
 requires matrix-matrix product.
-\item[Symmetric Gauss-Seidel]
-\item[Amesos-KLU:] Use \bf{KLU} through \bf{Amesos}. Coarse grid problem is
+\item[Symmetric Gauss-Seidel] 
+\item[Amesos-KLU:] Use {\bf KLU} through {\bf Amesos}. Coarse grid problem is
 shipped to proc 0, solved and solution is broadcast.
 \end{description}
 The MultiLevelPreconditioner class provides default values for five different
 preconditioner types, including classical smoothed aggregation for symmetric
-positive definite or nearly symmetric definite systems.
+and positive definite or nearly symmetric and positive definite systems.
 \begin{description}
 \item [option name:] SA
 \item [max levels:] 10

@@ -28,15 +28,16 @@ Linear Discontinuous (PWLD) finite elements \cite{pwld_2d,pwld_3d} have been
 successfully used to solve the transport equation. Another variant of the
 PieceWise Linear finite elements, the PieceWise Linear Continuous (PWLC) finite 
 elements were also developed and used to discretize the diffusion equation. 
-They have shown to be second order and to produce a symmetric positive (SPD) 
-matrix contrarily to others discretization for arbitrary polygonal meshes 
-\cite{pwl_diffusion}. However, no Diffusion Synthetic Acceleration (DSA) 
-\cite{dsa_ref,larsen_dsa,consistent_p1,mip} was developed using either PWLD or
-PWLC finite elements. In this work, we will remedy this lack by adapting the 
-Modified Interior Penalty (MIP) DSA developed in \cite{mip} for triangular 
-cells to PWLD finite elements which will allow the DSA scheme to work on arbitrary 
-polygonal cells. Since MIP produces SPD equations, it has usually 
-been solved using conjugate gradient (CG) preconditioned by SSOR. In this
+They have shown to be a second order accuracy method and to produce a symmetric 
+and positive definite (SPD) matrix contrarily to others discretization for 
+arbitrary polygonal meshes \cite{pwl_diffusion}. However, no Diffusion
+Synthetic Acceleration (DSA) \cite{dsa_ref,larsen_dsa,consistent_p1,mip} was 
+developed using either PWLD or PWLC finite elements. In this work, we will 
+remedy this lack by adapting the Modified Interior Penalty (MIP) DSA developed 
+in \cite{mip} for triangular cells to PWLD finite elements which will allow 
+the DSA scheme to work on arbitrary polygonal cells. Since MIP produces SPD 
+equations, it has usually been solved using conjugate gradient (CG) preconditioned 
+by a symmetric successive overrelaxation method (SSOR). In this
 paper, the effectiveness of algebraic multigrid methods (AMG) to precondition 
 the Krylov solver \cite{amg,amg_course} will be tested. Algebraic multigrid methods 
 allow the use of multigrid techniques when there is no grid or when the mesh is 
