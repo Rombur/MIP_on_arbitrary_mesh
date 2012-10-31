@@ -1,5 +1,6 @@
 pdf : MIP_on_arbitrary_mesh.tex\
 	introduction.tex\
+	transport.tex\
 	mip.tex\
 	algebraic_multigrid.tex\
 	conclusions.tex\

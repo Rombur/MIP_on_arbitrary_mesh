@@ -1,10 +1,12 @@
 \section{Algebraic Multigrid} \label{sec_amg}
 \subsection{Introduction}
 As mentioned earlier, the most common way to solve a SPD system is to use
-conjugate gradient preconditioned with SSOR (PCG-SSOR). In this research, we
-will compare the calculation time using PCG-SGS, which is a particular version
-of PCG-SSOR, with the time needed by CG 
-preconditioned with an algebraic multigrid method. In \cite{amg_pn}, the authors 
+conjugate gradient preconditioned with SSOR (PCG-SSOR). {In this research, we
+will compare the calculation time using conjugate gradient preconditioned with
+Symmetric Gauss-Seidel (PCG-SGS), which is PCG-SSOR with a
+damping factor of one, with the time needed by CG preconditioned with an
+algebraic multigrid method. PCG-SGS was chosen because it was more efficient
+than PCG-SSOR used with other damping factors. In \cite{amg_pn}, the authors 
 used an algebraic multigrid method to precondition the Krylov solver for the 
 even-parity finite element-spherical harmonics (FE-$P_N$) method. The AMG 
 preconditioner resulted in a 60\% reduction in the solution time compared to 
@@ -52,11 +54,13 @@ Solving the system $\bs{A}_c v = r_c$ on the coarse grid is generally very
 expansive, therefore this step is recursively replaced by $\gamma$ two-grid
 methods until the system can be efficiently inverted with a direct solver.
 This yields the multigrid method. When $\gamma = 1$, respectively $\gamma =
-2$, the multigrid method is said to use a $V-$cycle, respectively a $W-$cycle: 
+2$, the multigrid method is said to use a $V-$cycle, respectively a $W-$cycle
+(see \Cref{fig_v_w}): 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.5\textwidth]{v_w_cycles}
   \caption{$V-$ and $W-$cycles.}
+  \label{fig_v_w}
 \end{figure}
 A dot represents a smoothing operation and a square a direct inversion. The
 grid transfer operators are symbolized by lines.
@@ -90,11 +94,11 @@ dimension of the problem. The algorithm works as follows \cite{mis}:
         aggregate. This point is a new root point.
       \item Define a new aggregate as the root point and its neighbors 
     \end{enumerate}
-  \item[Step 2:] Add all the points left to the existing aggregates or form a
+  \item[Step 2:] Add all the points left to the existing aggregates or form 
     new aggregates with them
 \end{description}
 The MIS scheme used in ML applied the MIS algorithm \cite{graph_coloring} to
-the graph produced by the square of the matrix $\bs{A}$. These two coarsening 
+the graph of the matrix $\bs{A}^2$. These two coarsening 
 schemes use a fixed ratio of coarsening between levels. 
 
 Once the aggregation is done, a tentative prolongator matrix, $\bs{\tilde{P}}_k$ 
