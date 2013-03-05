@@ -1,17 +1,20 @@
 \begin{abstract}
   The Modified Interior Penalty (MIP) Diffusion Synthetic Acceleration (DSA)
   is adapted to the PieceWise Linear Discontinuous (PWLD) finite elements.
-  This allows MIP to be used on arbitrary polygonal meshes. Arbitrary
-  polygonal meshes can be used to decrease the number of unknowns or to use
-  adaptive mesh refinement without having hanging nodes. Fourier analysis are 
-  performed on the new MIP and it is shown that this scheme is always stable 
-  if the scattering is isotropic and the mesh uses rectangular cells. The 
-  method is tested on three different unstructured meshes and is shown to be 
+  This provides a DSA preconditioner for arbitrary polygonal meshes. Arbitrary
+  polygonal meshes can be used to model complex objects and to decrease the
+  number of unknowns or to employ
+  adaptive mesh refinement without the need to treat so-called ``hanging
+  nodes''. Fourier analyses are 
+  performed on the new MIP formulation and it is shown that this scheme is
+  always stable with isotropic scattering, including high-aspect ratio cells.
+  Numerical results are presented for three different unstructured meshes and 
+  is shown to be 
   efficient on all these meshes. The system of equations produced by the MIP 
-  is symmetric and positive definite and it is usually solved using
-  Conjugate Gradient (CG) preconditioned with a symmetric successive
-  overrelaxation scheme. In this research, we compare CG preconditioned with 
-  symmetric Gauss-Seidel and CG preconditioned by Algebraic MultiGrid
+  is symmetric and positive definite and it is typical solved using
+  Conjugate Gradient (CG) preconditioned with a Symmetric Gauss-Seidel
+  scheme. In this research, we also compare CG preconditioned with 
+  Symmetric Gauss-Seidel and CG preconditioned by Algebraic MultiGrid
   methods (AMG). AMG preconditioning is shown to be much more effective and
   efficient than SGS preconditioning.
 \end{abstract}

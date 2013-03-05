@@ -1,6 +1,6 @@
 \section{Discretization and Solution Techniques for the $S_n$ Transport
 Equation}\label{sec_transport}
-Here, we briefly recall the \sn transport equations, the iterative techniques
+We recall the \sn transport equations, the iterative techniques
 employed to solve them, and discuss the PWLD discontinuous spatial
 discretization for the transport equation with an emphasis on arbitrary
 polygonal/polyhedral grids.
@@ -10,7 +10,7 @@ Given an angular quadrature set $\{\bo_d,w_d\}_{1\leq d\leq M}$, the one-group
 \begin{equation}
   \(\bo_d\cdot \bn + \Sigma_t(\br)\)\psi_d (\br) = \frac{1}{4\pi} \Sigma_s
   (\br) \phi(\br) + \frac{1}{4\pi} S (\br), \ \textrm{ for } \br \in \mc{D},\
-  1 \leq d \leq M
+  1 \leq d \leq M,
   \label{transport_sn}
 \end{equation}
 with $\psi_d(\br) = \psi(\br,\bo_d)$ the angular flux at position $\br$ in
@@ -22,21 +22,21 @@ defined as and evaluated as follows:
   \psi_d (\br).
 \end{equation}
 For brevity, we assume only incoming boundary conditions, $\psi_d(\br_b) =
-\psi_d^{inc}(\br_b)$, for any boundary location $\br_b \in \partial \mc{D}_d^-
+\psi_d^{inc}(\br_b)$, for any boundary $\br_b \in \partial \mc{D}_d^-
 = \{\partial \mc{D} \textrm{ such that }\bo_d \cdot \bs{n}_b <0\}$, where
 $\bs{n}_b = \bs{n}(\br_b)$ is the outward unit normal vector at the boundary. 
-
 \Cref{transport_sn} can be written in a compact form using operators:
 \begin{align}
   & \bs{L} \Psi = \bs{M \Sigma}\Phi + S \equiv q, \label{L_Psi}\\
   &\Phi = \bs{D} \Psi, \label{Phi}
 \end{align}
-where $\Psi$ is the vector of angular fluxes, $\Phi$ the vector scalar flux,
+where $\Psi$ is the vector of angular fluxes, $\Phi$ the scalar flux,
 $q$ is the total (scattering+external) source $\bs{L}$ is the streaming
-operator, $\bs{M}$ is the moment-to-direction operator, and $\bs{D}$ is the
-direction-to-moment operator. $\bs{L} = diag
+operator, $\bs{\Sigma}$ is the scattering matrix, $\bs{M}$ is the
+moment-to-direction operator, and $\bs{D}$ is the direction-to-moment
+operator. $\bs{L} = diag
 (\bs{L}_1,\hdots,\bs{L}_d,\hdots,\bs{L}_M)$ is a diagonal operator; given a
-total cross section, one can solve independently for the resulting angular
+total source $q$, one can solve independently for the resulting angular
 fluxes in all directions. The action of $\bs{L}^{-1}$ is often referred to as
 a \emph{transport sweep} when discontinuous spatial approximations are
 employed because, for any direction $\bo_d$, the action of $\bs{L}_d^{-1}$ can
@@ -46,71 +46,62 @@ cell by cell. The order in which the elements are solved constitutes the graph
 of the sweep; for brevity and because this is not the focus of this article,
 we do not expand on situations where the graph can present some dependencies
 (cycles); in such a case, these dependencies can either be lagged within the
-iterative procedure or the solution vector consisting of the scalar flux is
-augmented by the angular fluxes that cause the cycle.
+iterative procedure \cite{dgfem} or the solution vector consisting of the scalar 
+flux is augmented by the angular fluxes that cause the cycle \cite{mip}.
 \subsection{Solution Techniques}
 \Cref{L_Psi,Phi} can be solved using the Source Iteration (SI) method (a
-stationary iterative technique also knows as Richardson iteration). The SI
+stationary iterative technique also known as Richardson iteration). The SI
 techniques at the $\ell^{th}$ iteration is given by :
 \begin{equation}
-  \Phi^{(\ell+1)} = \bs{DL}^{-1} \(\bs{M\Sigma}\Phi^{(\ell)} + S\)
+  \Phi^{(\ell+1)} = \bs{DL}^{-1} \(\bs{M\Sigma}\Phi^{(\ell)} + S\).
 \end{equation}
-Alternatively, a subspace Krylov method (usually GMRes) can be employed to
-solve the system of equations:
-\begin{equation}
-  \(\bs{I} - \bs{DL}^{-1}\bs{M \Sigma}\) \Phi = \bs{DL}^{-1}S
-\end{equation}
-Both the SI and the GMRES approaches require transport sweeps (the action of
-$\bs{L}^{-1}$ is required in both procedures).
-
-When the scattering ratio $c=\frac{\Sigma_s}{\Sigma_t}$ tends to one in
-optically thick domains, the number of SI and GMRES can become large. To
-accelerate the convergence, a DSA preconditioner is needed; the MIP
-discontinuous finite element discretization of the diffusion equation for
-arbitrary polygonal/polyhedral grids is presented in \Cref{sec_mip}.
+SI requires transport sweeps (the action of
+$\bs{L}^{-1}$ is required in both procedures). When the scattering ratio
+$c=\frac{\Sigma_s}{\Sigma_t}$ tends to one in optically thick domains, the
+number of SI iterations can become large. To accelerate the convergence, a DSA
+preconditioner is needed; the MIP discontinuous finite element discretization
+of the diffusion correction equation 
+is presented in \Cref{sec_mip} for arbitrary polygonal grids. 
 \subsection{Discontinuous Finite Element Discretization on Arbitrary Grids}
-The domain $\mc{D}$ is meshed into element $K$ (specifically polygons and
-polyhedra). For a given streaming direction $\bo_d$, the discontinuous finite
+The domain $\mc{D}$ is meshed into element $K$ (specifically polygons). For 
+a given streaming direction $\bo_d$, the discontinuous finite
 element scheme on a given element $K$ is given by:
 \begin{equation}
   -\int_{K} \(\psi_d \bo_d \cdot \bn b + \Sigma_t \Psi_d b \)\ d\br +
   \int_{\partial K^+} \bo_d \cdot \bs{n} \Psi_d b\ d\br = \int_{K} qb\ d\br +
-  \int_{\partial K^{-}} |\bo_d \cdot \bs{n}| \psi_d^{\uparrow}b \ d\br
+  \int_{\partial K^{-}} |\bo_d \cdot \bs{n}| \psi_d^{\uparrow}b \ d\br,
   \label{transport_int}
 \end{equation}
-where $b$ represents a generic basis function, $\partial K^{-}$ is the inflow
+where $b$ represents a generic finite element basis function, $\partial K^{-}$ 
+is the inflow
 face of element $K$, $\partial K^{+}$ is the outflow face of element $K$. The
 angular flux values on an inflow face, denoted by $\psi_d^{\uparrow}$ in
 \cref{transport_int}, are taken from the upwind neighbor element of that face.
 
 Next, we define the basis function $b$ for the PWLD method. First, we
-introduce a within-cell point $c$ inside the polygon in 2D (resp., polyhedron
-in 3D). The coordinates of $c$ are weighted averages of the vertex
-coordinates:
+introduce a within-cell point $c$ inside the polygon in 2D. The coordinates 
+of $c$ are weighted averages of the vertex coordinates:
 \begin{equation}
-  u_c = \sum_{j=1}^{N_V} \alpha_j u_j
+  u_c = \sum_{j=1}^{N_V} \alpha_j u_j,
 \end{equation}
-where $u=x$, $y,$ or $z$, $N_V$ is the number of vertices for the cell under
-consideration, and the weights are such that $\sum_{j=1}^V \alpha_j =1$,
-$\alpha_j \geq 0\ \forall j$. In 2D, the basis function at vertex $j$ is
-defined by \cite{pwld_2d}:
+where $u=x$ or $y$, $N_V$ is the number of vertices for the cell under
+consideration, and the weights are such that $\sum_{j=1}^{N_V} \alpha_j =1$,
+$\alpha_j \geq 0\ \forall j$. The basis function at vertex $j$ is defined by 
+\cite{pwld_2d}:
 \begin{equation}
-  b_j(x,y) = t_j(x,y) + \alpha_j t_c(x,y)
+  b_j(x,y) = t_j(x,y) + \alpha_j t_c(x,y),
 \end{equation}
 where $t_j(x,y)$ is a linear function such that $t_j(x,y)$ is unity at vertex
-$j$ and zero at $j-1$, $j+1$, and $c$. The $t_c(x,y)$ function is a ``hat''
-function in the interior of the cell, is unity at point $c$, and zero at all
-the vertices of the cell. In 3D, the same definition applies for $t_c$ but
-$t_j$ is now constructed on a tetrahedron obtained from two adjacent vertices,
-the cell center point $c$, and a face center point, where that face contains
-both vertices. The PWLD method employs a notion of sub-cells on each arbitrary 
-polygon (polyhedron); the number of PWLD basis functions is equal to the
-number of vertices in the polygon (polyhedron). In this paper, the arbitrary
+$j$ and zero at $j-1$, $j+1$, and $c$. The $t_c(x,y)$ function is a ``tent''
+function in the interior of the cell; it is unity at the within-cell point $c$
+and zero at all the vertices of the cell. The PWLD method employs a notion of 
+sub-cells on each arbitrary polygon; the number of PWLD basis functions is 
+equal to the number of vertices in the polygon. In this paper, the arbitrary
 positive weights $\alpha_j$ are chosen to be $\frac{1}{N_V}$, thus, on a
 quadrilateral cell, one has $\alpha_j =0.25 \forall j$. Finally, note that on
 triangular (resp., tetrahedral) cells, the PWLD basis functions reduce to the
-standard Linear Discontinuous (LD) basis functions of $\alpha_j = \frac{1}{3}$
-$\(\textrm{resp., }\alpha_j = \frac{1}{4}\)$. Given the definition of the PWLD
+standard Linear Discontinuous (LD) basis functions if $\alpha_j =
+\frac{1}{3}$. Given the definition of the PWLD
 finite elements, it may seem complicated to build the mass and the gradient
 matrices on an arbitrary polygonal cell but the construction of such matrices
 can be greatly simplified using the sub-cells. By looping over all of the

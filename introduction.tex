@@ -3,11 +3,10 @@
 In this article, we present a Diffusion Synthetic Acceleration (DSA) scheme
 that is fully compatible with the piecewise linear discontinuous finite
 element (PWLD) discretization of the transport equation on arbitrary
-polygonal/polyhedral cells. Before discussing the PWLD discretization applied
+polygonal cells. Before discussing the PWLD discretization applied
 to the transport equation on such arbitrary grids, we first recall the
-rationale for acceleration schemes (i.e., preconditioners) applied to the
-iterative solution of transport problems/when solving iteratively transport
-problem.
+rationale for acceleration schemes (i.e., preconditioners) when solving
+iteratively transport problems.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\subsection{Rationale for DSA preconditioning}
@@ -16,22 +15,22 @@ problem.
 Because analytical and closed form solutions are unavailable for most
 radiation transport problems of practical interest, one typically employs
 iterative techniques to solve the large system of equations that results from
-the spatial and angular discretization of the transport equation. Standard
+the spatial and angular discretizations of the transport equation. Standard
 iterative techniques for the first-order form of the discrete-ordinate (\sn)
 transport equation include the Source Iteration (SI) technique and Krylov 
-subspace algorithms (usually GMRES). For highly diffusive materials (i.e., 
-with scattering ratios $c=\Sigma_s / \Sigma_t $ close to 1) and optically 
+subspace algorithms (usually GMRES \cite{gmres}). For highly diffusive materials 
+(i.e., with scattering ratios $c=\Sigma_s / \Sigma_t $ close to 1) and optically 
 thick configurations (i.e., not leakage dominated), these iterative techniques 
 can become quite ineffective, requiring high iteration counts and possibly 
 leading to false convergence. However, SI and GMRES-based transport solves 
-can be accelerated (preconditioned) with DSA approaches 
+can be effectively accelerated (preconditioned) with DSA approaches 
 \cite{dsa_ref,larsen_dsa,consistent_p1,m4s,wla,mip}. 
 
 
 It is well established that the spatial discretization of the DSA equations
-must be ``consistent'' with the one used for the \sn transport equations to
+must be somewhat ``consistent'' with the one used for the \sn transport equations to
 yield unconditionally stable and efficient DSA schemes
-(\cite{dsa_ref,larsen_dsa,consistent_p1,m4s,wla,mip}). However, the search for full
+\cite{dsa_ref,larsen_dsa,consistent_p1,m4s,wla,mip}. However, the search for full
 consistency between the discretized transport equations and the discretized
 diffusion may not be computationally practical (especially for unstructured
 arbitrary meshes, \cite{dsa_ref}). For instance, Warsa, Wareing, and
@@ -40,7 +39,7 @@ discontinuous finite elements on unstructured tetrahedral meshes; their DSA
 scheme yielded in a $P_1$ system of equations which was found to be
 computationally more expensive than partially consistent DSA schemes that are
 based upon discretizations of a standard diffusion equation. Some partially 
-consistent schemes have been analyzed for linear discontinuous finite element
+consistent schemes have been analyzed for discontinuous finite element
 (DFE) discretizations of the transport equation on unstructured meshes, for
 instance, the modified-four-step (M4S) scheme \cite{m4s}, the
 Wareing-Larsen-Adams (WLA) scheme \cite{wla}, and the Modified Interior
@@ -50,113 +49,53 @@ Penalty (MIP) scheme \cite{mip}.
 %\subsection{PWLD discretization on arbitrary grids}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We will come back to DSA later but first, we want to point the usefulness of
-using polygonal or polyhedral cells. Such cell types may present some advantages over
-traditional cells types (simplices, hexahedra) and have found some
-applications in radiation transport \cite{pwld_2d,pwld_3d,cfm_dfm}, but also in fluid
-flow simulations \cite{fluent,fluent2,fluentbio}. Some general motivations for
-polyhedral cells are as follows. Polyhedral cells retain the attractive
-features of hexahedral
-cells  (the number of polyhedra is often much smaller than that of tetrahedral
-cells for an equivalent accuracy), while allowing for meshing
-flexibility (boundary layer meshes can easily be set up, polyhedral meshes can
-be generated from tetrahedral meshes, polyhedra can be included locally in
-existing tet meshes to improve mesh quality). Meshing tools such as MSTK
-\cite{mstk} and the Computational Geometry Algorithms Library \cite{cgal} may
-be employed to process polyhedral meshes. For example, the radiation transport
-code PDT and the CFD codes Fluent and OpenFOAM offer polyhedral mesh and
-solver capabilities.
-
-The following features of polygonal and polyhedral cells are noteworthy:
-\begin{itemize}
- \item \underline{Reduced number of unknowns per cell.} To illustrate this, we
-   assume one unknown per vertex in every cell, which is standard for
-   transport discretizations that perform well in the thick diffusive regime.
-   In the 2D hexagonal example of \Cref{fig_hexa_split}, the number of
-   unknowns would be six (one unknown per vertex). Using triangular cells, the
-   same hexagon would have to be split into four triangles at least (thus 12
-   unknowns) or possibly six triangles to preserve symmetry (thus 18 unknowns in
-   that case). Similarly, using quadrilateral cells, the hexagon would be
-   bisected into two quadrilaterals at least (8 unknowns), but divisions into
-   three or four quadrilaterals are also possible (thus, 12 or 16 unknowns).
-   \begin{figure}[H]
-   \centering
-   \includegraphics[width=0.5\textwidth]{hex_tri_cells}
-   \caption{Hexagonal cell versus triangle cells.}
-   \label{fig_hexa_split}
-   \end{figure}
- \item \underline{Transition elements and Adaptive Mesh Refinement.} Solvers
-   based on arbitrary polyhedral cells can easily handle cells with various
-   numbers of edges (2D) and faces (3D). This can be particularly useful for
-   simulations with Adaptive Mesh Refinement (AMR)
-   \cite{amr_rad,amr_block,amr_unstruc}, without having to deal with the
-   implementation of data structures to handle hanging nodes
-   \cite{arbitrary_hanging_nodes,dealII_hanging_nodes,locally_hanging_nodes}.
-   On \Cref{fig_amr}, the left cell is a pentagon whereas the two cells on the right
-   are quadrilaterals (a similar illustration can be made for 3D hexahedral
-   AMR meshes: suppose a cell is connect to four cells through one of its faces
-   - a standard situation with AMR on hexahedral grids - ; such a cell can be
-   thought of as a 9-face polyhedron). A method based on a piecewise linear
-   discretization can handle locally adapted meshes without any special
-   treatment or further approximation of the coupling between cells.
-   \begin{figure}[H]
-   \centering
-   \includegraphics[width=0.3\textwidth]{amr}
-   \caption{AMR mesh.}
-   \label{fig_amr}
-   \end{figure}
-\end{itemize}
 Several discretization methods haven been developed for 
 arbitrary polygonal meshes \cite{pwld_2d,pwld_3d,cfm_dfm,pwl_diffusion,
 palmer_fe,mimetic,cell_centered_diff,palmer_proc,palmer_ane,wachspress,pwbld}.
-In this work, we focus on the PWLD discretization \cite{pwld_2d,pwld_3d}. This
+In this work, we focus on the PWLD discretization because it was successfully
+used to discretize the transport equation \cite{pwld_2d,pwld_3d}. This
 discretization can be applied for any polygonal cells and the integrals
 generated by this discretization can be easily computed analytically. 
 
-As of today, a lot of the ongoing effort to develop a DSA scheme on
-polygonal/polyhedral cells focuses on adapting the WLA scheme on polygonal meshes
+As of today, a lot of the ongoing effort to develop a DSA scheme for 
+polygonal cells has focused on adapting the WLA scheme to polygonal meshes
 \cite{cfm_dfm,wla_pwl}. The WLA scheme is a two-stage process, where first a
 diffusion solution is obtained using a {\em continuous} finite element
 discretization and then a {\em discontinuous } update is performed cell-by-cell 
-in order to provide an appropriate discontinuous scalar flux to the DFE transport 
+in order to provide an appropriate discontinuous scalar flux correction to the DFE transport 
 solver. In \cite{consistent_p1}, the WLA scheme was
 found to be a stable and effective DSA technique, though its efficiency
 degraded as the problem became more optically thick and highly diffusive.
 To the authors' best knowledge, no work is currently done to adapt the M4S 
-technique to polygonal/polyhedral meshes. This is probably due to the fact
+technique to polygonal meshes. This is probably due to the fact
 that even though the scheme is effective in one-dimensional slab and
 two-dimensional rectangular geometries, it was found to be divergent for
 three-dimensional tetrahedral meshes with linear discontinuous elements.
 Furthermore, the scheme does not yield a Symmetric Positive Definite (SPD)
 matrix. In this paper, we present an extension of the MIP technique to the
-PWLD discretization techniques for for arbitrary polygonal/polyhedral meshes.
-The MIP scheme is based on the standard Interior Penalty (IP) for the
+PWLD discretization technique for arbitrary polygonal meshes.
+The MIP scheme is based on the standard Interior Penalty (IP) method for the
 discontinuous discretization of diffusion equations. MIP was first derived in
 \cite{mip}, where it was applied to triangular unstructured meshes (with
 locally adapted cells). MIP did not suffer the same problems than WLA when the
 problem becomes optically thick and highly diffusive and it is therefore an
-interesting alternative to WLA. Because MIP produces SPD
-equations, it has been solved using conjugate gradient (CG) preconditioned by
-a symmetric successive over-relaxation method (SSOR) in \cite{mip}. Here, the
-effectiveness of algebraic multigrid methods (AMG) to precondition diffusion
-solver \cite{amg,amg_course} will be tested and compared with CG+SSOR.
+interesting alternative to WLA. Because MIP produces SPD equations, it has been 
+solved using a Preconditioned Conjugate Gradient (PCG) technique preconditioned 
+using a symmetric successive over-relaxation method (SSOR) in \cite{mip}. Here, 
+the effectiveness of algebraic multigrid methods (AMG) to precondition diffusion
+solver \cite{amg,amg_course} will be tested and compared with PCG+SGS.
 Algebraic multigrid methods allow the use of multigrid techniques when no grid
 information is available or when the grid is unstructured. Instead of using a
 succession of grids based on the geometry of the problems, the ``grid levels''
 are based on properties of the matrix.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Paper Outline}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 The remainder of this paper is organized as follows. In \Cref{sec_transport},
 we briefly recall the \sn transport equation, its discontinuous finite element
-discretization using the PWLD technique, and standard iterative techniques
-employed to solve it. In \Cref{sec_mip}, we recall the MIP scheme and  adapt it
-to the PWLD discretization for arbitrary polygons/polyhedra. In \Cref{sec_amg},
-we briefly explain Algebraic MultiGrod (AMG) and introduce the two different
-AMG approaches used here: the ML package of Trilinos \cite{ml_guide} and the
+discretization using the PWLD technique, and Source Iteration. In \Cref{sec_mip}, 
+we recall the MIP scheme and adapt it to the PWLD discretization for arbitrary 
+polygons/polyhedra. In \Cref{sec_amg}, we introduce the Algebraic MultiGrid (AMG) 
+approaches used here: the ML package of Trilinos \cite{ml_guide} and the
 AGMG (AGgregation-based algebraic MultiGrid) technique \cite{agmg_guide}. In
-\Cref{sec_res}, we present a Fourier analysis of MIP scheme discretized with
+\Cref{sec_res}, we present a Fourier analysis for the MIP scheme discretized with
 PWLD and we compare the different AMG with preconditioned CG solver.
 Conclusions are given in \Cref{sec_conc}.
