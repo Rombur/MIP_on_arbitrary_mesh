@@ -1,21 +1,20 @@
 \begin{abstract}
   The Modified Interior Penalty (MIP) Diffusion Synthetic Acceleration (DSA) technique
   is extended to the Piece-Wise Linear Discontinuous (PWLD) finite elements.
-  This provides a DSA preconditioner for arbitrary 2D polygonal/3D polyhderal meshes. Arbitrary
-  polygonal/polyhedral grids are used to model complex objects while decreasing the
-  number of unknowns. Such grids can also be advantageously employed within an 
-  adaptive mesh refinement process without the need to treat so-called ``hanging
-  nodes'' between cells of different refinement depth. 
-  The system of equations obtained by the MIP technique 
-  is symmetric and positive definite. This linear system is typically solved using
+  This \textcolor{red}{provides} a DSA preconditioner for arbitrary polygonal/polyhedral meshes. 
+	Arbitrary grids can be used to model complex objects and can also be advantageously employed 
+	within locally refined spatial grid without the need to treat so-called ``hanging
+  nodes''. 
+  The MIP technique yields a system of linear equations that is 
+  is symmetric and positive definite. This system is typically solved using
   Conjugate Gradient (CG) preconditioned with a \textcolor{red}{Symmetric Gauss-Seidel}
   (SGS) scheme. In this research, we also compare SGS-preconditioned CG with 
-  GG preconditioned using an Algebraic MultiGrid   methods (AMG). 
+  GG preconditioned using an Algebraic MultiGrid  method (AMG). 
   Fourier analyses are 
   performed for the PWLD MIP formulation and we show that this scheme is
   always stable and effective at reducing the spectral radius for iterative transport
   solves, including for grids with high-aspect ratio cells.
-  Numerical results are presented for three different unstructured meshes. 
-  AMG preconditioning for the MIP system is shown to be significantly more effective 
+  Numerical results are presented for three different unstructured grids. 
+  AMG preconditioning for the MIP system is shown to be significantly more efficient 
   than SGS preconditioning.
 \end{abstract}

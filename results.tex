@@ -1,4 +1,9 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results} \label{sec_res}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 In this section, we present two Fourier analyses: one where the $S_n$ order is
 varied and one where the cell aspect ratio is varied and compare different
 methods to solve MIP: Conjugate Gradient (CG), Conjugate Gradient
@@ -6,7 +11,11 @@ Preconditioned with Symmetric Gauss-Seidel (PCG-SGS), Conjugate Gradient
 Preconditioned with ML using Uncoupled aggregation (PCG-MLU),
 Conjugate Gradient Preconditioned with ML using MIS aggregation (PCG-MLMIS),
 and AGMG. The computations are performed using a $S_n$ code.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Fourier Analyses}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 Assessing some of the properties of Source Iteration accelerated with DSA is
 often performed thanks to a Fourier analysis \cite{larsen_dsa,consistent_p1},
 where the error is decomposed into different modes. By inspecting the 
@@ -48,8 +57,13 @@ $\frac{Y}{X}=1$, $\frac{Y}{X}=4$, $\frac{Y}{X}=16$, and $\frac{Y}{X}=100$.
 MIP is stable for every aspect ratio, including 100, and the maximum spectral radius
 is about 0.5.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Numerical results using MIP-DSA implemented in an $S_n$ code}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsubsection{Homogeneous medium test case}  \label{sec_homog}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 We compare different solvers for MIP-DSA on a homogeneous medium, $100cm
 \times 100cm$, $\Sigma_t = 1cm^{-1}$ and $\Sigma_s = 0.999cm^{-1}$, with
 vacuum boundary conditions and a source of intensity $1cm^{-3}s^{-1}$. We
@@ -146,6 +160,8 @@ We see that using different types of cells in the same mesh does not affect
 the performance of MIP-DSA or that of its preconditioners.
 
 \subsubsection{Heterogeneous medium}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 In this example, a heterogeneous geometry with three materials is used. It is 
 composed of 184 triangles, 3720 quadrilaterals and 2791 regular hexagons of 
 side $0.05cm$ for a total of 6695 cells and 32178 degrees of freedom (spatial 
@@ -205,6 +221,8 @@ significantly fewer iterations than the Trilinos implementation, PCG-MLU,
 and PCG-MLMIS.
 
 \subsubsection{AMR mesh}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 In this example \cite{mip}, the domain is $10cm\times 10cm$. The left and bottom
 boundaries are reflective whereas the right and the top boundaries are vacuum. 
 There are 10720 cells: 10482 quadrilaterals, 236 pentagons,
@@ -269,6 +287,8 @@ MIP calculation (s) & NA   & 48.1908 & 81.0992  & 25.2699 & 25.0699  &
 The conclusions are similar to the ones made for our previous tests.
 
 \subsubsection{Rectangular cells}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \red{When the aspect ratio is high and the scattering ratio is close to one, MIP
 becomes ill-conditioned.} In the next two examples, the domain is square $100cm
 \times 100cm$ with vacuum boundaries. There are 10000 cells and thus, 40000
