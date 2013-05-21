@@ -1,6 +1,11 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
 \section{ML options}
-The options used to solve MIP with ML are \cite{ml_guide}:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The options used to solve this MIP equation with the ML package of Trilinos \cite{ml_guide} are given below:
 \begin{description}
 \item [Uncoupled:] Attempt to construct aggregates of optimal size ($3^d$
 nodes in $d$ dimensions). Each process works independently and aggregates
@@ -16,6 +21,8 @@ shipped to proc 0, solved and solution is broadcast.
 The MultiLevelPreconditioner class provides default values for five different
 preconditioner types, including classical smoothed aggregation for symmetric
 and positive definite or nearly symmetric and positive definite systems.
+
+\textcolor{red}{this below should really be put in a Table}
 \begin{description}
 \item [option name:] SA
 \item [max levels:] 10
