@@ -256,26 +256,30 @@ significantly fewer iterations than the Trilinos implementations, PCG-ML/U and a
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\cite{mip}
-In this example, a domain of $10cm\times 10cm$ is used. The left and bottom
-boundaries are reflective whereas the right and the top boundaries are vacuum. 
-\Cref{zone_amr} shows the material zoning and the mesh used. Material properties 
+In this example, a 3-material domain of size $10cm\times 10cm$ is used. 
+\Cref{mat_amr} shows the material zoning and the mesh used. Material properties 
 are given in \Cref{prop_amr}. The grid used mimics meshes obtained via adaptive mesh
-refinement: the cells at the interfaces between two material are refined once more.
-There are 10,720 cells: 10,482 quadrilaterals, 236 pentagons,
-and 2 hexagons for a total of 43120 degrees of freedom. 
+refinement: the rectangular cells at the interfaces between two materials are refined once more,
+leading to a grid composed of 10,482 quadrilaterals, 236 pentagons,
+and 2 hexagons for a total of 10,720 cells and 43120 degrees of freedom. The bottom
+and left sides of the domain have reflective boundary conditions, while the other two sides
+have vacuum boundary conditions. 
 %
 The distribution of cells is given \Cref{fig_pol_dist}.
 A $S_{16}$ GLC quadrature is employed. The tolerance on SI is $10^{-8}$ and
 the tolerance on the CG solvers is $10^{-10}$.
 The different linear solvers for MIP-DSA are compared in \Cref{table_amr}.
 %
-The conclusions are similar to the ones made for our previous tests.
+The conclusions drawn from this test case are similar to the ones made for 
+our previous tests. This test case demonstrates that degenerate polygons 
+(here, pentagons and hexagons) do not seem to affect the MIP-DSA acceleration.
+
 %
 \begin{figure}[!htbp]
   \centering
   \begin{subfigure}{0.75\textwidth}
     \centering
-    \includegraphics[width=6cm]{zone_amr}
+    \includegraphics[width=6cm]{mat_amr}
     \caption{Material regions}
   \end{subfigure}
   \begin{subfigure}{0.75\textwidth}
@@ -329,23 +333,23 @@ MIP calculation (s) & NA   & 48.1908 & 81.0992  & 25.2699 & 25.0699  &
   \end{center}
 \end{table}
 
-\subsubsection{High aspect ratio grid}
+\subsubsection{High aspect ratio grids}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-For the next two examples, the domain is square $100cm
-\times 100cm$ with vacuum boundaries. There are 10000 cells and thus, 40000
-degrees of freedom. The relative tolerance on SI is $10^{-8}$ and the relative
-tolerance for CG is $10^{-10}$. We use a $S_8$ GLC quadrature, $\Sigma_t =
-1cm^{-1}$, and $\Sigma_s = 0.999cm^{-1}$. The source is $1n/(cm^3s)$. In the
-first test, the domain is discretized by 100 cells along $x$ and 100 cells
-along $y$, i.e., square cells with aspect ratio of one. In the second run, 
-the domain is discretized by 1000 cells along $x$ and 10 cells along $y$ 
-(the aspect ratio is 100).
+In these last two examples, a square domain  of $100cm \times 100cm$ with vacuum boundaries
+is employed. There are 10,000 cells (thus, 40,000 degrees of freedom). Again, the relative 
+tolerance on SI is $10^{-8}$ and the relative tolerance for CG is $10^{-10}$. 
+An $S_8$ GLC angular quadrature is used. $\Sigma_t = 1cm^{-1}$, $\Sigma_s = 0.999cm^{-1}$,
+and the source is $1n/(cm^3s)$. 
+In the first run, the domain is discretized using 100 subdivisions of the $x$ and $y$
+axes, i.e., 10,000 square cells with an aspect ratio of one. In the second run, 
+the domain is discretized using 1,000 subdivision along $x$ and 10 along $y$ 
+(the aspect ratio is then 100).
 %
 As expected, solving the MIP-DSA equations requires more CG iterations when the aspect
 ratio increases. PCG-ML/U and PCG-ML/MIS are significantly more affected by the
 increase in the aspect ratio than the other methods. AGMG is the least
-affected by the change of aspect ratio and is the best performing
+affected by the change of aspect ratio and is again the best performing
 preconditioner.
 %
 \begin{table}[!htbp]
