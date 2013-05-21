@@ -5,7 +5,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Background}
+\subsection{Principles}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 As mentioned above, a common way to solve a SPD system of equations is to use
@@ -113,7 +113,7 @@ The MIS scheme used in ML applies the MIS algorithm \cite{graph_coloring} to
 the graph of the matrix $\bs{A}^2$. These two coarsening 
 schemes use a fixed ratio of coarsening between levels. 
 %
-Once aggregation is done, a tentative prolongator matrix, $\bs{\tilde{P}}_k$ 
+Once aggregation is done, a tentative prolongation matrix, $\bs{\tilde{P}}_k$ 
 is constructed \cite{mis}. A example of $\bs{\tilde{P}}_k$ is given by:
 \begin{equation}
   \bs{\tilde{P}}_k(i,j) = \left\{
@@ -124,9 +124,9 @@ is constructed \cite{mis}. A example of $\bs{\tilde{P}}_k$ is given by:
   \end{aligned}
   \right.
 \end{equation}
-This tentative prolongator could be used as prolongator but smoothing it
+This tentative prolongation operator could be used as is but smoothing it
 allows to have a more robust scheme. Let $\bs{S}_k$ be a smoother, for example
-damped Jacobi. Then, the prolongator matrix is given by:
+damped Jacobi. Then, the prolongation matrix is given by:
 \begin{equation}
   \bs{P}_k = \bs{S}_k \bs{\tilde{P}}_k.
 \end{equation}
@@ -134,7 +134,7 @@ damped Jacobi. Then, the prolongator matrix is given by:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{AGMG Package from ULB}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Unlike ML, the prolongator in AGMG is not smoothed; this results in a
+Unlike ML, the prolongation operator in AGMG is not smoothed; this results in a
 cheaper setup and a decrease in memory requirements \cite{agmg2}. However,
 such a scheme could be less robust. To counteract this weakness, the
 aggregation scheme is more involved. Coarsening algorithms that control
