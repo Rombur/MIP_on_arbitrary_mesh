@@ -30,7 +30,7 @@ error modes \cite{}. For instance, the iteration matrices for the SI and SI+DSA 
 \begin{equation}
 \bs{D L^{-1}M \Sigma} \quad \text{and} \quad \bs{I}-\bs{(I+A^{-1}\Sigma)(I-D L^{-1}M \Sigma)},
 \end{equation}
-respectively. The error modes are of the form $\exp(i \bs{\Lambda} \cdot \bs{r})$, with the
+respectively. \textcolor{red}{check that} The error modes are of the form $\exp(i \bs{\Lambda} \cdot \bs{r})$, with the
 wave number $\bs{\Lambda}=[\lambda_x,\, \lambda_y]^T$. The expressions for these modes 
 are inserted into the discretized equations and the spectral radius (largest eigenvalue in magnitude)
 of the iteration matrices are sought for $0 \le \lambda_x \le 2\pi/X$ and $0 \le \lambda_y \le 2\pi/Y$,
@@ -79,7 +79,7 @@ and that the maximum spectral radius shows little sensitivity the the aspect rat
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Implementation of PWLD-discretized MIP-DSA in an $S_n$ code}
+\subsection{Performance of MIP-DSA Implemented in a PWLD $S_n$ Transport Code}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The MIP-DSA scheme has been implemented in a 2D \sn code that employs a PWLD discretization
 for arbitrary polygonal grids. Several test cases are presented.
@@ -129,6 +129,10 @@ The different linear solvers are compared for the polygonal grid in \Cref{compar
 We note that using different spatial cell types in the same grid does not affect
 the performance of MIP-DSA or that of its preconditioners.
 %
+\textcolor{red}{why is the min value in the colorbar different for these 2 grids??? The grids seem refined enough ....}
+
+\textcolor{red}{also, add the vtk to the repo in case I would like to do a zoom in to better show the quadrilateral/polygonal cells}
+%
 \begin{figure}[!htbp]
   \centering
   \begin{subfigure}{0.75\textwidth}
@@ -145,7 +149,6 @@ the performance of MIP-DSA or that of its preconditioners.
   \label{homog_test}
 \end{figure}
 %
-\textcolor{red}{what is the min value in the colorbar different for these grids??? The grids seem refined enough ....}
 \begin{table}[!htbp]
   \begin{center}
     \caption{Comparison of different preconditioners for quadrilateral cells}
@@ -189,6 +192,7 @@ Total calculation (s) & 42666.7 & 1060.53 & 1447.53 & 382.275 & 384.422 &
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \textcolor{red}{why not make this problem thick? DSA is almost useless ....\\}
+\textcolor{red}{also, add the vtk to the repo in case I would like to do a zoom in to better show the cells}
 
 In this example, a heterogeneous geometry with three materials is used. It is 
 composed of 184 triangles, 3,720 quadrilaterals and 2,791 regular hexagons of 
@@ -255,6 +259,8 @@ significantly fewer iterations than the Trilinos implementations, PCG-ML/U and a
 \subsubsection{Locally refined grid}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\textcolor{red}{also, add the vtk to the repo in case I would like to do a zoom in to better show the cells}
+
 %\cite{mip}
 In this example, a 3-material domain of size $10cm\times 10cm$ is used. 
 \Cref{mat_amr} shows the material zoning and the mesh used. Material properties 
@@ -279,8 +285,9 @@ our previous tests. This test case demonstrates that degenerate polygons
   \centering
   \begin{subfigure}{0.75\textwidth}
     \centering
-    \includegraphics[width=6cm]{mat_amr}
+    \includegraphics[width=6cm]{zone_amr}
     \caption{Material regions}
+    \label{mat_amr}
   \end{subfigure}
   \begin{subfigure}{0.75\textwidth}
     \centering
