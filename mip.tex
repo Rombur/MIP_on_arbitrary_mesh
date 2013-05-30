@@ -58,9 +58,9 @@ where $\mathrm{D}$ is the diffusion coefficient, $\Sigma_a$ is the absorption cr
 $Q_0=\Sigma_s\(\Phi^{(\ell+1/2)}-\Phi^{(\ell)}\)$, 
 %$J^{inc} = \sum_{\bo_m\cdot\bs{n}_b >0} w_m 
 %|\bo_m \cdot \bs{n}_b| \delta \psi_d$, 
-and $\partial_{n_e} = \bs{n}_e\cdot \bn$ where
-$\bs{n}_e$ is the normal unit vector associated with a given edge $e$ (on the
-boundary $\bs{n}_e = \bs{n}_b$). 
+and $\partial_{n} = \bs{n}\cdot \bn$. %where
+%$\bs{n}_e$ is the normal unit vector associated with a given edge $e$ (on the
+%boundary $\bs{n}_e = \bs{n}_b$). 
 %The only difference between IP and MIP is the
 %penalty factor $\kappa_e^{IP}$ used for IP is replaced by a new penalty factor
 %$\kappa_e^{MIP}$. Therefore, 
@@ -114,8 +114,10 @@ respectively.
 %
 The definition of the left/right values along a given edge $e$ is
 \begin{equation}
-u^{\pm}= \lim_{s\rightarrow 0^{\pm}}u(\bs{r}+s\bs{n}_e) .
+u^{\pm}= \lim_{s\rightarrow 0^{\pm}}u(\bs{r}+s\bs{n}_e) ,
 \end{equation}
+where $\bs{n}_e$ is the normal unit vector associated with the given edge $e$
+(on the boundary $\bs{n}_e$ is the external normal).\\
 %
 The MIP penalty coefficient is given by
 \begin{equation}
@@ -151,7 +153,8 @@ In such case, if the cell has an even number of edges, the orthogonal
 length equals two times the apothem, i.e., two times the segment between the 
 midpoint of a side of the polygon and the center of this polygon 
 $\(\textrm{apothem}=2\times \frac{\textrm{area}}{\textrm{perimeter}}\)$. 
-\textcolor{red}{I think you mean area and perimeter of the triangle formed by the edge $e$ and polygon the mid-point. Confirm.}
+\textcolor{red}{I think you mean area and perimeter of the triangle formed by
+the edge $e$ and polygon the mid-point. Confirm. ????}
 If the cell has an odd number of edges, the orthogonal length is given by the 
 apothem plus the circumradius, i.e., the radius of the circle circumscribed to 
 the polygon $\(\textrm{circumradius}=\sqrt{\frac{2\times \textrm{area}}{N_V
