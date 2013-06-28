@@ -33,7 +33,7 @@ Ideally, $\bs{A}$ should be SPD (such that efficient iterative techniques can
 be employed in its linear solve) and easy to form (even on arbitrary grids).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Modified Interior Penalty DSA for polygons}
+\subsection{Modified Interior Penalty DSA scheme for polygons}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Now, we discuss the Modified Interior Penalty as a DSA scheme for arbitrary polygons. 
@@ -41,36 +41,48 @@ This DSA scheme employs the same discontinuous finite elements used in the
 transport discretization for the discretization of the diffusion operator. 
 MIP-DSA has been shown to be always stable for isotropic scattering on triangular 
 cells \cite{mip}. The MIP diffusion solve is based on the standard Interior Penalty scheme (IP)
-\cite{ip}, with an appropriately modified penalty term. Consider 
+\cite{ip}, with an \textcolor{red}{appropriately modified} penalty term. Consider 
 following diffusion update equation:
 \begin{align}
+  \label{eq:dsa}
   \left(-\bn \cdot \mathrm{D} \bn  + \Sigma_a \right) \delta \phi &= Q_0 &\textrm{ for }\br \in
   \mc{D}\\
+  \label{eq:dsa-bc}
   \frac{1}{4}\delta \phi - \frac{1}{2} \mathrm{D} \partial_n \delta \phi & = 0 &\textrm{ for }
   \br \in \partial \mc{D} %^d \\
   %-\mathrm{D} \partial_n \phi &= J^{inc} & \textrm{ for } \br \in \partial
   %\mc{D}^r,
 \end{align}
-where $\mathrm{D}$ is the diffusion coefficient, $\Sigma_a$ is the absorption cross section, 
+where $\mathrm{D}$ is the diffusion coefficient and $\Sigma_a$ is the absorption cross section. 
+%
 %$\partial \mc{D}^d$ is the
 %boundary of the domain with Dirichlet condition, $\partial \mc{D}^r$ is the
 %boundary of the domain with reflective condition, 
-$Q_0=\Sigma_s\(\Phi^{(\ell+1/2)}-\Phi^{(\ell)}\)$, 
+%
+For DSA, the volumetric source term is given by the scattering due to the difference in scalar flux
+between two iterations, $Q_0=\Sigma_s\(\Phi^{(\ell+1/2)}-\Phi^{(\ell)}\)$, 
+%
 %$J^{inc} = \sum_{\bo_m\cdot\bs{n}_b >0} w_m 
 %|\bo_m \cdot \bs{n}_b| \delta \psi_d$, 
-and $\partial_{n} = \bs{n}\cdot \bn$. %where
+%
+and the known incoming angular flux from the transport problem translates into the diffusion
+vacuum boundary condition given in \eqt{eq:dsa-bc}, where $\partial_{n} = \bs{n}\cdot \bn$
+and $\bs{n}$ is the outer normal unit vector on the domain's boundary, $\partial \mc{D}$. 
+%
+%where
 %$\bs{n}_e$ is the normal unit vector associated with a given edge $e$ (on the
 %boundary $\bs{n}_e = \bs{n}_b$). 
 %The only difference between IP and MIP is the
 %penalty factor $\kappa_e^{IP}$ used for IP is replaced by a new penalty factor
 %$\kappa_e^{MIP}$. Therefore, 
+%
 The weak form of MIP-DSA equations is given by:
 \begin{equation}
 a(\delta \phi,\phi^*) = l(\phi^*)
 \label{mip}
 \end{equation}
 %
-with:
+with the bilinear (matrix) form:
 \begin{equation}
 \begin{split}
 a(\delta \phi,\phi^*) =& \(\Sigma_a \delta \phi,\phi^*\)_{\mc{D}}+
@@ -86,22 +98,24 @@ a(\delta \phi,\phi^*) =& \(\Sigma_a \delta \phi,\phi^*\)_{\mc{D}}+
 \end{split}
 \end{equation}
 %
-and
+and the linear (right-hand-side) form
 %
 \begin{equation}
-l(\phi^*) = (Q_0,\phi^*)_{\mc{D}}+ (J^{inc},\phi^*)_{\partial \mc{D}^r} .
+l(\phi^*) = (Q_0,\phi^*)_{\mc{D}}\ . % + (J^{inc},\phi^*)_{\partial \mc{D}^r} .
 \label{mip_l}
 \end{equation}
 %
 The notations used are as follows:
-$(f,g)_{\mc{D}} = \sum_{K\in \mathbb{T}_h} \(f,g\)_K$, with the element integrals defined as 
-$(f,g)_K = \int_K fg\ d\br$; $(f,g)_{E_h^i}=\sum_{e\in E_h^i}(f,g)_e$, with the edge integrals defined as 
+the domain integral is split onto the element integrals, $(f,g)_{\mc{D}} = \sum_{K\in \mathbb{T}_h} \(f,g\)_K$, with the element integrals defined as 
+$(f,g)_K = \int_K fg\ d\br$; 
+the integral over all interior edges is $(f,g)_{E_h^i}=\sum_{e\in E_h^i}(f,g)_e$, with the edge integrals defined as 
 $(f,g)_e = \int_e fg\ ds$. In the above, 
  $\mathbb{T}_h$ denotes the partition of domain
 $\mc{D}$ into non-overlapping elements $K$, $E_h^i$ is the set of interior
 edges, $\delta \phi$ is the numerical solution for the diffusion correction and $\phi^*$ is any test function.
-Any entry $A_{ij}$ of matrix $\bs{A}$ is simply: $A_{ij}= a(b_j,b_i)$. Matrix $\bs{A}$ is SPD
+Any entry $A_{ij}$ of matrix $\bs{A}$ is simply: $A_{ij}= a(b_j,b_i)$. The resulting matrix $\bs{A}$ is SPD
 and thus can be solved using a preconditioned conjugate gradient technique.
+%
 %$\in W_{\mc{D}}^h$, $W_{\mc{D}}^h=\{P \in
 %L^2(\mc{D}); P|_{K}\in V_p(K), \forall K \in \mathbb{T}_h\}$, where $V_p(K)$
 %is the space of polynomials of degree up to $p$ on element $K$,  
@@ -135,8 +149,9 @@ e\in E_h^i\\
 \end{aligned}
 \right. 
 \end{equation}
-where $c$ is a constant (chosen to equal 4 here) and $h_{\bot}$ is the length of the cell in the direction
+where $c$ is a constant (chosen equal to 4 here) and $h_{\bot}$ is the length of the cell in the direction
 orthogonal to the edge $e$. 
+%
 %MIP yields only a correction for the scalar flux
 %but by assuming that the angular dependence satisfies a diffusion expansion,
 %the angular correction can be computed using:
@@ -146,7 +161,7 @@ orthogonal to the edge $e$.
 %This correction can be used when some of the boundary conditions are periodic
 %or reflective.
 %
-When PWLD finite elements are employed, there is no 
+When polygonal cells are employed, there is no 
 simple way to compute $h_{\bot}$. To estimate $h_{\bot}$, we 
 assume that the polygonal cells do not deviate too much from regular polygons. 
 In such case, if the cell has an even number of edges, the orthogonal 
