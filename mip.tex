@@ -8,15 +8,15 @@
 \subsection{DSA Solution Principle}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-As noted earlier, in thick diffusive configurations, standard iterative techniques 
-applied to transport solves 
-can be slowly converging. DSA can be employed to accelerate their convergence.
+As noted earlier standard iterative techniques applied to transport solves 
+can be slowly converging in thick diffusive configurations. A DSA scheme 
+must be employed to accelerate their convergence.
 The idea behind synthetic acceleration is that the error between the (yet
 unknown) transport solution and the current iterate can be estimated from a
-computationally less expensive process, yielding a correction term to be added
+computationally less expensive process, yielding a corrective term to be added
 to the current iterate in order to improve the next iterate. In DSA, a
 corrective scalar flux contribution, $\delta \Phi$, is sought through the following 
-diffusion solve, 
+diffusion equation, 
 \begin{equation}
   \bs{A}\ \delta \Phi = \bs{\Sigma}\(\Phi^{(\ell+1/2)} - \Phi^{(\ell)}\).
 \end{equation}
@@ -24,11 +24,11 @@ where the source term is a scattering term due to the
 difference between the previous iterate scalar flux $\Phi^{(\ell)}$ and the
 newest scalar flux, $\Phi^{(\ell+1/2)}$, obtained after a single transport sweep. 
 The next scalar flux iterate is obtained by adding the scalar flux correction to
-the scalar flux obtained after a transport sweep:
+the latest scalar flux, yielding:
 \begin{equation}
   \Phi^{(\ell+1)} = \Phi^{(\ell+1/2)}+\delta \Phi.
 \end{equation}
-$\bs{A}$ is the DSA matrix.
+$\bs{A}$ is the diffusion matrix of the DSA scheme.
 Ideally, $\bs{A}$ should be SPD (such that efficient iterative techniques can 
 be employed in its linear solve) and easy to form (even on arbitrary grids).
 
@@ -36,11 +36,12 @@ be employed in its linear solve) and easy to form (even on arbitrary grids).
 \subsection{Modified Interior Penalty DSA scheme for polygons}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Now, we discuss the Modified Interior Penalty as a DSA scheme for arbitrary polygons. 
-This DSA scheme employs the same discontinuous finite elements used in the 
-transport discretization for the discretization of the diffusion operator. 
-MIP-DSA has been shown to be always stable for isotropic scattering on triangular 
-cells \cite{mip}. The MIP diffusion solve is based on the standard Interior Penalty scheme (IP)
+Here, we discuss the Modified Interior Penalty method for the diffusion equation for arbitrary polygons
+as a DSA scheme. 
+This DSA scheme employs in its discretization the same discontinuous finite elements used in the 
+discretization of the transport operator. 
+MIP as a DSA scheme has been shown to be always stable for isotropic scattering on triangular 
+cells \cite{mip}. The MIP diffusion solve is based on the standard Interior Penalty (IP) method
 \cite{ip}, with an \textcolor{red}{appropriately modified} penalty term. Consider 
 following diffusion update equation:
 \begin{align}
@@ -66,7 +67,7 @@ between two iterations, $Q_0=\Sigma_s\(\Phi^{(\ell+1/2)}-\Phi^{(\ell)}\)$,
 %|\bo_m \cdot \bs{n}_b| \delta \psi_d$, 
 %
 and the known incoming angular flux from the transport problem translates into the diffusion
-vacuum boundary condition given in \eqt{eq:dsa-bc}, where $\partial_{n} = \bs{n}\cdot \bn$
+vacuum boundary condition given in \Cref{eq:dsa-bc}, where $\partial_{n} = \bs{n}\cdot \bn$
 and $\bs{n}$ is the outer normal unit vector on the domain's boundary, $\partial \mc{D}$. 
 %
 %where
@@ -76,7 +77,7 @@ and $\bs{n}$ is the outer normal unit vector on the domain's boundary, $\partial
 %penalty factor $\kappa_e^{IP}$ used for IP is replaced by a new penalty factor
 %$\kappa_e^{MIP}$. Therefore, 
 %
-The weak form of MIP-DSA equations is given by:
+The weak form for the MIP-DSA equation is given by:
 \begin{equation}
 a(\delta \phi,\phi^*) = l(\phi^*)
 \label{mip}
@@ -113,7 +114,7 @@ $(f,g)_e = \int_e fg\ ds$. In the above,
  $\mathbb{T}_h$ denotes the partition of domain
 $\mc{D}$ into non-overlapping elements $K$, $E_h^i$ is the set of interior
 edges, $\delta \phi$ is the numerical solution for the diffusion correction and $\phi^*$ is any test function.
-Any entry $A_{ij}$ of matrix $\bs{A}$ is simply: $A_{ij}= a(b_j,b_i)$. The resulting matrix $\bs{A}$ is SPD
+Any entry $A_{ij}$ of matrix $\bs{A}$ is simply given by $A_{ij}= a(b_j,b_i)$. The resulting matrix $\bs{A}$ is SPD
 and thus can be solved using a preconditioned conjugate gradient technique.
 %
 %$\in W_{\mc{D}}^h$, $W_{\mc{D}}^h=\{P \in
@@ -131,7 +132,7 @@ The definition of the left/right values along a given edge $e$ is
 u^{\pm}= \lim_{s\rightarrow 0^{\pm}}u(\bs{r}+s\bs{n}_e) ,
 \end{equation}
 where $\bs{n}_e$ is the normal unit vector associated with the given edge $e$
-(on the boundary $\bs{n}_e$ is the external normal).\\
+(on the boundary $\bs{n}_e$ is the external normal).
 %
 The MIP penalty coefficient is given by
 \begin{equation}
@@ -141,10 +142,9 @@ with:
 \begin{equation}
 \kappa_e^{IP} = \left\{
 \begin{aligned}
-&\frac{c}{2} \frac{\mathrm{D^+}}{h_{\bot}^+} + \frac{c}{2}
-\frac{\mathrm{D}^-}{h_{\bot}^-} & \textrm{on interior edges, i.e., }
+&\frac{c}{2} \left( \frac{\mathrm{D^+}}{h_{\bot}^+} + \frac{\mathrm{D}^-}{h_{\bot}^-} \right) & \textrm{on interior edges, i.e., for }
 e\in E_h^i\\
-&c \frac{\mathrm{D}}{h_{\bot}} & \textrm{on boundary edges, i.e., } e
+&c \frac{\mathrm{D}}{h_{\bot}} & \textrm{on boundary edges, i.e., for } e
 \in\partial \mc{D} %^d 
 \end{aligned}
 \right. 
@@ -163,14 +163,12 @@ orthogonal to the edge $e$.
 %
 When polygonal cells are employed, there is no 
 simple way to compute $h_{\bot}$. To estimate $h_{\bot}$, we 
-assume that the polygonal cells do not deviate too much from regular polygons. 
+assume that the polygonal cells do not deviate significantly from regular polygons. 
 In such case, if the cell has an even number of edges, the orthogonal 
 length equals two times the apothem, i.e., two times the segment between the 
 midpoint of a side of the polygon and the center of this polygon 
 $\(\textrm{apothem}=2\times \frac{\textrm{area}}{\textrm{perimeter}}\)$. 
-\textcolor{red}{I think you mean area and perimeter of the triangle formed by
-the edge $e$ and polygon the mid-point. Confirm. ????}
-If the cell has an odd number of edges, the orthogonal length is given by the 
+If a cell has an odd number of edges, its orthogonal length is given by the 
 apothem plus the circumradius, i.e., the radius of the circle circumscribed to 
 the polygon $\(\textrm{circumradius}=\sqrt{\frac{2\times \textrm{area}}{N_V
 \sin\(\frac{2\pi}{N_V}\)}}\)$. A summary of the definitions used for $h_{\bot}$ for 
@@ -178,7 +176,7 @@ any polygon as a function of the number of vertices is given in
 \Cref{table_h_bot}.
 \begin{table}[H]
   \begin{center}
-    \caption{Orthogonal length $h_{\bot}$ for different polygon types.}
+    \caption{Orthogonal length $h_{\bot}$ for different polygonal types.}
     \begin{tabular}{|c|c|c|c|c|}
       \hline
       Number of vertices & 3 & 4 & $> 4$ and even & $> 4$ and odd \\

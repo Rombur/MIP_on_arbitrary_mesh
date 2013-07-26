@@ -8,22 +8,23 @@
 \subsection{Principles}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-As mentioned above, a common way to solve a SPD system of equations is to use
-conjugate gradient preconditioned with SSOR (PCG-SSOR). In this research, we
+As mentioned above, a common way to solve a SPD system of equations is to use a 
+conjugate gradient technique preconditioned  with Symmetric Gauss-Seidel (PCG-SGS)
+or SSOR (PCG-SSOR); SGS is simply SSOR with a damping factor of one. In this research, we
 will compare the calculation time and the number of iterations using conjugate 
-gradient preconditioned with Symmetric Gauss-Seidel (PCG-SGS), which is PCG-SSOR with a
-damping factor of one, to those of CG preconditioned with an
+gradient preconditioned with Symmetric Gauss-Seidel (PCG-SGS) to those of CG preconditioned with an
 algebraic multigrid method. PCG-SGS was chosen because little difference was noted 
-when employing other damping factors \cite{wang_personal_comm}. In \cite{amg_pn}, the authors 
+when employing other damping factors for MIP-DSA on triangular grids \cite{wang_personal_comm}. 
+In \cite{amg_pn}, the authors 
 used an algebraic multigrid method to precondition the Krylov solver for the 
 even-parity finite element-spherical harmonics (FE-$P_N$) method. The AMG 
 preconditioner resulted in a 60\% reduction in the solution time compared to 
 ILU(0) preconditioning and even more reduction compared to SSOR preconditioning. 
-In our implementation, we have linked our code to the ML package 
-\cite{ml_guide} from the Trilinos library and the AGMG code \cite{agmg_guide}. 
+In our implementation, we have linked our code with the ML package 
+\cite{ml_guide} of the Trilinos library and with the AGMG library \cite{agmg_guide}. 
 ML is a multigrid preconditioning package that uses a smoothed aggregation 
 algebraic multigrid to build a preconditioner for a Krylov method. AGMG is an 
-aggregation-based algebraic multigrid code written in Fortran 90.
+aggregation-based algebraic multigrid library written in Fortran 90.
 %
 The first multigrid methods developed were geometric multigrid techniques, used as 
 stand-alone solvers. In many applications, they achieve the so-called 
@@ -43,7 +44,7 @@ two-grid method. Assume one wants to solve the following system:
 defined on a fine grid $\Gamma_f$. The two-grid algorithm is given by:
 \begin{enumerate}
   \item Perform $\nu_1$ pre-smoothing iterations using a smoother (Jacobi,
-    Gauss-Seidel or ILU) and an initial guess $u_0$: $u = S^{\nu_1}(u_0,b_f)$
+    Gauss-Seidel, or ILU) and an initial guess $u_0$: $u = S^{\nu_1}(u_0,b_f)$
   \item Compute the residual on the fine grid $\Gamma_f$ and restrict it to
     the coarse grid $\Gamma_c$: $r_c = \bs{R}(b_f-\bs{A}_f u)$;
   \item Solve the system on the coarse grid: $v=\bs{A}_c^{-1} r_c$;
@@ -64,8 +65,9 @@ with a direct solver.
 %This yields the multigrid method. 
 When $\gamma = 1$, respectively $\gamma =
 2$, the multigrid method is said to use a $V-$cycle, respectively a $W-$cycle. 
-In \Cref{fig_v_w}, a dot represents a smoothing operation and a square a
-direct inversion. The grid transfer operators are symbolized by lines.
+\Cref{fig_v_w} shows typical $V-$ and $W-$ cycles. In \Cref{fig_v_w}, a 
+dot represents a smoothing operation and a square a
+direct inversion; the grid transfer operators are symbolized by the line segments.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.5\textwidth]{v_w_cycles}
@@ -82,11 +84,11 @@ smoothed aggregation AMG. ML uses smoothed aggregation AMG and AGMG
 uses plain aggregation AMG. Next, we briefly explain the coarsening step in
 the ML and AGMG implementations. The coarsening step is the most important 
 step because if the coarsening occurs too fast, convergence rates will 
-decrease. However, if the coarsening is too slow, more memory may be 
+decrease. However, if coarsening is too slow, more memory may be 
 required to solve the problem. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{ML Package of Trilinos}
+\subsection{The ML Package of Trilinos}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 When using a smoothed aggregation scheme, the smoothed interpolation operators,
 $\bs{P}_k$, are the transpose of the coarsening operators,
@@ -151,10 +153,10 @@ number rather than the coarsening speed is a more interesting feature. By
 monitoring the condition number, bad aggregates will not be created and, instead, 
 a few aggregates below the target size may be generated. This  
 does not affect the efficiency of the method in a noticeable way \cite{agmg2}. 
-A simple way to create the aggregates would be to try exhaustively all the
-combinations, to compute their quality, and then to choose the optimal
+A simple way to create the aggregates would be to try exhaustively all of the possible 
+combinations, compute their quality, and then choose the optimal
 coarsening. In practice, this would be too costly and, in AGMG, the aggregation 
-is step done by a few passes of a pairwise aggregation algorithm. Each pass
+step is done by a few passes of a pairwise aggregation algorithm. Each pass
 aggregates the variables two by two to allow a simple computation of the aggregate 
 quality and to keep the cost per iteration low. The advantage of controlling the 
 condition number becomes even more important when a $K-$cycle or Krylov-cycle, is 

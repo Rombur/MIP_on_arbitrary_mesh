@@ -38,11 +38,11 @@ $\bs{n}_b = \bs{n}(\br_b)$ the outward unit normal vector at $\br_b$.
   &\Phi = \bs{D} \Psi, \label{Phi}
 \end{align}
 where $\Psi$ is the vector of angular fluxes, $\Phi$ the scalar flux,
-$q$ is the total (scattering+external) source $\bs{L}$ is the streaming
+$q$ is the total (scattering+external) source, $\bs{L}$ is the streaming
 operator, $\bs{\Sigma}$ is the scattering matrix, $\bs{M}$ is the
 moment-to-direction operator, and $\bs{D}$ is the direction-to-moment
 operator. $\bs{L} = diag(\bs{L}_1,\hdots,\bs{L}_m,\hdots,\bs{L}_M)$ is 
-a diagonal operator; given a total source $q$, one can solve independently 
+a block-diagonal operator; given a total source $q$, one can solve independently 
 for the resulting angular
 fluxes in all directions. The action of $\bs{L}^{-1}$ is often referred to as
 a transport sweep when discontinuous spatial approximations are
@@ -50,33 +50,32 @@ employed because, for any direction $\bo_m$, the action of $\bs{L}_m^{-1}$ can
 be obtained by traversing the mesh (i.e., sweeping) in a specific ordering of
 the cells, thus requiring only to solve a small linear system of equations,
 cell by cell. The order in which the elements are solved constitutes the graph
-of the sweep; for brevity and because this is not the focus of this article,
+of the sweep; for brevity and since this is not the focus of this article,
 we do not expand on situations where the graph presents dependencies
 (cycles); in such a case, these dependencies can either be lagged within the
 iterative procedure \cite{dgfem} or the solution vector consisting of the scalar 
-flux is augmented by the angular fluxes that cause the cycle \cite{mip}.
+flux is augmented by the angular flux unknowns that cause the cycle \cite{mip}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Solution Techniques}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \Cref{L_Psi,Phi} can be solved using the Source Iteration (SI) method (a
-stationary iterative technique also known as Richardson iteration). The SI
-techniques at the $\ell^{th}$ iteration is given by :
+stationary iterative technique also known as Richardson iteration). 
+The $\ell^{th}$ iteration of the SI technique is given by :
 \begin{equation}
   \Phi^{(\ell+1)} = \bs{DL}^{-1} \(\bs{M\Sigma}\Phi^{(\ell)} + S\).
 \end{equation}
 Alternatively, a subspace Krylov method (usually GMRes) can be employed to
-solve the system of equations:
+solve the linear system of equations, recast of follows:
 \begin{equation}
   \(\bs{I} - \bs{DL}^{-1}\bs{M \Sigma}\) \Phi = \bs{DL}^{-1}S
 \end{equation}
-SI and GMRes-based transport solves require transport sweeps (action of $\bs{L}^{-1}$).
+SI and GMRes-based transport solves require transport sweeps (the action of $\bs{L}^{-1}$).
 When the scattering ratio
 $c=\frac{\Sigma_s}{\Sigma_t}$ tends to one in optically thick domains, the
 number of SI and GMRes iterations can become large. To speed up convergence, a DSA
-preconditioner is needed; this is further discussed in \Cref{sec_mip} for arbitrary 
-polygonal grids. 
+preconditioner is needed; this is further discussed in \Cref{sec_mip}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Discontinuous Finite Element Discretization on Arbitrary Grids}
@@ -84,28 +83,28 @@ polygonal grids.
 
 The domain $\mc{D}$ is partitioned into arbitrary polygons. For 
 a given streaming direction $\bo_m$, the discontinuous finite
-element formulation, on a given element $K$, is:
+element formulation, on a given spatial cell $K$, is:
 \begin{equation}
   -\int_{K} \(\psi_m \bo_m \cdot \bn \tf + \Sigma_t \Psi_m \tf \)\ d\br +
   \int_{\partial K^+} \bo_m \cdot \bs{n} \Psi_m \tf \ d\br = \int_{K} q\, \tf \ d\br +
   \int_{\partial K^{-}} |\bo_m \cdot \bs{n}| \psi_m^{\uparrow}\, \tf \ d\br,
   \label{transport_int}
 \end{equation}
-where $\tf$ represents a generic finite element basis function, $\partial K^{-}$ 
+where $\tf$ represents a generic discontinuous finite element basis function, $\partial K^{-}$ 
 is the inflow face of element $K$, $\partial K^{+}$ is the outflow face of 
 element $K$. The angular flux values on an inflow face, denoted by 
 $\psi_m^{\uparrow}$ in \cref{transport_int}, are taken from the upwind neighbor 
 element of that face.
 
-Now, we define the basis functions, $\tf$, for the PWLD discretization. First, we
-introduce a within-cell point $c$ inside the polygon in 2D. The coordinates 
-of $c$ are weighted averages of the vertex coordinates:
+Next, we define the $\tf$ basis functions for the PWLD discretization. First, we
+define the within-cell point $c$ for any 2D polygonal cell: the coordinates 
+of $c$ are the weighted averages of the polygon's vertices:
 \begin{equation}
   u_c = \sum_{i=1}^{N_V} \alpha_i u_i,
 \end{equation}
 where $u=x$ or $y$, $N_V$ is the number of vertices for the cell under
 consideration, and the (positive) weights $\alpha_i$ are such that $\sum_{i=1}^{N_V} \alpha_i =1$. 
-The basis function at vertex $j$ is defined by 
+The basis function at vertex $i$ is defined by 
 \cite{pwld_2d}:
 \begin{equation}
   b_i(x,y) = t_i(x,y) + \alpha_i t_c(x,y),
@@ -113,12 +112,12 @@ The basis function at vertex $j$ is defined by
 where $t_i(x,y)$ is a linear function such that $t_i(x,y)$ is unity at vertex
 $i$ and zero at vertices $i-1$, $i+1$, and $c$. The $t_c(x,y)$ function is a ``tent''
 function in the interior of the cell; it is unity at the within-cell point $c$
-and zero at all the vertices of the cell. The number of PWLD basis functions is 
-equal to the number of vertices in the polygon (i.e., $1 \le i \le N_v$). In this paper, the arbitrary
-positive weights $\alpha_i$ are chosen to be $\frac{1}{N_V}$; for example, on a
+and zero at all of the vertices of the cell. The number of PWLD basis functions is 
+equal to the number of vertices in the polygon (i.e., $1 \le i \le N_V$). In this paper, the arbitrary
+positive weights $\alpha_i$ are chosen to be equal to $\frac{1}{N_V}$; for example, on a
 quadrilateral cell, we employ $\alpha_i =\frac{1}{4}$. Finally, note that on
 triangular cells, the PWLD basis functions reduce to the
-standard Linear Discontinuous (LD) basis functions if $\alpha_i = \frac{1}{3}$. 
+standard Linear Discontinuous (LD) basis functions if ones chooses $\alpha_i = \frac{1}{3}$. 
 Given the definition of the PWLD
 finite elements, it may seem complicated to build the elementary transport 
 matrices on an arbitrary polygonal cell but the construction of such matrices
@@ -126,4 +125,4 @@ can be greatly simplified using the notion of ``sub-cells'', where a ``sub-cell'
 in 2D, is defined as the triangular cell linking an edge of the polygonal cell to its
 within-cell point. Note that these ``sub-cells'' are never created as part of the 
 polygonal grid; they are just \textcolor{red}{a simple implementation means of computing}
-the elementary matrices of a polygonal cell by loop over its sub-cells. 
+the elementary matrices of a polygonal cell by looping over its sub-cells. 

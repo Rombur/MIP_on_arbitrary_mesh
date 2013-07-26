@@ -17,13 +17,13 @@ a hexagonal cell. Employing a PWLD discretization, such cell possesses six unkno
 alternate DFE discretizations that perform well in the thick diffusive limit, such as 
 linear discontinuous on triangles and bilinear discontinuous on quadrangles, the same 
 hexagonal cell could be split into two quadrangles (for a total of 8 unknowns), two 
-triangles and one quadrangle (10 unknowns), four triangles (12 unknowns); by inserting an 
+triangles and one quadrangle (10 unknowns), or four triangles (12 unknowns). By inserting an 
 extra point inside the cell, the hexagon could also be split into three quadrangles 
 (12 unknowns), four quadrangles (16 unknowns) or six triangles (18 unknowns). A 
 similar reasoning can be applied to any $n$-polygon. Arbitrary polygonal grids can 
 also handle locally refined meshes in a natural manner. Consider the example given
 in \Cref{fig_amr}, which is typical of simulations performed with Adaptive Mesh 
-Refinement (AMR). Solvers based on arbitrary polyhedral cells can easily handle cells 
+Refinement (AMR). Solvers based on arbitrary polygonal cells can easily handle cells 
 with various numbers of edges. On \Cref{fig_amr}, the left cell is a actually a
 pentagon whereas the two cells on the right are quadrilaterals. PWLD spatial
 discretization can handle locally adapted meshes without any special treatment 

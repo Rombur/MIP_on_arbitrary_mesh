@@ -1,15 +1,15 @@
 \begin{abstract}
   The Modified Interior Penalty (MIP) Diffusion Synthetic Acceleration (DSA) technique
   is extended to the Piece-Wise Linear Discontinuous (PWLD) finite elements.
-  This \textcolor{red}{provides} a DSA preconditioner for arbitrary polygonal/polyhedral meshes. 
-	Arbitrary grids can be used to model complex objects and can also be advantageously employed 
-	within locally refined spatial grid without the need to treat so-called ``hanging
+  This \textcolor{red}{provides} an efficient DSA preconditioner for arbitrary polygonal/polyhedral meshes. 
+	Such arbitrary grids can be used to model complex objects; they can also be advantageously employed 
+	with locally refined spatial grids without the need to deal with so-called ``hanging
   nodes''. 
   The MIP technique yields a system of linear equations that is 
-  is symmetric and positive definite. This system is typically solved using
+  is Symmetric Positive Definite (SPD). This system may be solved using
   Conjugate Gradient (CG) preconditioned with a \textcolor{red}{Symmetric Gauss-Seidel}
-  (SGS) scheme. In this research, we also compare SGS-preconditioned CG with 
-  CG preconditioned using an Algebraic MultiGrid  method (AMG). 
+  (SGS) scheme. In this research, we compare SGS-preconditioned CG with 
+  CG preconditioned using an Algebraic MultiGrid method (AMG). 
   Fourier analyses are 
   performed for the PWLD MIP formulation and we show that this scheme is
   always stable and effective at reducing the spectral radius for iterative transport
