@@ -81,9 +81,10 @@ preconditioner is needed; this is further discussed in \Cref{sec_mip}.
 \subsection{Discontinuous Finite Element Discretization on Arbitrary Grids}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The domain $\mc{D}$ is partitioned into arbitrary polygons. For 
+To seek a DFE solution for the angular flux, the domain $\mc{D}$ is partitioned 
+into arbitrary polygonal cells. For 
 a given streaming direction $\bo_m$, the discontinuous finite
-element formulation, on a given spatial cell $K$, is:
+element formulation, on a given spatial cell $K$, is given by:
 \begin{equation}
   -\int_{K} \(\psi_m \bo_m \cdot \bn \tf + \Sigma_t \Psi_m \tf \)\ d\br +
   \int_{\partial K^+} \bo_m \cdot \bs{n} \Psi_m \tf \ d\br = \int_{K} q\, \tf \ d\br +
