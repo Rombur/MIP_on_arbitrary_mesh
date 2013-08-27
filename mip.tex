@@ -42,7 +42,7 @@ This DSA scheme employs in its discretization the same discontinuous finite elem
 discretization of the transport operator. 
 MIP as a DSA scheme has been shown to be always stable for isotropic scattering on triangular 
 cells \cite{mip}. The MIP diffusion solve is based on the standard Interior Penalty (IP) method
-\cite{ip}, with an \textcolor{red}{appropriately modified} penalty term. Consider 
+\cite{Kanschat2007}, with an \textcolor{red}{appropriately modified} penalty term. Consider 
 following diffusion update equation:
 \begin{align}
   \label{eq:dsa}
@@ -167,10 +167,10 @@ assume that the polygonal cells do not deviate significantly from regular polygo
 In such case, if the cell has an even number of edges, the orthogonal 
 length equals two times the apothem, i.e., two times the segment between the 
 midpoint of a side of the polygon and the center of this polygon 
-$\(\textrm{apothem}=2\times \frac{\textrm{area}}{\textrm{perimeter}}\)$. 
+$\(\textrm{apothem}=2\times \tfrac{\textrm{area}}{\textrm{perimeter}}\)$. 
 If a cell has an odd number of edges, its orthogonal length is given by the 
 apothem plus the circumradius, i.e., the radius of the circle circumscribed to 
-the polygon $\(\textrm{circumradius}=\sqrt{\frac{2\times \textrm{area}}{N_V
+the polygon $\(\textrm{circumradius}=\sqrt{\tfrac{2\times \textrm{area}}{N_V
 \sin\(\frac{2\pi}{N_V}\)}}\)$. A summary of the definitions used for $h_{\bot}$ for 
 any polygon as a function of the number of vertices is given in
 \Cref{table_h_bot}.

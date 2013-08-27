@@ -134,7 +134,7 @@ damped Jacobi. Then, the prolongation matrix is given by:
 \end{equation}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{AGMG Package}
+\subsection{The AGMG Package}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Unlike ML, the prolongation operator in AGMG is not smoothed; this results in a
 cheaper setup and a decrease in memory requirements \cite{agmg2}. However,
@@ -174,4 +174,4 @@ computational cost of $K-$cycle is about the same than that of a $W-$cycle.
 If the number of unknowns does not decrease sufficiently from one 
 level to the next, the $K-$cycle at one level is replaced by a $V-$cycle at 
 this level. At that level, no Krylov solver is used in order to decrease the
-computational cost of the method.
+computational cost of the method. \textcolor{red}{so what is used?}
