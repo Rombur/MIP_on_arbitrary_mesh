@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{DSA on arbitrary polygonal cells} \label{sec_mip}
+\section{Diffusion Synthetic Acceleration (DSA) on Arbitrary Polygonal Cells} \label{sec_mip}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -33,7 +33,7 @@ Ideally, $\bs{A}$ should be SPD (such that efficient iterative techniques can
 be employed in its linear solve) and easy to form (even on arbitrary grids).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Modified Interior Penalty DSA scheme for polygons}
+\subsection{Modified Interior Penalty DSA Scheme \textcolor{red}{for/on} Polygons}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Here, we discuss the Modified Interior Penalty method for the diffusion equation for arbitrary polygons
@@ -42,8 +42,9 @@ This DSA scheme employs in its discretization the same discontinuous finite elem
 discretization of the transport operator. 
 MIP as a DSA scheme has been shown to be always stable for isotropic scattering on triangular 
 cells \cite{mip}. The MIP diffusion solve is based on the standard Interior Penalty (IP) method
-\cite{Kanschat2007}, with an \textcolor{red}{appropriately modified} penalty term. Consider 
-following diffusion update equation:
+\cite{Kanschat2007}.
+%, with an \textcolor{red}{appropriately modified} penalty term. 
+Consider following diffusion update equation:
 \begin{align}
   \label{eq:dsa}
   \left(-\bn \cdot \mathrm{D} \bn  + \Sigma_a \right) \delta \phi &= Q_0 &\textrm{ for }\br \in

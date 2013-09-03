@@ -37,7 +37,7 @@ of the iteration matrices are sought for $0 \le \lambda_x \le 2\pi/X$ and $0 \le
 where $X$ and $Y$ are the dimensions of the rectangular domain.
 
 
-\subsubsection{Spectral radius as a function of the $S_n$ order}
+\subsubsection{Spectral Radius as a Function of the $S_n$ Order}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 This Fourier analysis is carried on a square cell ($X=Y$), using a
@@ -59,7 +59,7 @@ quadrature is refined, the standard limit value of $0.2247c$ for the spectral re
   \label{fig_fa_sn}
 \end{figure}
 
-\subsubsection{Spectral radius as a function of the cell aspect ratio}
+\subsubsection{Spectral Radius as a Function of the Cell Aspect Ratio}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 For this Fourier analysis, we use a $S_{16}$ GLC quadrature. The medium is
 again homogeneous with $c=0.9999$ and periodic boundary conditions apply. 
@@ -83,7 +83,7 @@ and that the maximum spectral radius shows little sensitivity to the aspect rati
 The MIP-DSA scheme has been implemented in a 2D \sn code that employs a PWLD discretization
 for arbitrary polygonal grids. Several test cases are presented.
 
-\subsubsection{Homogeneous test problems}  \label{sec_homog}
+\subsubsection{Homogeneous Tests}  \label{sec_homog}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We compare the different linear solvers employed for MIP-DSA using a homogeneous medium, $100cm
@@ -133,14 +133,14 @@ the performance of MIP-DSA or that of its preconditioners.
   \begin{subfigure}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{quad_solu0000}
-    \caption{Whole domain}
+    \caption{Whole domain mesh}
   \end{subfigure}
   \begin{subfigure}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{quad_solu0001}
     \caption{Zoom}
   \end{subfigure}
-  \caption{Grids and scalar flux solutions for the homogenous test problem using quadrilaterla cells}
+  \caption{Grids and scalar flux solutions for the homogenous test problem using quadrilateral cells}
   \label{homog_test_quads}
 \end{figure}
 
@@ -149,7 +149,7 @@ the performance of MIP-DSA or that of its preconditioners.
   \begin{subfigure}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{poly_solu0000}
-    \caption{Whole domain}
+    \caption{Whole domain mesh}
   \end{subfigure}
   \begin{subfigure}{0.45\textwidth}
     \centering
@@ -216,7 +216,7 @@ Total calculation (s) & 42666.7 & 1060.53 & 1447.53 & 382.275 & 384.422 &
   \end{center}
 \end{table}
 
-\subsubsection{Heterogeneous medium}
+\subsubsection{Heterogeneous Media}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In this example, a heterogeneous geometry with three materials is used. It is 
@@ -235,12 +235,12 @@ The different linear solvers for MIP-DSA are compared in \Cref{comparison_hex}.
   \begin{subfigure}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{hexa_grid0000}
-    \caption{Whole domain}
+    \caption{Whole domain mesh}
   \end{subfigure}
-  \begin{subfigure}{0.45\textwidth}
+  \begin{subfigure}{0.40\textwidth}
     \centering
     \includegraphics[width=\textwidth]{hexa_grid0001}
-    \caption{Zoom}
+    \caption{Zoom highlighting  triangular, rectangular, and hexagonal cells}
   \end{subfigure}
   \caption{Material zones for the heterogeneous test problem}
   \label{hex_zones}
@@ -290,7 +290,7 @@ homogeneous tests where the number of CG iterations remained similar for all
 algebraic multigrid preconditioners, in this test, AGMG requires
 significantly fewer iterations than the Trilinos implementations, PCG-ML/U and and PCG-ML/MIS.
 
-\subsubsection{Locally refined grid}
+\subsubsection{Locally Refined Grids}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In this example, a 3-material domain of size $10cm\times 10cm$ is used. 
@@ -320,10 +320,10 @@ our previous tests. This test case demonstrates that degenerate polygons
     \caption{Material regions}
     \label{mat_amr}
   \end{subfigure}
-  \begin{subfigure}{0.50\textwidth}
+  \begin{subfigure}{0.53\textwidth}
     \centering
     \includegraphics[width=5cm]{amr_grid0001}
-    \caption{Polygons distribution (zoom): quadrilaterals (blue cells),  pentagons(green cells),  hexagons (red cells)}
+    \caption{Polygons distribution (zoom): quadrilaterals (blue cells),  pentagons (green cells),  hexagons (red cells)}
     \label{fig_pol_dist}
   \end{subfigure}
   \caption{AMR-like test domain}
@@ -370,7 +370,7 @@ MIP calculation (s) & NA   & 48.1908 & 81.0992  & 25.2699 & 25.0699  &
   \end{center}
 \end{table}
 
-\subsubsection{High aspect ratio grids}
+\subsubsection{High Aspect Ratio Grids}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In these last two examples, a square domain  of $100cm \times 100cm$ with vacuum boundaries

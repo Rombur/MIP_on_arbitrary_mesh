@@ -4,8 +4,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-We recall the \sn transport equations, the iterative techniques
-employed to solve them, and discuss the PWLD discontinuous spatial
+In this Section, we recall the \sn transport equation, 
+review the iterative solution techniques 
+employed to solve it, 
+\textcolor{red}{and} 
+describe the PWLD discontinuous spatial
 discretization for the transport equation with an emphasis on arbitrary
 polygonal/polyhedral grids.
 
@@ -23,7 +26,7 @@ Given an angular quadrature set $\{\bo_m,w_m\}_{1\leq m \leq M}$, the one-group
 with $\psi_m(\br) = \psi(\br,\bo_m)$ the angular flux at position $\br$ in
 direction $\bo_m$, $\Sigma_t$ and $\Sigma_s$ the total and scattering cross
 sections, respectively, and $\mc{D}$ the spatial domain. The scalar flux is
-defined and evaluated as follows:
+defined and numerically evaluated as follows:
 \begin{equation}
   \phi(\br) \equiv \int_{4\pi} \psi(\br,\bo) d\bo \approx \sum_{m=1}^M w_m
   \psi_m (\br).
@@ -98,7 +101,7 @@ $\psi_m^{\uparrow}$ in \cref{transport_int}, are taken from the upwind neighbor
 element of that face.
 
 Next, we define the $\tf$ basis functions for the PWLD discretization. First, we
-define the within-cell point $c$ for any 2D polygonal cell: the coordinates 
+introduce the within-cell point $c$ for any 2D polygonal cell: the coordinates 
 of $c$ are the weighted averages of the polygon's vertices:
 \begin{equation}
   u_c = \sum_{i=1}^{N_V} \alpha_i u_i,
@@ -106,7 +109,7 @@ of $c$ are the weighted averages of the polygon's vertices:
 where $u=x$ or $y$, $N_V$ is the number of vertices for the cell under
 consideration, and the (positive) weights $\alpha_i$ are such that $\sum_{i=1}^{N_V} \alpha_i =1$. 
 The basis function at vertex $i$ is defined by 
-\cite{pwld_2d}:
+(see also \cite{pwld_2d}):
 \begin{equation}
   b_i(x,y) = t_i(x,y) + \alpha_i t_c(x,y),
 \end{equation}
