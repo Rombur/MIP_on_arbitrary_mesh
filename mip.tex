@@ -38,13 +38,13 @@ be employed in its linear solve) and easy to form (even on arbitrary grids).
 
 Here, we discuss the Modified Interior Penalty method for the diffusion equation for arbitrary polygons
 as a DSA scheme. 
-This DSA scheme employs in its discretization the same discontinuous finite elements used in the 
+In its discretization, this DSA scheme employs the same discontinuous finite elements used in the 
 discretization of the transport operator. 
 MIP as a DSA scheme has been shown to be always stable for isotropic scattering on triangular 
 cells \cite{mip}. The MIP diffusion solve is based on the standard Interior Penalty (IP) method
 \cite{Kanschat2007}.
 %, with an \textcolor{red}{appropriately modified} penalty term. 
-Consider following diffusion update equation:
+Consider the following diffusion update equation:
 \begin{align}
   \label{eq:dsa}
   \left(-\bn \cdot \mathrm{D} \bn  + \Sigma_a \right) \delta \phi &= Q_0 &\textrm{ for }\br \in
@@ -109,12 +109,12 @@ l(\phi^*) = (Q_0,\phi^*)_{\mc{D}}\ . % + (J^{inc},\phi^*)_{\partial \mc{D}^r} .
 %
 The notations used are as follows:
 the domain integral is split onto the element integrals, $(f,g)_{\mc{D}} = \sum_{K\in \mathbb{T}_h} \(f,g\)_K$, with the element integrals defined as 
-$(f,g)_K = \int_K fg\ d\br$; 
+$(f,g)_K = \int_K fg\ d\br$; and 
 the integral over all interior edges is $(f,g)_{E_h^i}=\sum_{e\in E_h^i}(f,g)_e$, with the edge integrals defined as 
 $(f,g)_e = \int_e fg\ ds$. In the above, 
  $\mathbb{T}_h$ denotes the partition of domain
 $\mc{D}$ into non-overlapping elements $K$, $E_h^i$ is the set of interior
-edges, $\delta \phi$ is the numerical solution for the diffusion correction and $\phi^*$ is any test function.
+edges, $\delta \phi$ is the numerical solution for the diffusion correction, and $\phi^*$ is any test function.
 Any entry $A_{ij}$ of matrix $\bs{A}$ is simply given by $A_{ij}= a(b_j,b_i)$. The resulting matrix $\bs{A}$ is SPD
 and thus can be solved using a preconditioned conjugate gradient technique.
 %
@@ -165,7 +165,7 @@ orthogonal to the edge $e$.
 When polygonal cells are employed, there is no 
 simple way to compute $h_{\bot}$. To estimate $h_{\bot}$, we 
 assume that the polygonal cells do not deviate significantly from regular polygons. 
-In such case, if the cell has an even number of edges, the orthogonal 
+In such cases, if the cell has an even number of edges, the orthogonal 
 length equals two times the apothem, i.e., two times the segment between the 
 midpoint of a side of the polygon and the center of this polygon 
 $\(\textrm{apothem}=2\times \tfrac{\textrm{area}}{\textrm{perimeter}}\)$. 

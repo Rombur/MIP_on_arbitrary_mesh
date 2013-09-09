@@ -4,11 +4,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this Section, we recall the \sn transport equation, 
-review the iterative solution techniques 
-employed to solve it, 
-\textcolor{red}{and} 
-describe the PWLD discontinuous spatial
+In this Section, we review the \sn transport equation 
+and the iterative solution techniques typically
+employed to solve it. 
+We then describe the PWLD discontinuous spatial
 discretization for the transport equation with an emphasis on arbitrary
 polygonal/polyhedral grids.
 
@@ -51,11 +50,11 @@ fluxes in all directions. The action of $\bs{L}^{-1}$ is often referred to as
 a transport sweep when discontinuous spatial approximations are
 employed because, for any direction $\bo_m$, the action of $\bs{L}_m^{-1}$ can
 be obtained by traversing the mesh (i.e., sweeping) in a specific ordering of
-the cells, thus requiring only to solve a small linear system of equations,
-cell by cell. The order in which the elements are solved constitutes the graph
+the cells, \textcolor{red}{thus requiring only to solve a small linear system of equations,
+cell by cell}. The order in which the elements are solved constitutes the graph
 of the sweep; for brevity and since this is not the focus of this article,
 we do not expand on situations where the graph presents dependencies
-(cycles); in such a case, these dependencies can either be lagged within the
+(cycles). In such a case, these dependencies can either be lagged within the
 iterative procedure \cite{dgfem} or the solution vector consisting of the scalar 
 flux is augmented by the angular flux unknowns that cause the cycle \cite{mip}.
 
@@ -70,7 +69,7 @@ The $\ell^{th}$ iteration of the SI technique is given by :
   \Phi^{(\ell+1)} = \bs{DL}^{-1} \(\bs{M\Sigma}\Phi^{(\ell)} + S\).
 \end{equation}
 Alternatively, a subspace Krylov method (usually GMRes) can be employed to
-solve the linear system of equations, recast of follows:
+solve the linear system of equations, recast as follows:
 \begin{equation}
   \(\bs{I} - \bs{DL}^{-1}\bs{M \Sigma}\) \Phi = \bs{DL}^{-1}S
 \end{equation}
@@ -95,13 +94,13 @@ element formulation, on a given spatial cell $K$, is given by:
   \label{transport_int}
 \end{equation}
 where $\tf$ represents a generic discontinuous finite element basis function, $\partial K^{-}$ 
-is the inflow face of element $K$, $\partial K^{+}$ is the outflow face of 
+is the inflow face of element $K$, and $\partial K^{+}$ is the outflow face of 
 element $K$. The angular flux values on an inflow face, denoted by 
 $\psi_m^{\uparrow}$ in \cref{transport_int}, are taken from the upwind neighbor 
 element of that face.
 
 Next, we define the $\tf$ basis functions for the PWLD discretization. First, we
-introduce the within-cell point $c$ for any 2D polygonal cell: the coordinates 
+introduce the within-cell point $c$ for any 2D polygonal cell. The coordinates 
 of $c$ are the weighted averages of the polygon's vertices:
 \begin{equation}
   u_c = \sum_{i=1}^{N_V} \alpha_i u_i,
@@ -118,13 +117,13 @@ $i$ and zero at vertices $i-1$, $i+1$, and $c$. The $t_c(x,y)$ function is a ``t
 function in the interior of the cell; it is unity at the within-cell point $c$
 and zero at all of the vertices of the cell. The number of PWLD basis functions is 
 equal to the number of vertices in the polygon (i.e., $1 \le i \le N_V$). In this paper, the arbitrary
-positive weights $\alpha_i$ are chosen to be equal to $\frac{1}{N_V}$; for example, on a
+positive weights $\alpha_i$ are chosen to be equal to $\frac{1}{N_V}$. For example, on a
 quadrilateral cell, we employ $\alpha_i =\frac{1}{4}$. Finally, note that on
 triangular cells, the PWLD basis functions reduce to the
 standard Linear Discontinuous (LD) basis functions if ones chooses $\alpha_i = \frac{1}{3}$. 
 Given the definition of the PWLD
 finite elements, it may seem complicated to build the elementary transport 
-matrices on an arbitrary polygonal cell but the construction of such matrices
+matrices on an arbitrary polygonal cell, but the construction of such matrices
 can be greatly simplified using the notion of ``sub-cells'', where a ``sub-cell'',
 in 2D, is defined as the triangular cell linking an edge of the polygonal cell to its
 within-cell point. Note that these ``sub-cells'' are never created as part of the 

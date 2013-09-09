@@ -1,26 +1,27 @@
 \begin{abstract}
-  \textcolor{red}{The Modified Interior Penalty (MIP) Diffusion Synthetic Acceleration (DSA) technique
-  is extended to the Piece-Wise Linear Discontinuous (PWLD) finite elements.\\
-	In this paper, the Diffusion Synthetic Acceleration (DSA) technique, based
-	on the Modified Interior Penalty (MIP), is adapted to Piece-Wise Linear 
-	Discontinuous (PWLD) finite elements.}\\
-  This \textcolor{red}{provides/yields/results in} an efficient DSA preconditioner for arbitrary 
-	polygonal/polyhedral meshes. 
-	Such arbitrary grids (which include triangular and tetrahedral meshes as a subset) can be used to model complex objects; 
-	they can also be advantageously employed 
-	with locally refined spatial grids without the need to deal with ``hanging nodes''. 
-  The MIP technique was originally derived to solve diffusion problems using discontinuous finite elements;
-	it yields a system of linear equations that is 
+  %\textcolor{red}{The Modified Interior Penalty (MIP) Diffusion Synthetic Acceleration (DSA) technique
+  %is extended to the Piece-Wise Linear Discontinuous (PWLD) finite elements.}
+	In this paper, a Diffusion Synthetic Acceleration (DSA) technique
+	is developed for Piece-Wise Linear Discontinuous (PWLD) finite element
+	approximations on arbitrary polygonal grids.
+%	
+  The discretization of the DSA equations uses the Modified Interior Penalty (MIP), derived from a standard
+	discontinuous finite element technique for the standard form of the diffusion equation.
+  The MIP technique yields a system of linear equations that  
   is Symmetric Positive Definite (SPD). Thus, solution techniques, such as Preconditioned 
 	Conjugate Gradient (PCG), can be effectively employed. 
-	In this research, we compare Symmetric Gauss-Seidel (SGS) and Algebraic MultiGrid (AMG) methods
-	as preconditioners
-  Fourier analyses are 
-  performed for the MIP-DSA formulation using PWLD finite elements and we show that this scheme is
+	This results in an efficient DSA preconditioner for arbitrary 
+	polygonal meshes. Such grids (which include triangular and tetrahedral meshes as a subset) can be used to model 
+	complex objects; 	they can also be advantageously employed 
+	with locally refined spatial grids without the need to deal with ``hanging nodes''. 
+%
+	Fourier analyses are 
+  performed for the MIP-DSA formulation using PWLD finite elements, and we show that this scheme is
   always stable and effective at reducing the spectral radius for iterative transport
-  solves, including for grids with high-aspect ratio cells.
+  solves, even for grids with high-aspect ratio cells.
   Numerical results are presented for different grids (quadrilateral, hexagonal, polygonal, and rectangular
 	with local mesh adaptation). 
-  AMG preconditioning for the MIP system is shown to be significantly more efficient 
-  than SGS preconditioning.
+%
+	Algebraic MultiGrid (AMG) and Symmetric Gauss-Seidel (SGS) are employed as preconditioners for the MIP 
+	system. AMG is shown to be significantly more efficient than SGS.
 \end{abstract}

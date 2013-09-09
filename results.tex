@@ -10,27 +10,27 @@ for an homogeneous infinite medium meshed with rectangular cells and discretized
 The effects of the $S_n$ order and the cell aspect ratio on the spectral radius of the iterative 
 scheme are also studied. Second, the MIP-DSA technique is implemented in a 2D \sn code that uses
 arbitrary polygonal grids with a PWLD spatial discretization.  Numerical examples employ
-several mesh types: arbitrary quadrilaterals, arbitrary polygons, a regular layout of 
-hexagons/triangles/rectangles, and a grid that mimics adaptive mesh refinement 
+several mesh types: arbitrary quadrilaterals; arbitrary polygons; a regular layout of 
+hexagons/triangles/rectangles; and a grid that mimics adaptive mesh refinement 
 performed on rectangular cells. The MIP-DSA diffusion solves are performed using various
-linear solvers: Conjugate Gradient (CG), Conjugate Gradient
-Preconditioned with Symmetric Gauss-Seidel (PCG-SGS), Conjugate Gradient
-Preconditioned with ML using Uncoupled aggregation (PCG-ML/U),
-Conjugate Gradient Preconditioned with ML using MIS aggregation (PCG-ML/MIS),
+linear solvers: Conjugate Gradient (CG); Conjugate Gradient
+Preconditioned with Symmetric Gauss-Seidel (PCG-SGS); Conjugate Gradient
+Preconditioned with ML using Uncoupled aggregation (PCG-ML/U);
+Conjugate Gradient Preconditioned with ML using MIS aggregation (PCG-ML/MIS);
 and Conjugate Gradient Preconditioned with AGMG (AGMG). 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Fourier Analyses}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Fourier analyses are often performed to assess some of the properties of 
+Fourier analysis is often performed to assess some of the properties of 
 DSA-accelerated transport solves \cite{dsa_ref,larsen_dsa,consistent_p1}. In a Fourier analysis,
 the eigenvalues of the iteration matrix are analyzed, assuming a Fourier ansatz for the 
 error modes. Specifically, the iteration matrices for the SI and SI+DSA schemes are given by
 \begin{equation}
 \bs{D L^{-1}M \Sigma} \quad \text{and} \quad \bs{I}-\bs{(I+A^{-1}\Sigma)(I-D L^{-1}M \Sigma)},
 \end{equation}
-respectively.  The error modes are of the form $\exp(i \bs{\Lambda} \cdot \bs{r})$, with the
+respectively.  The error modes are of the form $\exp(i \bs{\Lambda} \cdot \bs{r})$ with the
 wave number $\bs{\Lambda}=[\lambda_x,\, \lambda_y]^T$. This expression for the error modes 
 is inserted into the discretized equations and the spectral radius (largest eigenvalue in magnitude)
 of the iteration matrices are sought for $0 \le \lambda_x \le 2\pi/X$ and $0 \le \lambda_y \le 2\pi/Y$,
@@ -40,40 +40,38 @@ where $X$ and $Y$ are the dimensions of the rectangular domain.
 \subsubsection{Spectral Radius as a Function of the $S_n$ Order}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-This Fourier analysis is carried on a square cell ($X=Y$), using a
+This Fourier analysis is carried on a square cell ($X=Y$) using a
 Gauss-Legendre-Chebyshev (GLC) angular quadrature. The medium is homogeneous with a 
 scattering ratio $c=0.9999$; periodic boundary conditions are used. The results 
 are plotted on \Cref{fig_fa_sn}, where the $x-$axis is the mesh size in mean free 
 paths and the $y-$axis is the spectral radius. There are four curves corresponding 
-to different $S_n$ orders: $S_2$, $S_4$, $S_8$ and $S_{16}$.
+to different $S_n$ orders: $S_2$, $S_4$, $S_8$, and $S_{16}$.
 From \Cref{fig_fa_sn}, we conclude that MIP is stable for every 
 cell size. The spectral radius is always less than 0.5, except for $S_2$ where 
-it is about 0.7. In the fine mesh limit, the spatial continuum results are recovered \cite{multisweep}:
-the spectral radius of SI+DSA using an $S_2$ quadrature in 2D undiscretized space is $0.5c$; as the angular 
-quadrature is refined, the standard limit value of $0.2247c$ for the spectral result is obtained.
+it is about 0.7. In the fine mesh limit, the continuum results are recovered \cite{multisweep}. Notably,
+the spectral radius of SI+DSA using an $S_2$ quadrature in 2D undiscretized space is $0.5c$. Also, as the angular 
+quadrature is refined, the standard limit value of $0.2247c$ for the spectral result is reached.
 \begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.7\textwidth]{sn_order_9999}
-  \caption{Fourier analysis as a function of the mesh optical thickness, square cell,
-    various \sn orders.}
+  \caption{Spectral radius as a function of the mesh optical thickness for various \sn orders (Fourier analysis on a square cell).}
   \label{fig_fa_sn}
 \end{figure}
 
 \subsubsection{Spectral Radius as a Function of the Cell Aspect Ratio}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 For this Fourier analysis, we use a $S_{16}$ GLC quadrature. The medium is
-again homogeneous with $c=0.9999$ and periodic boundary conditions apply. 
+again homogeneous with $c=0.9999$, and periodic boundary conditions apply. 
 On \Cref{fig_fa_ar}, the five curves correspond to the following cell aspect 
-ratios: $\frac{Y}{X}=\frac{1}{16}$, $\frac{1}{4}$,
-$1$, $4$, $16$, and $100$.
+ratios: $\frac{Y}{X}=\frac{1}{16}$; $\frac{1}{4}$;
+$1$; $4$; $16$; and $100$.
 We note that the MIP-DSA scheme is stable for every aspect ratio tested, including an
 aspect ratio value of 100, 
 and that the maximum spectral radius shows little sensitivity to the aspect ratio.
 \begin{figure}[!htbp]
   \centering
   \includegraphics[width=0.7\textwidth]{aspect_ratio_9999_2}
-  \caption{Fourier analysis as a function of the mesh optical thickness,
-  $S_{16}$ angular quadrature, various aspect ratios.}
+  \caption{Spectral radius as a function of the mesh optical thickness for various cell aspect ratios (Fourier analysis carried out using an $S_{16}$ angular quadrature).}
   \label{fig_fa_ar}
 \end{figure}
 
@@ -83,15 +81,15 @@ and that the maximum spectral radius shows little sensitivity to the aspect rati
 The MIP-DSA scheme has been implemented in a 2D \sn code that employs a PWLD discretization
 for arbitrary polygonal grids. Several test cases are presented.
 
-\subsubsection{Homogeneous Tests}  \label{sec_homog}
+\subsubsection{Homogeneous Test Problem}  \label{sec_homog}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We compare the different linear solvers employed for MIP-DSA using a homogeneous medium, $100cm
 \times 100cm$, $\Sigma_t = 1cm^{-1}$ and $\Sigma_s = 0.999cm^{-1}$, with
 vacuum boundary conditions and a unit source of intensity $1cm^{-3}s^{-1}$. We
-use an $S_8$ GLC angular quadrature, Source Iteration as solver
-with relative tolerance of $10^{-8}$ and a relative tolerance of
-$10^{-10}$ for MIP-DSA solver. The medium is discretized using two different meshes:
+use an $S_8$ angular quadrature. A relative tolerance of  $10^{-8}$ is used for the Source Iteration solver
+while the MIP-DSA solvers employs a relative tolerance of $10^{-10}$. 
+The domain is discretized using two different meshes:
 \begin{enumerate}
   \item a quadrilateral grid composed of 49263 quadrilateral
     cells (197,052 degrees of freedom); 
@@ -102,15 +100,15 @@ $10^{-10}$ for MIP-DSA solver. The medium is discretized using two different mes
     mesh composed of different cell types.
 \end{enumerate}
 %
-The meshes and the numerical solutions are given on \Cref{homog_test_quads,homog_test_polys}.
+The meshes and the numerical solutions are given in \Cref{homog_test_quads,homog_test_polys}.
 In \Cref{comparison_homog_quad}, results obtained with the different linear solvers for MIP-DSA 
 are compared for the quadrilateral grid.
-In \Cref{comparison_homog_quad}, SI iterations is the number iterations of 
-needed to solve the problem, Precond init is the time, in
-seconds, needed to initialize the preconditioner used by CG, MIP calculation
-is the total time, in seconds, spent solving DSA during the calculation, CG
-iterations is the total number of CG iterations used to solve MIP, and Total
-calculation is the time, in seconds, needed to solve the problem. 
+In \Cref{comparison_homog_quad}, {\it SI iterations} is the number iterations of 
+needed to solve the problem, {\it Precond init} is the time, in
+seconds, needed to initialize the preconditioner used by CG, {\it MIP calculation}
+is the total time, in seconds, spent solving DSA during the calculation, {\it CG
+iterations} is the total number of CG iterations used to solve MIP, and {\it Total
+calculation} is the time, in seconds, needed to solve the problem. 
 We note that the accelerated transport solves only require 24 SI iterations, regardless of the linear solver
 employed in MIP-DSA (as expected). Preconditioning CG significantly reduces the number of CG iterations.
 %
@@ -121,10 +119,10 @@ slower than one unpreconditioned CG iteration. Profiling of the code reveals tha
 bottleneck is the function \emph{Ifpack\_PointRelaxation::ApplyInverseSGS\_FastCrsMatrix} 
 of Trilinos. This function applies the forward and the backward substitutions required by SGS.
 It is unclear why these substitutions are so costly. Also note that SGS is employed as
-a pre- and post-smoother in the ML package of Trilinos and the same function
+a pre- and post-smoother in the ML package of Trilinos and that the same function
 is once again the bottleneck of the method.
 %
-The different linear solvers are compared for the polygonal grid in \Cref{comparison_homog_poly}:
+The different linear solvers are compared for the polygonal grid in \Cref{comparison_homog_poly}.
 We note that using different spatial cell types in the same grid does not affect
 the performance of MIP-DSA or that of its preconditioners.
 
@@ -179,7 +177,7 @@ the performance of MIP-DSA or that of its preconditioners.
 %
 \begin{table}[!htbp]
   \begin{center}
-    \caption{Comparison of different preconditioners for quadrilateral cells}
+    \caption{Comparison of different preconditioners for the homogeneous test problem (quadrilateral cells)}
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
@@ -198,7 +196,7 @@ Total calculation (s) & 39176.7 & 1264.98 & 1477.95  & 363.202 & 367.841 &
 %
 \begin{table}[!htbp]
   \begin{center}
-    \caption{Comparison of different preconditioners for polygonal cells}
+    \caption{Comparison of different preconditioners for the homogeneous test problem (polygonal cells)}
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
@@ -216,16 +214,16 @@ Total calculation (s) & 42666.7 & 1060.53 & 1447.53 & 382.275 & 384.422 &
   \end{center}
 \end{table}
 
-\subsubsection{Heterogeneous Media}
+\subsubsection{Test with Heterogeneous Media}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In this example, a heterogeneous geometry with three materials is used. It is 
-composed of 184 triangles, 3,720 quadrilaterals and 2,791 regular hexagons of 
+composed of 184 triangles, 3,720 quadrilaterals, and 2,791 regular hexagons of 
 side $0.05cm$ for a total of 6,695 cells and 32,178 degrees of freedom (spatial 
 unknowns per angular direction). The domain is $5.28275cm$ by $4.6cm$. 
-Reflective boundary conditions are used. A $S_{16}$ GLC 
+Reflective boundary conditions are used. A $S_{16}$ angular 
 quadrature is used. The SI solver has a relative tolerance of 
-$10^{-8}$ and the relative tolerance for MIP is $10^{-10}$. \Cref{hex_zones}
+$10^{-8}$, and the relative tolerance for MIP-DSA is $10^{-10}$. \Cref{hex_zones}
 shows the problem geometry and the material properties are in given
 \Cref{hex_prop}.
 The different linear solvers for MIP-DSA are compared in \Cref{comparison_hex}.
@@ -240,7 +238,7 @@ The different linear solvers for MIP-DSA are compared in \Cref{comparison_hex}.
   \begin{subfigure}{0.40\textwidth}
     \centering
     \includegraphics[width=\textwidth]{hexa_grid0001}
-    \caption{Zoom highlighting  triangular, rectangular, and hexagonal cells}
+    \caption{Zoom emphasizing triangular, rectangular, and hexagonal cells}
   \end{subfigure}
   \caption{Material zones for the heterogeneous test problem}
   \label{hex_zones}
@@ -284,26 +282,29 @@ Total calculation (s) & 910.566 & 120.889 & 190.413 & 99.7524  & 97.4666 &
 \end{table}
 %
 The remarks made in \Cref{sec_homog} for the homogeneous test problem
-remain mostly unchanged. MIP-DSA is effective for this heterogeneous test case and AGMG is
+remain mostly unchanged. MIP-DSA is effective for this heterogeneous test case, and AGMG is
 still the fastest solver. It is interesting to note that, contrary to the
-homogeneous tests where the number of CG iterations remained similar for all
-algebraic multigrid preconditioners, in this test, AGMG requires
-significantly fewer iterations than the Trilinos implementations, PCG-ML/U and and PCG-ML/MIS.
+homogeneous tests where the number of CG iterations was about identical  for all
+algebraic multigrid preconditioners, in this heterogeneous test case, AGMG requires
+significantly fewer iterations than the Trilinos implementations, PCG-ML/U and PCG-ML/MIS.
 
 \subsubsection{Locally Refined Grids}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In this example, a 3-material domain of size $10cm\times 10cm$ is used. 
 \Cref{mat_amr} shows the material zoning and the mesh used. Material properties 
-are given in \Cref{prop_amr}. The grid used mimics meshes obtained via adaptive mesh
+are given in \Cref{prop_amr} and their spatial distribution is given in \Cref{mat_amr}. 
+The bottom and left sides of the domain have reflective boundary conditions, while the other 
+two sides have vacuum boundary conditions. 
+
+The grid used mimics meshes obtained via adaptive mesh
 refinement: the rectangular cells at the interfaces between two materials are refined once more,
 leading to a grid composed of 10,482 quadrilaterals, 236 pentagons,
-and 2 hexagons for a total of 10,720 cells and 43120 degrees of freedom. The bottom
-and left sides of the domain have reflective boundary conditions, while the other two sides
-have vacuum boundary conditions. 
-%
-The distribution of cells is given \Cref{fig_pol_dist}.
-A $S_{16}$ GLC quadrature is employed. The tolerance on SI is $10^{-8}$ and
+and 2 hexagons for a total of 10,720 cells and 43120 degrees of freedom. 
+The distribution of cells is given in \Cref{fig_pol_dist}.
+
+
+A $S_{16}$ angular quadrature is employed. The tolerance on SI is $10^{-8}$, and
 the tolerance on the CG solvers is $10^{-10}$.
 The different linear solvers for MIP-DSA are compared in \Cref{table_amr}.
 %
@@ -344,12 +345,6 @@ our previous tests. This test case demonstrates that degenerate polygons
   \end{center}
 \end{table}
 
-where the blue cells are quadrilaterals, the green cells are pentagons, and
-the red cells are hexagons. This mesh is typical of a mesh obtained after one 
-level of adaptive mesh
-refinement (the cells at the interface of different materials have been refined
-once). We see that instead of introducing hanging nodes, the mesh now contains 
-pentagons and hexagons.
 \begin{table}[H]
   \caption{Comparison of preconditioners for the AMR mesh}
   \begin{center}
@@ -376,7 +371,7 @@ MIP calculation (s) & NA   & 48.1908 & 81.0992  & 25.2699 & 25.0699  &
 In these last two examples, a square domain  of $100cm \times 100cm$ with vacuum boundaries
 is employed. There are 10,000 cells (thus, 40,000 degrees of freedom). Again, the relative 
 tolerance on SI is $10^{-8}$ and the relative tolerance for CG is $10^{-10}$. 
-An $S_8$ GLC angular quadrature is used. $\Sigma_t = 1cm^{-1}$, $\Sigma_s = 0.999cm^{-1}$,
+An $S_8$ GLC angular quadrature is used. $\Sigma_t = 1cm^{-1}$, $\Sigma_s = 0.999cm^{-1}$
 and the source is $1n/(cm^3s)$. 
 In the first run, the domain is discretized using 100 subdivisions of the $x$ and $y$
 axes, i.e., 10,000 square cells with an aspect ratio of one. In the second run, 
@@ -390,7 +385,7 @@ affected by the change of aspect ratio and is again the best performing
 preconditioner.
 %
 \begin{table}[!htbp]
-  \caption{Comparison of preconditioners for a rectangular grid with an aspect
+  \caption{Preconditioners comparison for a rectangular grid with an aspect
   ratio of 1}
   \begin{center}
     \begin{tabular}{|c|c|c|c|c|c|c|}
@@ -413,7 +408,7 @@ Total calculation (s) & 7356.96 & 56.8993 & 98.2609 & 50.1247  & 51.5396 &
 \end{table}
 %
 \begin{table}[!htbp]
-  \caption{Comparison of preconditioners for a rectangular grid with an aspect
+  \caption{Preconditioners comparison for a rectangular grid with an aspect
   ratio of 100}
   \begin{center}
     \begin{tabular}{|c|c|c|c|c|c|c|}

@@ -15,9 +15,9 @@ will compare the calculation time and the number of iterations using conjugate
 gradient preconditioned with Symmetric Gauss-Seidel (PCG-SGS) to those of CG preconditioned with an
 algebraic multigrid method. PCG-SGS was chosen because little difference was noted 
 when employing other damping factors for MIP-DSA on triangular grids \cite{wang_personal_comm}. 
-An algebraic multigrid method to precondition the Krylov solver for the 
+An algebraic multigrid method was employed to precondition the Krylov solver for the 
 even-parity finite element-spherical harmonics (FE-$P_N$) method; see, for instance,
-\cite{amg_pn}. \textcolor{red}{There}, the use of AMG  as a 
+\cite{amg_pn}. In \cite{amg_pn}, the use of AMG  as a 
 preconditioner resulted in a 60\% reduction in the solution time compared to 
 ILU(0) preconditioning and even more reduction compared to SSOR preconditioning. 
 In our implementation, we have linked our code with the ML package 
@@ -32,7 +32,7 @@ stand-alone solvers. In many applications, they achieve the so-called
 system of equations [is attained] in a computational work that is a small 
 multiple of the operation counts associated with discretizing the system'' 
 \cite{textbook_eff}. However, in many other applications, multigrid methods, 
-and particularly algebraic multigrid methods, cannot achieve such efficiency 
+and particularly algebraic multigrid methods, cannot achieve such efficiency, 
 \cite{k_cycle} and, in such cases, they are often used as preconditioner for 
 Krylov subspace methods. 
 
@@ -76,7 +76,7 @@ direct inversion; the grid transfer operators are symbolized by the line segment
 \end{figure}
 
 The main difference between geometric and algebraic multigrid techniques
-pertains to the method used
+lies in the method used
 to coarsen the grid. Algebraic multigrid methods only use the properties of the
 matrix. Among the algebraic multigrid methods, there are three main categories: 
 the classical Ruge-Stueben AMG, the plain aggregation AMG, and the
@@ -90,8 +90,8 @@ required to solve the problem.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The ML Package of Trilinos}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-When using a smoothed aggregation scheme, the smoothed interpolation operators,
-$\bs{P}_k$, are the transpose of the coarsening operators,
+When using a smoothed aggregation scheme, the smoothed interpolation operators
+$\bs{P}_k$ are the transpose of the coarsening operators
 $\bs{R}_k=\bs{P}_k^T$. Therefore, when the $\bs{P}_k$ matrices are built, the
 coarsening operator is also known. First, the graph of the matrix is
 constructed: if element $(i,j)$ or $(j,i)$ of the matrix is non-zero, an edge
@@ -136,32 +136,32 @@ damped Jacobi. Then, the prolongation matrix is given by:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The AGMG Package}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Unlike ML, the prolongation operator in AGMG is not smoothed; this results in a
+Unlike in ML, the prolongation operator in AGMG is not smoothed; this results in a
 cheaper setup and a decrease in memory requirements \cite{agmg2}. However,
 such a scheme could be less robust. To counteract this weakness, the
 aggregation scheme is more involved. Coarsening algorithms that control
-the size of the aggregates tends to produce a few badly shaped aggregates.
+the size of the aggregates tend to produce a few badly shaped aggregates.
 Since the convergence of AMG is bounded by the worst aggregate, even a small 
 number of badly shaped aggregates can have a huge impact on
 the convergence. In AGMG, the aggregation algorithm has as input the upper
 bound of the two-grid condition number. When the aggregates are constructed,
 their quality is checked. Obviously, this increases the cost of the coarsening
 and it is thus important that the coarsening is fast enough. Such an 
-algorithm does not control the size of the aggregates, and therefore, it is 
+algorithm does not control the size of the aggregates, and, therefore, it is 
 difficult to control the speed of coarsening. However, controlling the condition 
-number rather than the coarsening speed is a more interesting feature. By 
+number rather than the coarsening speed \textcolor{red}{can be a potent alternative approach}. By 
 monitoring the condition number, bad aggregates will not be created and, instead, 
 a few aggregates below the target size may be generated. This  
 does not affect the efficiency of the method in a noticeable way \cite{agmg2}. 
-A simple way to create the aggregates would be to try exhaustively all of the possible 
+A simple way to create the aggregates would be to try to exhaust all of the possible 
 combinations, compute their quality, and then choose the optimal
-coarsening. In practice, this would be too costly and, in AGMG, the aggregation 
+coarsening. In practice, this would be too costly, and, in AGMG, the aggregation 
 step is done by a few passes of a pairwise aggregation algorithm. Each pass
 aggregates the variables two by two to allow a simple computation of the aggregate 
 quality and to keep the cost per iteration low. The advantage of controlling the 
-condition number becomes even more important when a $K-$cycle or Krylov-cycle, is 
+condition number becomes even more important when a $K-$cycle, or Krylov-cycle, is 
 used instead of the more common $V-$ or $W-$cycles. The difference between the 
-$K-$cycle and the $V-$ or $W-$cycles is that $K-$cycles use recursively a 
+$K-$cycle and the $V-$ or $W-$cycles is that $K-$cycles use a 
 few iterations of a Krylov solver preconditioned by a coarser grid to solve 
 the coarse grid problem in the two-grid algorithm \cite{k_cycle}. The
 advantage of the $K-$cycle is an increased robustness compared to $V-$ and
@@ -170,8 +170,10 @@ is nonlinear and requires, when the system is SPD, the use of flexible CG
 \cite{fcg,fcg_2,fcg_3,fcg_4} as the Krylov solver. Even when the condition 
 number of the two-grid method is large, the convergence properties of the 
 $K-$cycle can be independent of the number of levels \cite{k_cycle}. The 
-computational cost of $K-$cycle is about the same than that of a $W-$cycle. 
+computational cost of the $K-$cycle is about the same than that of a $W-$cycle. 
 If the number of unknowns does not decrease sufficiently from one 
 level to the next, the $K-$cycle at one level is replaced by a $V-$cycle at 
 this level. At that level, no Krylov solver is used in order to decrease the
-computational cost of the method. \textcolor{red}{so what is used?}
+computational cost of the method. 
+
+%\textcolor{red}{so what is used?}

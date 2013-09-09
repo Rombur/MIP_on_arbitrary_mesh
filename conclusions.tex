@@ -3,7 +3,6 @@
 \section{Conclusions} \label{sec_conc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\textcolor{red}{READ ALL}\\
 We have extended the Modified Interior Penalty (MIP) form of Diffusion Synthetic Acceleration (DSA) 
 to arbitrary polygonal grids discretized with Piece-Wise Linear Discontinuous finite elements. 
 The MIP-DSA solves employ the same discontinuous finite element trial spaces of the discrete \sn
@@ -21,14 +20,14 @@ demonstrating the effectiveness of MIP as a diffusion synthetic accelerator for
 Fourier analyses show that a PWLD discretization of MIP diffusion synthetic accelerator 
 is always stable, including for high-aspect ratio cells. 
 %
-Numerical experiments have been performed on son different grids with various types of polygonal cells, including
+Numerical experiments have been performed with mesh containing various types of polygonal cells, including
 grids with different polygon types for a given problem and tests with degenerate polygons that mimic
-grids obtained in adaptive mesh refinement strategies. \textcolor{red}{MIP-DSA always performed effectively,
-reducing significantly} the number of Source Iterations needed for convergence. 
-We noted that the efficiency of MIP does not seem to be affected by these meshes. 
+grids obtained in adaptive mesh refinement strategies. In these tests, MIP-DSA always performed effectively,
+reducing significantly the number of Source Iterations needed for convergence. 
+We noted that the efficiency of MIP does not seem to \textcolor{red}{be affected by the meshes employed}. 
 %
 The MIP-DSA  matrix is SPD and we solved the corresponding linear system of equations using a standard Conjugate
 Gradient method with different preconditioners. 
-Algebraic multigrid techniques were found to be the most effective preconditioner, with AGMG being more than 20 times
+Algebraic multigrid techniques were found to be the most effective preconditioner with AGMG being more than 20 times
 faster than unpreconditioned CG.
 
