@@ -127,5 +127,5 @@ matrices on an arbitrary polygonal cell, but the construction of such matrices
 can be greatly simplified using the notion of ``sub-cells'', where a ``sub-cell'',
 in 2D, is defined as the triangular cell linking an edge of the polygonal cell to its
 within-cell point. Note that these ``sub-cells'' are never created as part of the 
-polygonal grid; they are just \textcolor{red}{a simple implementation means of computing}
-the elementary matrices of a polygonal cell by looping over its sub-cells. 
+polygonal grid. However, from a simple code implementation perspective, the computation of
+the elementary matrices of a polygonal cell is greatly simplified by looping over its sub-cells. 
