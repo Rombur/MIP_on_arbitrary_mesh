@@ -1,15 +1,15 @@
 \begin{abstract}
   %\textcolor{red}{The Modified Interior Penalty (MIP) Diffusion Synthetic Acceleration (DSA) technique
   %is extended to the Piece-Wise Linear Discontinuous (PWLD) finite elements.}
-	In this paper, a Diffusion Synthetic Acceleration (DSA) technique
-	is developed for Piece-Wise Linear Discontinuous (PWLD) finite element
-	approximations on arbitrary polygonal grids.
+	In this paper, a Diffusion Synthetic Acceleration (DSA) technique for \sn radiation transport
+	is developed for on arbitrary polygonal grids using a Piece-Wise Linear Discontinuous (PWLD) 
+	finite element approximation.
 %	
-  The discretization of the DSA equations uses the Modified Interior Penalty (MIP), derived from a standard
+  The discretization of the DSA equations uses an Interior Penalty technique, as in classically derived from a standard
 	discontinuous finite element technique for the standard form of the diffusion equation.
   The MIP technique yields a system of linear equations that  
-  is Symmetric Positive Definite (SPD). Thus, solution techniques, such as Preconditioned 
-	Conjugate Gradient (PCG), can be effectively employed. 
+  is Symmetric Positive Definite (SPD). Thus, solution techniques such as Preconditioned 
+	Conjugate Gradient (PCG) can be effectively employed. 
 	This results in an efficient DSA preconditioner for arbitrary 
 	polygonal meshes. Such grids (which include triangular and tetrahedral meshes as a subset) can be used to model 
 	complex objects; 	they can also be advantageously employed 
