@@ -1,0 +1,58 @@
+\documentstyle[11pt]{letter}
+
+%%%%%% Letter Size Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%        \addtolength{\textwidth}{2.5cm}     %% For longer or shorter text width
+        \addtolength{\topmargin}{-4.0cm}    %% For more or less top margin
+       \addtolength{\textheight}{7.5cm}    %% For longer or shorter textheight
+%        \addtolength{\oddsidemargin}{-1.25cm} %% For odd side margin (twoside)
+                                            %% or margin (oneside)
+
+\address{Jean Ragusa\\ 
+Department of Nuclear Engineering \\
+Texas A\&M University\\
+College Station, TX 77843-3133, USA\\
+phone: (979) 862 2033\\
+e-mail: jean.ragusa@tamu.edu \vspace{0.5cm}}
+
+%%%%%% The Signature  and Date %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\signature{\vspace{-1.25cm}Bruno Turcksin and Jean Ragusa}   
+
+
+\begin{document}
+
+\begin{letter}{Professor William Martin\\
+    Editor,\\
+    Journal of Computational Physics}
+\date{\today}
+%%%%%% More vertical space can be added here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%         \vspace{3.0cm}
+
+\opening{Dear Professor Martin,}
+         \vspace{0.25cm}
+%%%%%% More vertical space can be added here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Please find attached a copy of our manuscript titled ``Discontinuous Diffusion Synthetic Acceleration for $S_n$ Transport on
+Arbitrary Polygonal Meshes'' for submission to the {\em Journal of Computational Physics}. 
+
+Some years ago (starting circa 2003), a piecewise linear \underline{\it discontinuous}  (PWLD) finite element discretization of the $S_n$ transport equation has been proposed by Marv Adams et al. Their PWLD discontinuous finite element discretization can be advantageously employed with arbitrary polygonal and polyhedral meshes and satisfies the thick diffusion limit. However, in thick and diffusive configurations, the standard iterative techniques for $S_n$ transport can be slowly converging and need to be preconditioned, usually via a Diffusion Synthetic Acceleration (DSA) scheme.
+
+This manuscript presents a DSA scheme that is fully compatible with a PWLD discretization for arbitrary polygonal meshes. The DSA diffusion matrix is SPD, thus amenable to efficient solution techniques such as PCG and we present results with algebraic multigrid (AMG) as the preconditioner for CG. Our DSA scheme is based on a common interior penalty technique for the discontinuous finite element discretization of the diffusion equation.  Numerical results are provided for grids with arbitrary quadrangles, arbitrary polygons, a mesh with a juxtaposition of triangles, rectangles and hexagons, and a locally refined mesh as obtained in adaptive mesh refinement. Cells with high-aspect ratios are also considered and the proposed DSA scheme performed quite well, especially with CG preconditioned with AMG.
+ 
+This work follows closely prior works on DSA schemes for DFEM discretizations of the transport equation, for instance, works by Jim Morel (LANL, now TAMU), Jim Warsa (LANL), Teresa Bailey (LLNL), Marvin Adams (TAMU), and Todd Palmer (OSU).
+
+
+
+Thank you for considering this manuscript for publication in JCP.
+
+%\vspace{-0.25cm}
+
+
+%%%%%% More vertical space can be added here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%% The Closing %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\closing{Best regards, }
+
+\end{letter}
+\end{document}
+
