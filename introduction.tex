@@ -18,7 +18,7 @@ for the following reasons: polygonal grids
 \een
 To illustrate these two points, first consider
 a hexagonal cell. Employing a PWLD discretization, such a cell possesses six unknowns. Using
-alternate DFE discretizations that perform well in the thick diffusive limit, such as 
+alternate discintinuous finite element discretizations that perform well in the thick diffusive limit, such as 
 linear discontinuous on triangles and bilinear discontinuous on quadrangles, the same 
 hexagonal cell could be split into two quadrangles (for a total of 8 unknowns), two 
 triangles and one quadrangle (10 unknowns), or four triangles (12 unknowns). By inserting an 
@@ -26,19 +26,20 @@ extra point inside the cell, the hexagon could also be divided into three quadra
 (12 unknowns), four quadrangles (16 unknowns) or six triangles (18 unknowns). A 
 similar reasoning can be applied to any $n$-polygon. Arbitrary polygonal grids can 
 also handle locally refined meshes in a natural manner. The example given
-in \Cref{fig_amr} is typical of simulations performed with Adaptive Mesh 
-Refinement (AMR). Solvers based on arbitrary polygonal cells can easily handle cells 
+in \Cref{fig_amr} is typical of configurations obtained with Adaptive Mesh 
+Refinement (AMR), where neighboring cells possess different refinement level depths. 
+Solvers based on arbitrary polygonal cells can easily handle cells 
 with various numbers of edges as follows: on \Cref{fig_amr}, the left cell is actually interpreted 
-as a (degenerate) pentagon whereas the two cells on the right are quadrilaterals. PWLD spatial
+as a (degenerate) pentagon whereas the two cells on the right are quadrilaterals. The PWLD spatial
 discretization can handle locally adapted meshes without any special treatment 
 or further approximation of the coupling between cells. Moreover, the finite element representation
-of the refined side is piece-wise linear. Had the finite element representation been, for instance,
-bilinear discontinuous (BLD), the unrefined cell would have remained a rectangular with a linear
-(not piece-wise linear) representation of the solution along that side. 
+on the refined side is piece-wise linear. Had the finite element representation been, for instance,
+bilinear discontinuous (BLD), the unrefined cell in \Cref{fig_amr} would remain rectangular with a linear
+(not piece-wise linear) representation of the solution along the refined edge. 
 \begin{figure}[H]
    \centering
    \includegraphics[width=0.3\textwidth]{fig_amr.png}
-   \caption{Adaptive mesh refinement grid with PWLD finite elements: left cell is a pentagon right cells are quadrangles.}
+   \caption{Adaptive mesh refinement grid with PWLD finite elements: left cell is interpreted as a pentagon while right cells are quadrangles.}
    \label{fig_amr}
 \end{figure}
 
@@ -76,7 +77,7 @@ scheme yields a $P_1$ system of equations that is
 computationally more expensive than partially consistent DSA schemes that are
 based upon discretizations of a standard diffusion equation. Several partially 
 consistent schemes have been analyzed for discontinuous finite element
-(DFE) discretizations of the transport equation on unstructured meshes, for
+discretizations of the transport equation on unstructured meshes, for
 example, the modified-four-step (M4S) scheme \cite{m4s}, the
 Wareing-Larsen-Adams (WLA) scheme \cite{wla}, and the Modified Interior
 Penalty (MIP) scheme \cite{mip}.
@@ -103,24 +104,27 @@ Recent work to develop a DSA scheme for polygonal cells has mainly focused
 on adapting the WLA scheme to polygonal meshes
 \cite{cfm_dfm,wla_pwl}. The WLA scheme is a two-stage process, where first a
 diffusion solution is obtained using a {\em continuous} finite element
-discretization and then a {\em discontinuous } update is performed cell-by-cell 
-in order to provide an appropriate discontinuous scalar flux correction to the DFE transport 
+discretization and then a {\em discontinuous} update is performed cell-by-cell 
+in order to provide an appropriate discontinuous scalar flux correction to 
+the discontinuous finite element transport 
 solver. In \cite{consistent_p1}, the WLA scheme was
 found to be a stable and effective DSA technique, though its efficiency
-degraded as the problem became more optically thick and highly diffusive.
+degraded as the problem became optically thick and highly diffusive.
 %
 In this paper, we extend the MIP technique to the
 PWLD discretization technique for arbitrary polygonal meshes.
 The MIP scheme is based on the standard Interior Penalty (IP) method for the
 discontinuous finite element discretization of diffusion equations. MIP was first derived in
 \cite{mip}, where it was applied to triangular unstructured meshes (with
-locally adapted cells). MIP does not suffer from the same problems as the WLA when the
+locally adapted cells). MIP does not suffer from the same issues as the WLA technique when the
 problem becomes optically thick and highly diffusive and, therefore, can be a
-viable alternative to the WLA scheme. Because MIP produces an SPD matrix, the authors of \cite{mip}
-have solved the resulting linear system using a Preconditioned Conjugate Gradient (PCG) technique
-(with Symmetric Gauss-Seidel, SGS, as preconditioner). In this paper, we also analyze  
-the effectiveness of algebraic multigrid methods (AMG) \cite{amg,amg_course} to precondition 
-the MIP-DSA diffusion solve and we compare AMG with PCG. %+\textcolor{red}{SGS/SSOR}.
+useful alternate DSA for to accelerate DFE transport solves. 
+%Because MIP produces an SPD matrix, the authors of \cite{mip}
+%have solved the resulting linear system using a Preconditioned Conjugate Gradient (PCG) technique
+In \cite{mip}, a Preconditioned Conjugate Gradient (PCG) technique (with Symmetric Gauss-Seidel, 
+SGS, as preconditioner) was used to solve the MIP-DSA equation. In this paper, we also analyze  
+the effectiveness of algebraic multigrid methods (AMG) \cite{amg,amg_course} as a preconditioner. 
+%the MIP-DSA diffusion solve and we compare AMG with PCG. %+\textcolor{red}{SGS/SSOR}.
 %Algebraic multigrid methods allow the use of multigrid techniques when no grid
 %information is available or when the grid is unstructured. Instead of using a
 %succession of grids based on the geometry of the problems, the ``grid levels''

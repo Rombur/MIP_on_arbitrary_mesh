@@ -9,13 +9,13 @@ and the iterative solution techniques typically
 employed to solve it. 
 We then describe the PWLD discontinuous spatial
 discretization for the transport equation with an emphasis on arbitrary
-polygonal/polyhedral grids.
+polygonal grids.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The \sn Transport Equations}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Given an angular quadrature set $\{\bo_m,w_m\}_{1\leq m \leq M}$, the one-group
-\sn transport equation with isotropic source and scattering is:
+\sn transport equation with isotropic source and isotropic scattering is:
 \begin{equation}
   \( \bo_m\cdot \bn + \Sigma_t(\br) \) \psi_m (\br) = \frac{1}{4\pi} \left( \Sigma_s
   (\br) \phi(\br) + S (\br) \right), \ \textrm{ for } \br \in \mc{D},\
@@ -39,7 +39,7 @@ $\bs{n}_b = \bs{n}(\br_b)$ the outward unit normal vector at $\br_b$.
   & \bs{L} \Psi = \bs{M \Sigma}\Phi + S \equiv q, \label{L_Psi}\\
   &\Phi = \bs{D} \Psi, \label{Phi}
 \end{align}
-where $\Psi$ is the vector of angular fluxes, $\Phi$ the scalar flux,
+where $\Psi=(\psi_1,\ldots,\psi_M)^T$ is the vector of angular fluxes, $\Phi$ the scalar flux,
 $q$ is the total (scattering+external) source, $\bs{L}$ is the streaming
 operator, $\bs{\Sigma}$ is the scattering matrix, $\bs{M}$ is the
 moment-to-direction operator, and $\bs{D}$ is the direction-to-moment
@@ -48,7 +48,7 @@ a block-diagonal operator; given a total source $q$, one can solve independently
 for the resulting angular
 fluxes in all directions. The action of $\bs{L}^{-1}$ is often referred to as
 a transport sweep when discontinuous spatial approximations are
-employed because, for any direction $\bo_m$, the action of $\bs{L}_m^{-1}$ can
+employed:  for any direction $\bo_m$, the action of $\bs{L}_m^{-1}$ can
 be obtained by traversing the mesh (i.e., sweeping) in a specific ordering of
 the cells, thus requiring that a small linear system of equations be solved 
 cell by cell. The order in which the elements are solved constitutes the graph
@@ -64,14 +64,14 @@ flux is augmented by the angular flux unknowns that cause the cycle \cite{mip}.
 
 \Cref{L_Psi,Phi} can be solved using the Source Iteration (SI) method (a
 stationary iterative technique also known as Richardson iteration). 
-The $\ell^{th}$ iteration of the SI technique is given by :
+The $\ell^{th}$ iteration of SI is given by :
 \begin{equation}
   \Phi^{(\ell+1)} = \bs{DL}^{-1} \(\bs{M\Sigma}\Phi^{(\ell)} + S\).
 \end{equation}
 Alternatively, a subspace Krylov method (usually GMRes) can be employed to
 solve the linear system of equations, recast as follows:
 \begin{equation}
-  \(\bs{I} - \bs{DL}^{-1}\bs{M \Sigma}\) \Phi = \bs{DL}^{-1}S
+  \(\bs{I} - \bs{DL}^{-1}\bs{M \Sigma}\) \Phi = \bs{DL}^{-1}S .
 \end{equation}
 SI and GMRes-based transport solves require transport sweeps (the action of $\bs{L}^{-1}$).
 When the scattering ratio
@@ -120,12 +120,13 @@ equal to the number of vertices in the polygon (i.e., $1 \le i \le N_V$). In thi
 positive weights $\alpha_i$ are chosen to be equal to $\frac{1}{N_V}$. For example, on a
 quadrilateral cell, we employ $\alpha_i =\frac{1}{4}$. Finally, note that on
 triangular cells, the PWLD basis functions reduce to the
-standard Linear Discontinuous (LD) basis functions if ones chooses $\alpha_i = \frac{1}{3}$. 
+standard Linear Discontinuous (LD) basis functions if one chooses $\alpha_i = \frac{1}{3}$. 
 Given the definition of the PWLD
 finite elements, it may seem complicated to build the elementary transport 
 matrices on an arbitrary polygonal cell, but the construction of such matrices
 can be greatly simplified using the notion of ``sub-cells'', where a ``sub-cell'',
 in 2D, is defined as the triangular cell linking an edge of the polygonal cell to its
-within-cell point. Note that these ``sub-cells'' are never created as part of the 
-polygonal grid. However, from a simple code implementation perspective, the computation of
-the elementary matrices of a polygonal cell is greatly simplified by looping over its sub-cells. 
+within-cell point. Note that these ``sub-cells'' are never created not stored as part of the 
+polygonal grid. However, from a code implementation perspective, the computation of
+the elementary matrices on a polygonal cell is greatly simplified by looping over its sub-cells. 
+
