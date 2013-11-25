@@ -108,7 +108,7 @@
   always stable and effective at reducing the spectral radius for iterative transport
   solves, even for grids with high-aspect ratio cells.
   Numerical results are presented for different grid types: quadrilateral, hexagonal, and polygonal grids as well as grids
-	with local mesh adaptativity. 
+	with local mesh adaptivity. 
 %
 \end{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -409,7 +409,7 @@ finite elements, it may seem complicated to build the elementary transport
 matrices on an arbitrary polygonal cell, but the construction of such matrices
 can be greatly simplified using the notion of ``sub-cells'', where a ``sub-cell'',
 in 2D, is defined as the triangular cell linking an edge of the polygonal cell to its
-within-cell point. Note that these ``sub-cells'' are never created not stored as part of the 
+within-cell point. Note that these ``sub-cells'' are never created nor stored as part of the 
 polygonal grid. However, from a code implementation perspective, the computation of
 the elementary matrices on a polygonal cell is greatly simplified by looping over its sub-cells. 
 
@@ -738,7 +738,7 @@ The MIS scheme used in ML applies the MIS algorithm \cite{graph_coloring} to
 the graph of the matrix $\bs{A}^2$. These two coarsening 
 schemes use a fixed ratio of coarsening between levels. 
 %
-Once aggregation is done, a tentative prolongation matrix, $\bs{\tilde{P}}_k$ 
+Once the aggregation is done, a tentative prolongation matrix, $\bs{\tilde{P}}_k$ 
 is constructed \cite{mis}. A example of $\bs{\tilde{P}}_k$ is given by:
 \begin{equation}
   \bs{\tilde{P}}_k(i,j) = \left\{
@@ -759,7 +759,7 @@ damped Jacobi. Then, the prolongation matrix is given by:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The AGMG Package}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Unlike in ML, the prolongation operator in AGMG is not smoothed; this results in a
+Unlike ML, the prolongation operator in AGMG is not smoothed; this results in a
 cheaper setup and a decrease in memory requirements \cite{agmg2}. However,
 such a scheme could be less robust. To counteract this weakness, the
 aggregation scheme is more involved. Coarsening algorithms that control
@@ -769,7 +769,7 @@ number of badly shaped aggregates can have a huge impact on
 the convergence. In AGMG, the aggregation algorithm has as input the upper
 bound of the two-grid condition number. When the aggregates are constructed,
 their quality is checked. This increases the cost of the coarsening
-and it is thus important that the coarsening is fast enough. Such an 
+and therefore, it is important that the coarsening is fast enough. Such an 
 algorithm does not control the size of the aggregates, and, therefore, it is 
 difficult to control the speed of coarsening. However, controlling the condition 
 number rather than the coarsening speed can be an effective alternative approach. By 
@@ -1277,8 +1277,9 @@ We noted that the effectiveness of MIP does not seem to be affected by the meshe
 
 The MIP-DSA  matrix is Symmetric Positive Definite (SPD) and we solved the resulting linear system 
 of equations using a standard Conjugate Gradient method with different preconditioners. 
-Algebraic multigrid techniques (AGMG and ML) were found to be the most effective preconditioner, with AGMG 
-being more than 20 times faster than unpreconditioned CG.
+Algebraic multigrid techniques (AGMG and ML) were found to be the most
+effective preconditioner.% with AGMG 
+%being more than 20 times faster than unpreconditioned CG.
 
 We conclude that MIP-DSA is an effective alternative to
 carry out diffusion synthetic accelerations for \sn radiation transport problems on arbitrary polygonal grids and 
