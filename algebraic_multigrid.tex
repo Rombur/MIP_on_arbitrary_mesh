@@ -15,9 +15,9 @@ will compare the calculation time and the number of iterations using conjugate
 gradient preconditioned with Symmetric Gauss-Seidel (PCG-SGS) to those of CG preconditioned with an
 algebraic multigrid method. PCG-SGS was chosen because little difference was noted 
 when employing other damping factors for MIP-DSA on triangular grids \cite{wang_personal_comm}. 
-An algebraic multigrid method was employed to precondition the Krylov solver for the 
-even-parity finite element-spherical harmonics (FE-$P_N$) method; see, for instance,
-\cite{amg_pn}. In \cite{amg_pn}, the use of AMG  as a 
+In \cite{amg_pn}, an algebraic multigrid method was successfully employed to precondition 
+the Krylov solver for the even-parity finite element-spherical harmonics
+(FE-$P_N$) method. The use of AMG as a 
 preconditioner resulted in a 60\% reduction in the solution time compared to 
 ILU(0) preconditioning and even more reduction compared to SSOR preconditioning. 
 In our implementation, we have linked our code with the ML package 
@@ -115,8 +115,8 @@ The MIS scheme used in ML applies the MIS algorithm \cite{graph_coloring} to
 the graph of the matrix $\bs{A}^2$. These two coarsening 
 schemes use a fixed ratio of coarsening between levels. 
 %
-Once aggregation is done, a tentative prolongation matrix, $\bs{\tilde{P}}_k$ 
-is constructed \cite{mis}. A example of $\bs{\tilde{P}}_k$ is given by:
+Once the aggregation is done, a tentative prolongation matrix, $\bs{\tilde{P}}_k$ 
+is constructed \cite{mis}. An example of $\bs{\tilde{P}}_k$ is given by:
 \begin{equation}
   \bs{\tilde{P}}_k(i,j) = \left\{
   \begin{aligned}
@@ -136,7 +136,7 @@ damped Jacobi. Then, the prolongation matrix is given by:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The AGMG Package}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Unlike in ML, the prolongation operator in AGMG is not smoothed; this results in a
+Unlike ML, the prolongation operator in AGMG is not smoothed; this results in a
 cheaper setup and a decrease in memory requirements \cite{agmg2}. However,
 such a scheme could be less robust. To counteract this weakness, the
 aggregation scheme is more involved. Coarsening algorithms that control
@@ -146,7 +146,7 @@ number of badly shaped aggregates can have a huge impact on
 the convergence. In AGMG, the aggregation algorithm has as input the upper
 bound of the two-grid condition number. When the aggregates are constructed,
 their quality is checked. Obviously, this increases the cost of the coarsening
-and it is thus important that the coarsening is fast enough. Such an 
+and it is important that the coarsening is fast enough. Such an 
 algorithm does not control the size of the aggregates, and, therefore, it is 
 difficult to control the speed of coarsening. However, controlling the condition 
 number rather than the coarsening speed can be an effective alternative approach. By 
