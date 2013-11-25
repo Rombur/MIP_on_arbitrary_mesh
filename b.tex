@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[preprint,10pt]{elsarticle}
 \usepackage{amsmath}
 \usepackage{array}
 \usepackage{xspace}
@@ -15,6 +15,7 @@
 \usepackage{subcaption}
 % % permet d'utiliser cref and Cref
  % permet d'utiliser cref and Cref
+\usepackage{lineno}
 
 \usepackage{setspace}
 %\doublespacing
@@ -55,13 +56,33 @@
 \newcommand{\jmp}[1]{[\![#1]\!]}                     % jump
 \newcommand{\mvl}[1]{\{\!\!\{#1\}\!\!\}}             % mean value%
 
+\journal{JCP}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frontmatter}
+
 \title{Discontinuous Diffusion Synthetic Acceleration for \sn Transport on
 2D Arbitrary Polygonal Meshes}
-\author{} 
-\date{}
-\maketitle
+
+%-------------------------
+\author{Bruno Turcksin \corref{cor1}\fnref{label1}}
+\ead{bruno.turcksin@math.tamu.edu}
+
+\author{Jean C. Ragusa\corref{cor2}\fnref{label1}}
+\ead{jean.ragusa@tamu.edu}
+
+\address[label1]{Department of Nuclear Engineering, Texas A\&M University 
+  College Station, TX 77843, USA \fnref{label1}}
+
+\cortext[cor1]{Current address: Department of Mathematics, Texas A\&M University 
+  College Station, TX 77843, USA  }
+\cortext[cor2]{Corresponding author}
+%-------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -92,6 +113,22 @@
 \end{abstract}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%-------------------------
+\begin{keyword}
+Diffusion Synthetic Acceleration \sep
+DSA \sep
+$S_n$ transport equation \sep
+piece-wise linear finite element \sep
+discontinuous finite element method \sep
+interior penalty method.
+\end{keyword}
+%-------------------------
+\end{frontmatter}
+%-------------------------
+
+\linenumbers
+\doublespacing
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
