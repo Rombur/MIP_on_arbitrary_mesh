@@ -8,9 +8,9 @@
 \usepackage{lscape} % utilisation du mode paysage
 \usepackage{mathbbol} % permet d'avoir le vrai symbol pour les reels grace a mathbb
 \usepackage{enumerate} % permet d'utiliser enumerate
-\usepackage{marvosym} % permet d'avoir le symbol pour le nucleaire
-\usepackage{moreverb} % permet d'utiliser verbatimtab : conservation la tabulation
-\usepackage{stmaryrd} % permet d'utiliser \llbrackedt et \rrbracket : double crochet
+%\usepackage{marvosym} % permet d'avoir le symbol pour le nucleaire
+%\usepackage{moreverb} % permet d'utiliser verbatimtab : conservation la tabulation
+%\usepackage{stmaryrd} % permet d'utiliser \llbrackedt et \rrbracket : double crochet
 \usepackage{caption}
 \usepackage{subcaption}
 % % permet d'utiliser cref and Cref
@@ -31,10 +31,10 @@
 \newcommand\ra{\right\rangle}
 \newcommand\bs{\boldsymbol}
 \newcommand\red{\textcolor{red}}
-\newcommand\ldb{\{\!\!\{}
-\newcommand\rdb{\}\!\!\}}
-\newcommand\llb{\llbracket}
-\newcommand\rrb{\rrbracket}
+%\newcommand\ldb{\{\!\!\{}
+%\newcommand\rdb{\}\!\!\}}
+%\newcommand\llb{\llbracket}
+%\newcommand\rrb{\rrbracket}
 \newcommand\mc{\mathcal}
 
 \renewcommand{\(}{\left(}
@@ -50,9 +50,10 @@
 \newtheorem{algorithm}{Algorithm}[section]
 
 % DGFEM commands
-\newcommand{\jmp}[1]{\llb #1 \rrb}                     % jump
-\newcommand{\mvl}[1]{\ldb #1 \rdb}             % mean value
-%
+%\newcommand{\jmp}[1]{\llb #1 \rrb}                     % jump
+%\newcommand{\mvl}[1]{\ldb #1 \rdb}             % mean value
+\newcommand{\jmp}[1]{[\![#1]\!]}                     % jump
+\newcommand{\mvl}[1]{\{\!\!\{#1\}\!\!\}}             % mean value%
 
 
 \begin{document}
@@ -94,6 +95,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
@@ -108,17 +110,16 @@ polygonal cells.
 Arbitrary polygonal (polyhedral in 3D) cells can advantageously be employed, especially
 in the context of spatial discretizations based on discontinuous finite elements (DFE),
 for the following reasons: polygonal grids 
-\ben
-\item may allow for a reduced numbers of unknowns and
-\item can provide a natural transition for locally adapted meshes. 
-\een
+(i) allow for a reduced numbers of unknowns and
+(ii) provide a natural transition for locally adapted meshes. 
+
 To illustrate these two points, first consider
 a hexagonal cell. Employing a PWLD discretization, such a cell possesses six unknowns. Using
-alternate discintinuous finite element discretizations that perform well in the thick diffusive limit, such as 
+other DFE that perform well in the thick diffusive limit \cite{thick_dgfem}, such as 
 linear discontinuous on triangles and bilinear discontinuous on quadrangles, the same 
-hexagonal cell could be split into two quadrangles (for a total of 8 unknowns), two 
+hexagonal cell could be split into: two quadrangles (for a total of 8 unknowns), two 
 triangles and one quadrangle (10 unknowns), or four triangles (12 unknowns). By inserting an 
-extra point inside the cell, the hexagon could also be divided into three quadrangles 
+extra point inside the cell, the hexagon could also be divided into: three quadrangles 
 (12 unknowns), four quadrangles (16 unknowns) or six triangles (18 unknowns). A 
 similar reasoning can be applied to any $n$-polygon. Arbitrary polygonal grids can 
 also handle locally refined meshes in a natural manner. The example given
@@ -129,7 +130,7 @@ with various numbers of edges as follows: on Figure~\ref {fig_amr}, the left cel
 as a (degenerate) pentagon whereas the two cells on the right are quadrilaterals. The PWLD spatial
 discretization can handle locally adapted meshes without any special treatment 
 or further approximation of the coupling between cells. Moreover, the finite element representation
-on the refined side is piece-wise linear. Had the finite element representation been, for instance,
+along the refined side is piece-wise linear. Had the finite element representation been, for instance,
 bilinear discontinuous (BLD), the unrefined cell in Figure~\ref {fig_amr} would remain rectangular with a linear
 (not piece-wise linear) representation of the solution along the refined edge. 
 \begin{figure}[H]
@@ -259,7 +260,7 @@ polygonal grids.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The \sn Transport Equations}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Given an angular quadrature set $\{\bo_m,w_m\}_{1\leq m \leq M}$, the one-group
+Given an angular quadrature set $\{\bo _m,w_m\}_{1\leq m \leq M}$, the one-group
 \sn transport equation with isotropic source and isotropic scattering is:
 \begin{equation}
   \( \bo_m\cdot \bn + \Sigma_t(\br) \) \psi_m (\br) = \frac{1}{4\pi} \left( \Sigma_s
@@ -341,7 +342,7 @@ element formulation, on a given spatial cell $K$, is given by:
 where $\tf$ represents a generic discontinuous finite element basis function, $\partial K^{-}$ 
 is the inflow face of element $K$, and $\partial K^{+}$ is the outflow face of 
 element $K$. The angular flux values on an inflow face, denoted by 
-$\psi_m^{\uparrow}$ in eq.~\textup {(\ref {transport_int})}, are taken from the upwind neighbor 
+$\psi_m^{\uparrow}$ in Eq.~\textup {(\ref {transport_int})}, are taken from the upwind neighbor 
 element of that face.
 
 Next, we define the $\tf$ basis functions for the PWLD discretization. First, we
@@ -398,7 +399,7 @@ unknown) transport solution and the current iterate can be estimated from a
 computationally less expensive process, yielding a corrective term to be added
 to the current iterate in order to improve the next iterate. In DSA, a
 corrective scalar flux contribution, $\delta \Phi$, is sought through the following 
-diffusion equation, 
+diffusion equation \cite{dsa_ref}, 
 \begin{equation}
   \bs{A}\ \delta \Phi = \bs{\Sigma}\(\Phi^{(\ell+1/2)} - \Phi^{(\ell)}\).
 \end{equation}
@@ -418,12 +419,15 @@ be employed in its linear solve) and easy to form (even on arbitrary grids).
 \subsection{Modified Interior Penalty DSA Scheme for Polygons}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Here, we discuss the Modified Interior Penalty method for the diffusion equation for arbitrary polygons
+Here, we discuss the Modified Interior Penalty (MIP) method for the diffusion equation for arbitrary polygons
 as a DSA scheme. 
 In its discretization, this DSA scheme employs the same discontinuous finite elements used in the 
 discretization of the transport operator. 
-MIP as a DSA scheme has been shown to be always stable for isotropic scattering on triangular 
-cells \cite{mip}. The MIP diffusion solve is based on the standard Interior Penalty (IP) method
+MIP as a DSA scheme has been shown to be always stable on triangular cells for isotropic scattering \cite{mip}
+(for highly forward-peaked scattering, DSA is not an efficient preconditioner and one needs to employ
+an angular multigrid technique \cite{angular_multigrid_1d}, whose coarsest angular level can be a diffusion solve;
+see \cite{angular_multigrid_bruno} for instance). 
+The MIP diffusion solve is based on the standard Interior Penalty (IP) method
 \cite{Kanschat2007}.
 %, with an \textcolor{red}{appropriately modified} penalty term. 
 Consider the following diffusion update equation:
@@ -449,7 +453,7 @@ between two iterations, $Q_0=\Sigma_s\(\Phi^{(\ell+1/2)}-\Phi^{(\ell)}\)$,
 %$J^{inc} = \sum_{\bo_m\cdot\bs{n}_b >0} w_m 
 %|\bo_m \cdot \bs{n}_b| \delta \psi_d$, 
 %
-and the known incoming angular flux from the transport problem translates into the diffusion
+and the known incoming angular flux boundary condition from the transport problem translates into the Robin-type
 vacuum boundary condition given in Equation~\textup {(\ref {eq:dsa-bc})}, where $\partial_{n} = \bs{n}\cdot \bn$
 and $\bs{n}$ is the outer normal unit vector on the domain's boundary, $\partial \mc{D}$. 
 %
@@ -460,7 +464,7 @@ and $\bs{n}$ is the outer normal unit vector on the domain's boundary, $\partial
 %penalty factor $\kappa_e^{IP}$ used for IP is replaced by a new penalty factor
 %$\kappa_e^{MIP}$. Therefore, 
 %
-The weak form for the MIP-DSA equation is given by:
+The MIP weak form for the DSA update equation is given by:
 \begin{equation}
 a(\delta \phi,\phi^*) = l(\phi^*)
 \label{mip}
@@ -469,15 +473,14 @@ a(\delta \phi,\phi^*) = l(\phi^*)
 with the bilinear (matrix) form:
 \begin{equation}
 \begin{split}
-a(\delta \phi,\phi^*) =& \(\Sigma_a \delta \phi,\phi^*\)_{\mc{D}}+
-  (\mathrm{D}\bn\delta \phi,\bn\phi^*)_{\mc{D}} + \(\kappa_e^{MIP} \llb\delta \phi\rrb,
-\llb\phi^*\rrb\)_{E_h^i} + \(\llb\delta \phi\rrb,\ldb\mathrm{D}\partial_n
-\phi^*\rdb\)_{E_h^i} +\\
-& \(\ldb\mathrm{D}\partial_n \delta \phi\rdb,\llb\phi^*\rrb\)_{E_h^i} +
-\(\kappa_e^{MIP}
-\delta \phi,\phi^*\)_{\partial \mc{D}^d} -\frac{1}{2} \(\delta \phi,\mathrm{D} \partial_n
-\phi^*\)_{\partial \mc{D}^d} - \frac{1}{2}\(\mathrm{D}\partial_n
-\delta \phi,\phi^*\)_{\partial \mc{D}^d}
+a(\delta \phi,\phi^*) =& \(\Sigma_a \delta \phi,\phi^*\)_{\mc{D}}
+  + (\mathrm{D}\bn\delta \phi,\bn\phi^*)_{\mc{D}} 
+	+ \( \kappa_e^{MIP} \jmp{\delta \phi}, \jmp{\phi^*}      \)_{E_h^i} 
+	+ \( \jmp{\delta \phi}, \mvl{\mathrm{D}\partial_n\phi^*} \)_{E_h^i} \\	
+& + \( \mvl{\mathrm{D}\partial_n \delta \phi},\jmp{\phi^*} \)_{E_h^i} 
+  + \(\kappa_e^{MIP} \delta \phi,\phi^*\)_{\partial \mc{D}^d} 
+	- \frac{1}{2} \(\delta \phi,\mathrm{D} \partial_n\phi^*\)_{\partial \mc{D}^d} 
+	- \frac{1}{2} \(\mathrm{D} \partial_n\delta \phi,\phi^*\)_{\partial \mc{D}^d}
 \label{mip_b}
 \end{split}
 \end{equation}
@@ -498,7 +501,7 @@ $(f,g)_e = \int_e fg\ ds$. In the above,
 $\mc{D}$ into non-overlapping elements $K$, $E_h^i$ is the set of interior
 edges, $\delta \phi$ is the numerical solution for the diffusion correction, and $\phi^*$ is any test function.
 Any entry $A_{ij}$ of matrix $\bs{A}$ is simply given by $A_{ij}= a(b_j,b_i)$. The resulting matrix $\bs{A}$ is SPD
-and thus can be solved using a preconditioned conjugate gradient technique.
+\cite{Arnold1982,arnold2000discontinuous} and thus can be solved using a preconditioned conjugate gradient technique.
 %
 %$\in W_{\mc{D}}^h$, $W_{\mc{D}}^h=\{P \in
 %L^2(\mc{D}); P|_{K}\in V_p(K), \forall K \in \mathbb{T}_h\}$, where $V_p(K)$
@@ -506,7 +509,7 @@ and thus can be solved using a preconditioned conjugate gradient technique.
 %
 The jump and mean value of a variable $u$  at the interface between two elements is defined as follows:
 \begin{equation}
-\llb u \rrb = u^+ - u^- \text{ and } \ldb u\rdb = \frac{u^+ + u^-}{2} ,
+\jmp{u} = u^+ - u^- \text{ and } \mvl{u} = \frac{u^+ + u^-}{2} ,
 \end{equation}
 respectively.
 %
@@ -544,22 +547,26 @@ orthogonal to the edge $e$.
 %This correction can be used when some of the boundary conditions are periodic
 %or reflective.
 %
-When polygonal cells are employed, there is no 
-simple way to compute $h_{\bot}$. To estimate $h_{\bot}$, we 
+When polygonal cells are employed, there are no 
+simple ways in which to compute $h_{\bot}$. To estimate $h_{\bot}$, we 
 assume that the polygonal cells do not deviate significantly from regular polygons. 
-In such cases, if the cell has an even number of edges, the orthogonal 
-length equals two times the apothem, i.e., two times the segment between the 
-midpoint of a side of the polygon and the center of this polygon 
-$\(\textrm{apothem}=2\times \tfrac{\textrm{area}}{\textrm{perimeter}}\)$. 
-If a cell has an odd number of edges, its orthogonal length is given by the 
-apothem plus the circumradius, i.e., the radius of the circle circumscribed to 
+In such cases, if the regular polygon has an even number of edges, the orthogonal 
+length equals two times the apothem. The apothem is the line segment between the 
+polygon's center and the midpoint of the polygon's side and its length is equal to
+twice the polygon's area divided by the polygon's perimeter,
+$\textrm{apothem}=2\times \tfrac{\textrm{area}}{\textrm{perimeter}}$. 
+If polygon has an odd number of sides, its orthogonal length is given by the sum of the
+apothem and the circumradius, the latter being the radius of the circle circumscribed to 
 the polygon $\(\textrm{circumradius}=\sqrt{\tfrac{2\times \textrm{area}}{N_V
 \sin\(\frac{2\pi}{N_V}\)}}\)$. A summary of the definitions used for $h_{\bot}$ for 
 any polygon as a function of the number of vertices is given in
 Table~\ref {table_h_bot}.
+%
 \begin{table}[H]
   \begin{center}
-    \caption{Orthogonal length $h_{\bot}$ for different polygonal types.}
+    \caption{Orthogonal length $h_{\bot}$ for different polygonal types : 
+		$\textrm{area}$ is the polygon's area; $\textrm{perimeter}$ is the polygon's perimeter; 
+		$N_V$ is the number of vertices; $L_e $ is the edge's length.}
     \begin{tabular}{|c|c|c|c|c|}
       \hline
       Number of vertices & 3 & 4 & $> 4$ and even & $> 4$ and odd \\
@@ -589,18 +596,17 @@ $\frac{\textrm{area}}{L_e}$ & $4\times
 \subsection{AMG Principles}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-As mentioned above, a common way to solve a SPD system of equations is to use a 
-conjugate gradient technique preconditioned  with Symmetric Gauss-Seidel (PCG-SGS)
-or SSOR (PCG-SSOR); SGS is simply SSOR with a damping factor of one. In this research, we
-will compare the calculation time and the number of iterations using conjugate 
-gradient preconditioned with Symmetric Gauss-Seidel (PCG-SGS) to those of CG preconditioned with an
+A common way to solve an SPD system of equations is to use a 
+Conjugate Gradient (CG) technique preconditioned  with Symmetric Gauss-Seidel (PCG-SGS)
+or SSOR (PCG-SSOR); SGS is simply SSOR with a damping factor of one. Here, we
+compare CG preconditioned with Symmetric Gauss-Seidel (PCG-SGS) with CG preconditioned with an
 algebraic multigrid method. PCG-SGS was chosen because little difference was noted 
 when employing other damping factors for MIP-DSA on triangular grids \cite{wang_personal_comm}. 
-An algebraic multigrid method was employed to precondition the Krylov solver for the 
-even-parity finite element-spherical harmonics (FE-$P_N$) method; see, for instance,
-\cite{amg_pn}. In \cite{amg_pn}, the use of AMG  as a 
-preconditioner resulted in a 60\% reduction in the solution time compared to 
-ILU(0) preconditioning and even more reduction compared to SSOR preconditioning. 
+%An algebraic multigrid method was employed to precondition the Krylov solver for the 
+%even-parity finite element-spherical harmonics (FE-$P_N$) method; see, for instance,
+%\cite{amg_pn}. In \cite{amg_pn}, the use of AMG  as a 
+%preconditioner resulted in a 60\% reduction in the solution time compared to 
+%ILU(0) preconditioning and even more reduction compared to SSOR preconditioning. 
 In our implementation, we have linked our code with the ML package 
 \cite{ml_guide} of the Trilinos library and with the AGMG library \cite{agmg_guide}. 
 ML is a multigrid preconditioning package that uses a smoothed aggregation 
@@ -613,12 +619,12 @@ stand-alone solvers. In many applications, they achieve the so-called
 system of equations [is attained] in a computational work that is a small 
 multiple of the operation counts associated with discretizing the system'' 
 \cite{textbook_eff}. However, in many other applications, multigrid methods, 
-and particularly algebraic multigrid methods, cannot achieve such efficiency, 
+and particularly algebraic multigrid methods, may not achieve such efficiency, 
 \cite{k_cycle} and, in such cases, they are often used as preconditioner for 
 Krylov subspace methods. 
 
-Before describing a general multigrid method, we recall the process using a 
-two-grid method. Consider the following system
+Before describing a general multigrid method, we recall the process using 
+two grids. Consider the following system
 \begin{equation}
   \bs{A}_f u_f = b_f,
 \end{equation}
@@ -630,7 +636,7 @@ defined on a fine grid $\Gamma_f$. The two-grid algorithm is as follows:
     the coarse grid $\Gamma_c$: $r_c = \bs{R}(b_f-\bs{A}_f u)$;
   \item Solve the system on the coarse grid: $v=\bs{A}_c^{-1} r_c$;
   \item Interpolate the coarse grid correction to the fine grid and add the
-    correction to $u$: $u=u+\bs{P}v$;
+    correction to $u$: $u \leftarrow u+\bs{P}v$;
   \item Perform $\nu_2$ post-smoothing iterations: $u = S^{\nu_2}(u,b_f)$.
 \end{enumerate}
 When using AMG, the matrix $\bs{A}_c$ on the coarse grid is given by the
@@ -663,10 +669,9 @@ matrix. Among the algebraic multigrid methods, there are three main categories:
 the classical Ruge-Stueben AMG, the plain aggregation AMG, and the
 smoothed aggregation AMG. ML uses smoothed aggregation AMG and AGMG
 uses plain aggregation AMG. Next, we briefly explain the coarsening step in
-the ML and AGMG implementations. The coarsening step is the most important 
-step because if the coarsening occurs too fast, convergence rates will 
-decrease. However, if coarsening is too slow, more memory may be 
-required to solve the problem. 
+the ML and AGMG implementations. The coarsening step is a crucial step 
+because convergence rates will decrease if coarsening occurs too quickly. 
+However, if coarsening is too slow, more memory may be required to solve the problem. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The ML Package of Trilinos}
@@ -687,7 +692,7 @@ dimension of the problem; its algorithm proceeds as follows \cite{mis}:
     \begin{enumerate}
       \item Choose a point which is not an adjacent to an
         aggregate. This point is a new root point.
-      \item Define a new aggregate as the root point and its neighbors 
+      \item Define a new aggregate as the root point and its neighbors .
     \end{enumerate}
   \item[Step 2:] Add all the points left to the existing aggregates or form 
     new aggregates with them.
@@ -726,7 +731,7 @@ Since the convergence of AMG is bounded by the worst aggregate, even a small
 number of badly shaped aggregates can have a huge impact on
 the convergence. In AGMG, the aggregation algorithm has as input the upper
 bound of the two-grid condition number. When the aggregates are constructed,
-their quality is checked. Obviously, this increases the cost of the coarsening
+their quality is checked. This increases the cost of the coarsening
 and it is thus important that the coarsening is fast enough. Such an 
 algorithm does not control the size of the aggregates, and, therefore, it is 
 difficult to control the speed of coarsening. However, controlling the condition 
@@ -739,23 +744,24 @@ combinations, compute their quality, and then choose the optimal
 coarsening. In practice, this would be too costly, and, in AGMG, the aggregation 
 step is done by a few passes of a pairwise aggregation algorithm. Each pass
 aggregates the variables two by two to allow a simple computation of the aggregate 
-quality and to keep the cost per iteration low. The advantage of controlling the 
-condition number becomes even more important when a $K-$cycle, or Krylov-cycle, is 
-used instead of the more common $V-$ or $W-$cycles. The difference between the 
-$K-$cycle and the $V-$ or $W-$cycles is that $K-$cycles use a 
-few iterations of a Krylov solver preconditioned by a coarser grid to solve 
-the coarse grid problem in the two-grid algorithm \cite{k_cycle}. The
-advantage of the $K-$cycle is an increased robustness compared to $V-$ and
-$W-$cycle. This scheme 
-is nonlinear and requires, when the system is SPD, the use of flexible CG 
-\cite{fcg,fcg_2,fcg_3,fcg_4} as the Krylov solver. Even when the condition 
-number of the two-grid method is large, the convergence properties of the 
-$K-$cycle can be independent of the number of levels \cite{k_cycle}. The 
-computational cost of the $K-$cycle is about the same than that of a $W-$cycle. 
-If the number of unknowns does not decrease sufficiently from one 
-level to the next, the $K-$cycle at one level is replaced by a $V-$cycle at 
-this level. At that level, no Krylov solver is used in order to decrease the
-computational cost of the method. 
+quality and to keep the cost per iteration low. 
+%%The advantage of controlling the 
+%%condition number becomes even more important when a $K-$cycle, or Krylov-cycle, is 
+%%used instead of the more common $V-$ or $W-$cycles. The difference between the 
+%%$K-$cycle and the $V-$ or $W-$cycles is that $K-$cycles use a 
+%%few iterations of a Krylov solver preconditioned by a coarser grid to solve 
+%%the coarse grid problem in the two-grid algorithm \cite{k_cycle}. The
+%%advantage of the $K-$cycle is an increased robustness compared to $V-$ and
+%%$W-$cycle. This scheme 
+%%is nonlinear and requires, when the system is SPD, the use of flexible CG 
+%%\cite{fcg,fcg_2,fcg_3,fcg_4} as the Krylov solver. Even when the condition 
+%%number of the two-grid method is large, the convergence properties of the 
+%%$K-$cycle can be independent of the number of levels \cite{k_cycle}. The 
+%%computational cost of the $K-$cycle is about the same than that of a $W-$cycle. 
+%%If the number of unknowns does not decrease sufficiently from one 
+%%level to the next, the $K-$cycle at one level is replaced by a $V-$cycle at 
+%%this level. At that level, no Krylov solver is used in order to decrease the
+%%computational cost of the method. 
 
 %\textcolor{red}{so what is used?}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -765,17 +771,17 @@ computational cost of the method.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Results} \label{sec_res}
+\section{Numerical Results} \label{sec_res}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In this section, we present two series of results. First, Fourier analyses are 
 carried out to analyze the performance of the MIP-DSA acceleration scheme 
-for an homogeneous infinite medium meshed with rectangular cells and discretized with PWLD.
+for an homogeneous infinite medium meshed with rectangular cells and discretized with PWLD finite elements.
 The effects of the $S_n$ order and the cell aspect ratio on the spectral radius of the iterative 
 scheme are also studied. Second, the MIP-DSA technique is implemented in a 2D \sn code that uses
 arbitrary polygonal grids with a PWLD spatial discretization.  Numerical examples employ
-several mesh types: arbitrary quadrilaterals; arbitrary polygons; a regular layout of 
+several mesh types: arbitrary quadrilaterals; arbitrary polygons; a grid containing a regular layout of 
 hexagons/triangles/rectangles; and a grid that mimics adaptive mesh refinement 
 performed on rectangular cells. The MIP-DSA diffusion solves are performed using various
 linear solvers: Conjugate Gradient (CG); Conjugate Gradient
@@ -811,8 +817,8 @@ scattering ratio $c=0.9999$; periodic boundary conditions are used. The results
 are plotted on Figure~\ref {fig_fa_sn}, where the $x-$axis is the mesh size in mean free 
 paths and the $y-$axis is the spectral radius. There are four curves corresponding 
 to different $S_n$ orders: $S_2$, $S_4$, $S_8$, and $S_{16}$.
-From Figure~\ref {fig_fa_sn}, we conclude that MIP is stable for every 
-cell size. The spectral radius is always less than 0.5, except for $S_2$ where 
+From Figure~\ref {fig_fa_sn}, we conclude that a PWLD discretization of the MIP-DSA equations 
+is stable for every cell size. The spectral radius is always less than 0.5, except for $S_2$ where 
 it is about 0.7. In the fine mesh limit, the continuum results are recovered \cite{multisweep}. Notably,
 the spectral radius of SI+DSA using an $S_2$ quadrature in 2D undiscretized space is $0.5c$. Also, as the angular 
 quadrature is refined, the standard limit value of $0.2247c$ for the spectral result is reached.
@@ -846,7 +852,7 @@ and that the maximum spectral radius shows little sensitivity to the aspect rati
 The MIP-DSA scheme has been implemented in a 2D \sn code that employs a PWLD discretization
 for arbitrary polygonal grids. Several test cases are presented.
 
-\subsubsection{Homogeneous Test Problem}  \label{sec_homog}
+\subsubsection{Homogeneous Test Cases}  \label{sec_homog}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 We compare the different linear solvers employed for MIP-DSA using a homogeneous medium, $100cm
@@ -856,12 +862,16 @@ use an $S_8$ angular quadrature. A relative tolerance of  $10^{-8}$ is used for 
 while the MIP-DSA solvers employs a relative tolerance of $10^{-10}$. 
 The domain is discretized using two different meshes:
 \begin{enumerate}
-  \item a quadrilateral grid composed of 49263 quadrilateral
-    cells (197,052 degrees of freedom); 
-  \item a polygonal grid composed of 45,204 triangles, 823
+  \item A quadrilateral grid composed of 49263 quadrilateral
+    cells (197,052 degrees of freedom or spatial unknowns per angular direction). This grid was 
+		obtained from an unstructured triangular grid in which each triangle was split into 3 quadrangles.
+  \item A polygonal grid composed of 45,204 triangles, 823
     quadrilaterals, 4,978 pentagons, 4,155 hexagons, 725 heptagons, and 24
-    octagons, for a total of 55,909 cells and 193,991 degrees of freedom. This
-    example will allow us to test MIP and the different preconditioners on a
+    octagons, for a total of 55,909 cells and 193,991 degrees of freedom. This grid was obtained 
+		from the same triangular grid as before. This time, vertices were removed and the triangles 
+		containing them were merged into polygons. Since an arbitrary number of triangles may contain 
+		a given point, deleting a vertex leads to various polygonal types. This
+    example allows us to test MIP and the different preconditioners on a
     mesh composed of different cell types.
 \end{enumerate}
 %
@@ -869,23 +879,25 @@ The meshes and the numerical solutions are given in Figures~\ref {homog_test_qua
 In Table~\ref {comparison_homog_quad}, results obtained with the different linear solvers for MIP-DSA 
 are compared for the quadrilateral grid.
 In Table~\ref {comparison_homog_quad}, {\it SI iterations} is the number iterations of 
-needed to solve the problem, {\it Precond init} is the time, in
-seconds, needed to initialize the preconditioner used by CG, {\it MIP calculation}
-is the total time, in seconds, spent solving DSA during the calculation, {\it CG
-iterations} is the total number of CG iterations used to solve MIP, and {\it Total
-calculation} is the time, in seconds, needed to solve the problem. 
+needed to solve the problem 
+%{\it Precond init} is the time, in
+%seconds, needed to initialize the preconditioner used by CG, {\it MIP calculation}
+%is the total time, in seconds, spent solving DSA during the calculation, 
+and {\it CG iterations} is the total number of CG iterations used to solve MIP.
+%, and {\it Total
+%calculation} is the time, in seconds, needed to solve the problem. 
 We note that the accelerated transport solves only require 24 SI iterations, regardless of the linear solver
 employed in MIP-DSA (as expected). Preconditioning CG significantly reduces the number of CG iterations.
 %
 We observe that algebraic multigrid processes, PGC-ML and AGMG, require 
 about the same number of iterations (two orders of magnitude less than unpreconditioned CG). 
-However, AMG is significantly faster than PCG-ML. We also note that PCG-SGS iteration is 
-slower than one unpreconditioned CG iteration. Profiling of the code reveals that the
-bottleneck is the function \emph{Ifpack\_PointRelaxation::ApplyInverseSGS\_FastCrsMatrix} 
-of Trilinos. This function applies the forward and the backward substitutions required by SGS.
-It is unclear why these substitutions are so costly. Also note that SGS is employed as
-a pre- and post-smoother in the ML package of Trilinos and that the same function
-is once again the bottleneck of the method.
+%%However, AMG is significantly faster than PCG-ML. We also note that PCG-SGS iteration is 
+%%slower than one unpreconditioned CG iteration. Profiling of the code reveals that the
+%%bottleneck is the function \emph{Ifpack\_PointRelaxation::ApplyInverseSGS\_FastCrsMatrix} 
+%%of Trilinos. This function applies the forward and the backward substitutions required by SGS.
+%%It is unclear why these substitutions are so costly. Also note that SGS is employed as
+%%a pre- and post-smoother in the ML package of Trilinos and that the same function
+%%is once again the bottleneck of the method.
 %
 The different linear solvers are compared for the polygonal grid in Table~\ref {comparison_homog_poly}.
 We note that using different spatial cell types in the same grid does not affect
@@ -896,14 +908,14 @@ the performance of MIP-DSA or that of its preconditioners.
   \begin{subfigure}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{quad_solu0000}
-    \caption{Whole domain mesh}
+    \caption{Whole domain}
   \end{subfigure}
   \begin{subfigure}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{quad_solu0001}
     \caption{Zoom}
   \end{subfigure}
-  \caption{Grids and scalar flux solutions for the homogenous test problem using quadrilateral cells}
+  \caption{Grids and scalar flux solutions for the homogenous test problem using quadrilateral cells.}
   \label{homog_test_quads}
 \end{figure}
 
@@ -912,14 +924,14 @@ the performance of MIP-DSA or that of its preconditioners.
   \begin{subfigure}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{poly_solu0000}
-    \caption{Whole domain mesh}
+    \caption{Whole domain}
   \end{subfigure}
   \begin{subfigure}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{poly_solu0001}
     \caption{Zoom}
   \end{subfigure}
-  \caption{Grids and scalar flux solutions for the homogenous test problem  using arbitrary polygonal cells}
+  \caption{Grids and scalar flux solutions for the homogenous test problem  using arbitrary polygonal cells.}
   \label{homog_test_polys}
 \end{figure}
 
@@ -942,17 +954,16 @@ the performance of MIP-DSA or that of its preconditioners.
 %
 \begin{table}[!htbp]
   \begin{center}
-    \caption{Comparison of different preconditioners for the homogeneous test problem (quadrilateral cells)}
+    \caption{Comparison of different preconditioners for the homogeneous test problem (quadrilateral cells).}
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
       \hline
       SI iterations   & 7311    & 24      & 24       & 24      & 24      & 24 \\
-   Precond init (s)   & NA      & NA      & 0.171358 & 1.8255  & 9.56078 & 0.332 \\
-MIP calculation (s)   & NA      & 1095.7  & 1311.76  & 192.622 & 197.632 & 29.9727 \\
+   %Precond init (s)   & NA      & NA      & 0.171358 & 1.8255  & 9.56078 & 0.332 \\
+%MIP calculation (s)   & NA      & 1095.7  & 1311.76  & 192.622 & 197.632 & 29.9727 \\
       CG iterations   & NA      & 56649   & 17332    & 630     & 604     & 578 \\
-Total calculation (s) & 39176.7 & 1264.98 & 1477.95  & 363.202 & 367.841 &
-      194.568 \\
+%Total calculation (s) & 39176.7 & 1264.98 & 1477.95  & 363.202 & 367.841 &  194.568 \\
       \hline
     \end{tabular}
     \label{comparison_homog_quad}
@@ -961,31 +972,30 @@ Total calculation (s) & 39176.7 & 1264.98 & 1477.95  & 363.202 & 367.841 &
 %
 \begin{table}[!htbp]
   \begin{center}
-    \caption{Comparison of different preconditioners for the homogeneous test problem (polygonal cells)}
+    \caption{Comparison of different preconditioners for the homogeneous test problem (polygonal cells).}
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
       \hline
       SI iterations   & 7311    & 23      & 23      & 23      & 23      & 23 \\
-   Precond init (s)   & NA      & NA      & 0.06388 & 1.73379 & 8.0426  & 0.388 \\
-MIP calculation (s)   & NA      & 877.861 & 1263.31 & 198.63  & 191.989 &
-      31.242 \\
+   %Precond init (s)   & NA      & NA      & 0.06388 & 1.73379 & 8.0426  & 0.388 \\
+%MIP calculation (s)   & NA      & 877.861 & 1263.31 & 198.63  & 191.989 &
+      %31.242 \\
       CG iterations   & NA      & 46262   & 16712   & 652     & 603     & 555 \\
-Total calculation (s) & 42666.7 & 1060.53 & 1447.53 & 382.275 & 384.422 &
-      216.946 \\
+%Total calculation (s) & 42666.7 & 1060.53 & 1447.53 & 382.275 & 384.422 & 216.946 \\
       \hline
     \end{tabular}
     \label{comparison_homog_poly}
   \end{center}
 \end{table}
 
-\subsubsection{Test with Heterogeneous Media}
+\subsubsection{Test Case with Heterogeneous Media}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In this example, a heterogeneous geometry with three materials is used. It is 
 composed of 184 triangles, 3,720 quadrilaterals, and 2,791 regular hexagons of 
-side $0.05cm$ for a total of 6,695 cells and 32,178 degrees of freedom (spatial 
-unknowns per angular direction). The domain is $5.28275cm$ by $4.6cm$. 
+side $0.05cm$ for a total of 6,695 cells and 32,178 degrees of freedom. 
+The domain is $5.28275cm$ by $4.6cm$. 
 Reflective boundary conditions are used. A $S_{16}$ angular 
 quadrature is used. The SI solver has a relative tolerance of 
 $10^{-8}$, and the relative tolerance for MIP-DSA is $10^{-10}$. Figure~\ref {hex_zones}
@@ -1003,21 +1013,21 @@ The different linear solvers for MIP-DSA are compared in Table~\ref {comparison_
   \begin{subfigure}{0.40\textwidth}
     \centering
     \includegraphics[width=\textwidth]{hexa_grid0001}
-    \caption{Zoom emphasizing triangular, rectangular, and hexagonal cells}
+    \caption{Zoom}
   \end{subfigure}
-  \caption{Material zones for the heterogeneous test problem}
+  \caption{Material Zones for the Heterogeneous Test Problem}
   \label{hex_zones}
 \end{figure}
 %
 \begin{table}[!htbp]
   \begin{center}
-    \caption{Material Properties For the Different Regions}
+    \caption{Material Properties For the Different Regions of the Heterogeneous Test Problem}
     \begin{tabular}{|c|c|c|c|}
       \hline
        & Inner region & Intermediate region & Outer region \\ \hline
-      $\Sigma_t$ $(cm^{-1})$ & 1.5 & 1.0 & 1.0 \\
-      $\Sigma_s$ $(cm^{-1})$ & 1.4999 & 0.999 & 0.3 \\
-     source $(cm^{-3}s^{-1}$ & 1.0 & 0.0 & 0.0 \\
+      $\Sigma_t$ $(cm^{-1}) $ & 1.5 & 1.0 & 1.0 \\
+      $\Sigma_s$ $(cm^{-1}) $ & 1.4999 & 0.999 & 0.3 \\
+     source $(cm^{-3}s^{-1})$ & 1.0 & 0.0 & 0.0 \\
       \hline
     \end{tabular}
     \label{hex_prop}
@@ -1027,19 +1037,19 @@ The different linear solvers for MIP-DSA are compared in Table~\ref {comparison_
 %
 \begin{table}[!htbp]
   \begin{center}
-    \caption{Comparison of preconditioners (heterogeneous problem)}
+    \caption{Preconditioners Comparison (Heterogeneous Problem).}
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG\\
       \hline
       SI iterations & 278     & 17      & 17        & 17       & 17      & 17  \\
-   Precond init (s) & NA      & NA      & 0.0160661 & 0.368768 & 1.41632 &
-      0.07  \\
-MIP calculation (s) & NA      & 58.422  & 126.93    & 33.2225  & 31.3045 &
-      2.924 \\
+   %Precond init (s) & NA      & NA      & 0.0160661 & 0.368768 & 1.41632 &
+      %0.07  \\
+%MIP calculation (s) & NA      & 58.422  & 126.93    & 33.2225  & 31.3045 &
+      %2.924 \\
       CG iterations & NA      & 12214   & 6679      & 415      & 386     & 248  \\
-Total calculation (s) & 910.566 & 120.889 & 190.413 & 99.7524  & 97.4666 &
-      70.6424 \\      
+%Total calculation (s) & 910.566 & 120.889 & 190.413 & 99.7524  & 97.4666 &
+      %70.6424 \\      
       \hline
     \end{tabular}
     \label{comparison_hex}
@@ -1048,19 +1058,19 @@ Total calculation (s) & 910.566 & 120.889 & 190.413 & 99.7524  & 97.4666 &
 %
 The remarks made in Section~\ref {sec_homog} for the homogeneous test problem
 remain mostly unchanged. MIP-DSA is effective for this heterogeneous test case, and AGMG is
-still the fastest solver. It is interesting to note that, contrary to the
+again the most efficient preconditioner. It is interesting to note that, contrary to the
 homogeneous tests where the number of CG iterations was about identical  for all
 algebraic multigrid preconditioners, in this heterogeneous test case, AGMG requires
-significantly fewer iterations than the Trilinos implementations, PCG-ML/U and PCG-ML/MIS.
+significantly fewer iterations than both Trilinos implementations, PCG-ML/U and PCG-ML/MIS.
 
-\subsubsection{Locally Refined Grids}
+\subsubsection{Test Case with Locally Refined Cells}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In this example, a 3-material domain of size $10cm\times 10cm$ is used. 
-Figure~\ref {mat_amr} shows the material zoning and the mesh used. Material properties 
-are given in Table~\ref {prop_amr} and their spatial distribution is given in Figure~\ref {mat_amr}. 
+Figure~\ref {mat_amr} shows the material zoning and the mesh used. 
 The bottom and left sides of the domain have reflective boundary conditions, while the other 
-two sides have vacuum boundary conditions. 
+two sides have vacuum boundary conditions. Material properties 
+are given in Table~\ref {prop_amr}.
 
 The grid used mimics meshes obtained via adaptive mesh
 refinement: the rectangular cells at the interfaces between two materials are refined once more,
@@ -1097,7 +1107,7 @@ our previous tests. This test case demonstrates that degenerate polygons
 %
 \begin{table}
   \begin{center}
-    \caption{Material properties, AMR-like test problem}
+    \caption{Material Properties (AMR-like Problem)}
     \begin{tabular}{|c|c|c|c|}
       \hline
       & Inner region & Intermediate region & Outer region  \\ \hline
@@ -1111,26 +1121,25 @@ our previous tests. This test case demonstrates that degenerate polygons
 \end{table}
 
 \begin{table}[H]
-  \caption{Comparison of preconditioners for the AMR mesh}
+  \caption{Preconditioners Comparison for the AMR Mesh}
   \begin{center}
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
        & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
       \hline
    SI iterations & 184     & 19      & 19       & 19      & 19       & 19 \\
-Precond init (s) & NA      & NA      & 0.043463 & 0.358002 & 1.19301 & 0.0111\\
-MIP calculation (s) & NA   & 48.1908 & 81.0992  & 25.2699 & 25.0699  & 
-      2.56198\\
+%Precond init (s) & NA      & NA      & 0.043463 & 0.358002 & 1.19301 & 0.0111\\
+%MIP calculation (s) & NA   & 48.1908 & 81.0992  & 25.2699 & 25.0699  & 
+      %2.56198\\
    CG iterations & NA      & 11300   & 4734     & 361     & 361      & 264 \\
-     Total calculation (s) & 802.985 & 138.825 & 172.423  & 116.018 & 116.517  &
-      94.1963\\
+     %Total calculation (s) & 802.985 & 138.825 & 172.423  & 116.018 & 116.517  &  94.1963\\
       \hline
     \end{tabular}
     \label{table_amr}
   \end{center}
 \end{table}
 
-\subsubsection{High Aspect Ratio Grids}
+\subsubsection{Test Cases High Aspect Ratio Grids}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In these last two examples, a square domain  of $100cm \times 100cm$ with vacuum boundaries
@@ -1150,22 +1159,21 @@ affected by the change of aspect ratio and is again the best performing
 preconditioner.
 %
 \begin{table}[!htbp]
-  \caption{Preconditioners comparison for a rectangular grid with an aspect
-  ratio of 1}
+  \caption{Preconditioners Comparison for a Rectangular Grid with an Aspect Ratio of 1}
   \begin{center}
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
        & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
       \hline
       SI iterations & 7311      & 21      & 21      & 21       & 21      & 21 \\
-   Precond init (s) & NA        & NA      & 0.01422 & 0.051373 & 1.13144 &
-      0.044 \\
-MIP calculation (s) & NA        & 32.3825 & 73.8422 & 24.0707  & 25.0065 &
-      1.7114 \\
+   %Precond init (s) & NA        & NA      & 0.01422 & 0.051373 & 1.13144 &
+      %0.044 \\
+%MIP calculation (s) & NA        & 32.3825 & 73.8422 & 24.0707  & 25.0065 &
+      %1.7114 \\
       CG iterations & NA        & 8363    & 4853    & 376      & 375     &
       221\\
-Total calculation (s) & 7356.96 & 56.8993 & 98.2609 & 50.1247  & 51.5396 &
-      25.9306 \\
+%Total calculation (s) & 7356.96 & 56.8993 & 98.2609 & 50.1247  & 51.5396 &
+      %25.9306 \\
       \hline
     \end{tabular}
     \label{table_ar_1}
@@ -1173,20 +1181,19 @@ Total calculation (s) & 7356.96 & 56.8993 & 98.2609 & 50.1247  & 51.5396 &
 \end{table}
 %
 \begin{table}[!htbp]
-  \caption{Preconditioners comparison for a rectangular grid with an aspect
-  ratio of 100}
+  \caption{Preconditioners Comparison for a Rectangular Grid with an Aspect Ratio of 100}
   \begin{center}
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
        & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
       \hline
       SI iterations & 7304    & 24      & 24        & 24       & 24      & 24 \\
-   Precond init (s) & NA      & NA      & 0.0164239 & 0.362463 & 1.03128 & 0.052 \\
-MIP calculation (s) & NA      & 372.227 & 742.902   & 941.06   & 922.258 &
-      6.93176 \\
+   %Precond init (s) & NA      & NA      & 0.0164239 & 0.362463 & 1.03128 & 0.052 \\
+%MIP calculation (s) & NA      & 372.227 & 742.902   & 941.06   & 922.258 &
+      %6.93176 \\
       CG iterations & NA      & 84802   & 43466     & 14180    & 13896   & 821 \\
-Total calculation (s) & 9035.6 & 414.301 & 784.77   & 985.796  & 966.77  &
-      44.7032 \\
+%Total calculation (s) & 9035.6 & 414.301 & 784.77   & 985.796  & 966.77  &
+      %44.7032 \\
       \hline
     \end{tabular}
     \label{table_ar_100}
@@ -1203,7 +1210,8 @@ Total calculation (s) & 9035.6 & 414.301 & 784.77   & 985.796  & 966.77  &
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 We have extended the Modified Interior Penalty (MIP) form of Diffusion Synthetic Acceleration (DSA) 
-to arbitrary polygonal grids discretized with Piece-Wise Linear Discontinuous finite elements. 
+to \sn radiation transport solves performed on arbitrary polygonal grids discretized 
+with Piece-Wise Linear Discontinuous finite elements. 
 The MIP-DSA equation employs the same discontinuous finite element trial spaces as 
 the spatial discretization of the \sn transport equation. As such, 
 %Since this DSA employs the same discontinuous finite element spaces as the \sn transport discretization,
@@ -1220,10 +1228,10 @@ only a few additional elementary matrices need to be implemented to an existing 
 %
 
 Fourier analyses show that the PWLD discretization of the MIP diffusion synthetic accelerator 
-is always stable and effective, including for cells with high-aspect ratios. 
+is stable and effective, including for cells with high-aspect ratios. 
 %
 Numerical experiments have been performed with grids containing various types of polygonal cells
-(random quadrilaterals, random polygons, hexagons), including
+(random quadrilaterals, random polygons), including
 grids with different polygon types for a given mesh and tests with degenerate polygons that mimic
 grids obtained in adaptive mesh refinement strategies. In these tests, MIP-DSA always performed effectively,
 reducing significantly the number of Source Iterations needed for convergence. 
