@@ -1,0 +1,76 @@
+View Letter
+Date: 	Feb 25, 2014
+To: 	"Jean C Ragusa" jean.ragusa@tamu.edu,jean.ragusa@gmail.com
+From: 	"Journal of Computational Physics" jcp@elsevier.com
+Subject: 	JCOMP-D-13-01486
+
+Re: JCOMP-D-13-01486
+
+
+Dear Dr. Ragusa,
+
+The Editorial Office has received the decision on the paper entitled "Discontinuous Diffusion Synthetic Acceleration for Sn Transport on 2D Arbitrary Polygonal Meshes".
+
+The reviewers' comments are as follows:
+
+
+************************************************************
+
+Reviewer #1: Combination of MIP, PWLG and AMG is interesting and could have good applications for radiation transport. The contents are sufficiently novel and interesting to warrant publication. The manuscript is well-written. The authors gave appropriate references to the previous works. However, I want the authors address the following issues before a publication:
+
+1. The statement that 'polygonal grids allow for a reduced numbers of unknowns' is not complete. It is meaningful only in the condition of not sacrificing the accuracy. The authors need to provide numerical supports or give up the statement completely. The first part in the third paragraph of Introduction is superficial in this sense.
+
+2. The authors indeed provided several different grid types but few important types are missing in my opinion:
+a) a polygon with number of vertices greater than 4 with bad aspect ratios (Section 5.2.4 is only quadrilateral!). The assumption that 'the polygonal cells do not deviate significantly from regular polygons' on Line 157 weakens the conclusion 'effective for cells with high-aspect ratios'. It seems to me the same h perpendicular for all sides for a distorted polygon is not good;
+b) a degenerated polygons with more than one hanging node from AMR.
+The authors imply the solver works with arbitrary shapes of polygons, but I think there ought to be constraints on the grid. For example, any polygonal cell in the grid has to be convex.
+
+3. The authors need to carefully examine the control parameters they used for AMG, like the upper bound of the two-grid condition number (line 228), and etc., so that the readers can have a better understanding on the performances of different AMG packages.
+
+4. Missing results of CPU-times and memory usages especially memory consumed by the AMG packages.
+
+Some minor problems or typos are listed:
+
+1. GMRes equations are given and mentioned in Introduction but numerical results are not presented;
+2. MIP appeared in Abstract is not defined;
+3. Line 67 an incomplete sentence;
+4. Add 'with spatial discretization' after 'Equation (1)' above Eq. (3);
+5. Line 81, L is the streaming plus collision operator;
+6. Check the grammar on Line 177;
+7. Line 192-194, what is the different between n gamma and gamma?
+8. Line 205-206, what is the subscript k?
+9. To my knowledge, Gauss-Legendre-Chebyshev is a production quadrature, then why is there only one parameter Sn?
+10. In the results section, what quantity those iteration tolerances are applied on?
+11. Line 295, remove extra 'of';
+12. Line 298, typo PGC should be PCG;
+13. Line 340-341, what is the 'additional elementary matrices'?
+14. Line 343, remove extra 'for'.
+
+
+
+
+Reviewer #2: This paper presents a new method for solving 2D particle transport equation on arbitrary polygonal meshes.  The transport equation is discretized with the piecewise linear discontinuous finite element method.  The main contribution is an efficient acceleration method for this transport discretization scheme and considered class of spatial grids based on the diffusion synthetic acceleration (DSA) scheme. The authors proposed a partially consistent approximation of low-order DSA (LODSA) equations by means of (i) a finite element method using basis functions utilized to discretize the transport equation and (ii) the modified interior penalty scheme. The proposed method was studied theoretically by Fourier analysis. It demonstrated stability of the developed DSA method.  A good collection of numerical results of test problems with arbitrary polygonal grids is presented.  These results showed that the developed method efficiently accelerates transport iterations and converges fast.  Note that the proposed discretization of 2D LODSA equations gives rise to a system of linear algebraic equations with symmetric positive definite matrix.   This paper also presents analysis  of iteration methods for solving these discretized equations.  The preconditioned conjugate gradient method is applied.  Several preconditioners were considered. These studies showed that preconditioning with algebraic multigrid  gives the best results. This technique significantly reduces numbers of iterations.
+
+
+
+
+NOTE: Additional comments by the reviewers may be available in Elsevier Editorial System (EES). You can find these comments in EES by clicking on "view review attachments". Please contact jcp@elsevier.com if you have any problems opening the reviewer comments in EES.
+************************************************************
+
+In view of these comments made the Associate Editor who guided your article, Professor William R. Martin, has decided that the paper can be reconsidered for publication after minor revisions. Therefore we look forward to receiving the revised version of the paper together with a reply to the reports and a summary of the revisions made.
+
+If the revised version is submitted within one month of receipt of this e-mail, the manuscript will retain the original submission date.
+
+Please note that this journal offers a new, free service called AudioSlides: brief, webcast-style presentations that are shown next to published articles on ScienceDirect (see also http://www.elsevier.com/audioslides). If your paper is accepted for publication, you will automatically receive an invitation to create an AudioSlides presentation.
+
+The revised version of your submission is due by May 26, 2014.
+
+Yours sincerely,
+
+Soniya Deepak
+on behalf of the Editors of Journal of Computational Physics
+
+
+Editorial-Production Department,
+Elsevier
+E-mail: jcp@elsevier.com
