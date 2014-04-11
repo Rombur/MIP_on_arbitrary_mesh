@@ -1,0 +1,75 @@
+\documentclass{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb}
+% more math
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsbsy}
+
+\usepackage{color}
+\newcommand{\mt}[1]{\marginpar{\small #1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% new commands
+\newcommand{\nc}{\newcommand}
+% operators
+\renewcommand{\div}{\vec{\nabla}\! \cdot \!}
+\newcommand{\grad}{\vec{\nabla}}
+% latex shortcuts
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\bal}{\begin{align}}
+\newcommand{\eali}{\end{align}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\ben}{\begin{enumerate}}
+\newcommand{\een}{\end{enumerate}}
+% DGFEM commands
+\newcommand{\jmp}[1]{[\![#1]\!]}                     % jump
+\newcommand{\mvl}[1]{\{\!\!\{#1\}\!\!\}}             % mean value
+\newcommand{\keff}{\ensuremath{k_{\textit{eff}}}\xspace}
+% shortcut for domain notation
+\newcommand{\D}{\mathcal{D}}
+% vector shortcuts
+\newcommand{\vo}{\vec{\Omega}}
+\newcommand{\vr}{\vec{r}}
+\newcommand{\vn}{\vec{n}}
+\newcommand{\vnk}{\vec{\mathbf{n}}}
+\newcommand{\vj}{\vec{J}}
+% extra space
+\newcommand{\qq}{\quad\quad}
+% common reference commands
+\newcommand{\eqt}[1]{Eq.~(\ref{#1})}                     % equation
+\newcommand{\fig}[1]{Fig.~\ref{#1}}                      % figure
+\newcommand{\tbl}[1]{Table~\ref{#1}}                     % table
+
+\newcommand{\ud}{\,\mathrm{d}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+{ \Large Answers to Reviewer \#2}
+\end{center}
+
+\bigskip
+
+\noindent Ms. Ref. No. JCOMP-D-13-01486\\
+Title: Discontinuous Diffusion Synthetic Acceleration for Sn Transport on 2D Arbitrary Polygonal Meshes \\
+Journal of Computational Physics,\\
+
+\bigskip
+\bigskip
+
+{
+\color{blue}
+  This paper presents a new method for solving 2D particle transport equation on arbitrary polygonal meshes.  The transport equation is discretized with the piecewise linear discontinuous finite element method.  The main contribution is an efficient acceleration method for this transport discretization scheme and considered class of spatial grids based on the diffusion synthetic acceleration (DSA) scheme. The authors proposed a partially consistent approximation of low-order DSA (LODSA) equations by means of (i) a finite element method using basis functions utilized to discretize the transport equation and (ii) the modified interior penalty scheme. The proposed method was studied theoretically by Fourier analysis. It demonstrated stability of the developed DSA method.  A good collection of numerical results of test problems with arbitrary polygonal grids is presented.  These results showed that the developed method efficiently accelerates transport iterations and converges fast.  Note that the proposed discretization of 2D LODSA equations gives rise to a system of linear algebraic equations with symmetric positive definite matrix.   This paper also presents analysis  of iteration methods for solving these discretized equations.  The preconditioned conjugate gradient method is applied.  Several preconditioners were considered. These studies showed that preconditioning with algebraic multigrid  gives the best results. This technique significantly reduces numbers of iterations.
+}
+
+AAAAAAAAAA
+
+
+\end{document}
+

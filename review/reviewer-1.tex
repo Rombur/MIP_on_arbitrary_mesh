@@ -1,0 +1,168 @@
+\documentclass{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb}
+% more math
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsbsy}
+
+\usepackage{color}
+\newcommand{\mt}[1]{\marginpar{\small #1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% new commands
+\newcommand{\nc}{\newcommand}
+% operators
+\renewcommand{\div}{\vec{\nabla}\! \cdot \!}
+\newcommand{\grad}{\vec{\nabla}}
+% latex shortcuts
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\bal}{\begin{align}}
+\newcommand{\eali}{\end{align}}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\ben}{\begin{enumerate}}
+\newcommand{\een}{\end{enumerate}}
+% DGFEM commands
+\newcommand{\jmp}[1]{[\![#1]\!]}                     % jump
+\newcommand{\mvl}[1]{\{\!\!\{#1\}\!\!\}}             % mean value
+\newcommand{\keff}{\ensuremath{k_{\textit{eff}}}\xspace}
+% shortcut for domain notation
+\newcommand{\D}{\mathcal{D}}
+% vector shortcuts
+\newcommand{\vo}{\vec{\Omega}}
+\newcommand{\vr}{\vec{r}}
+\newcommand{\vn}{\vec{n}}
+\newcommand{\vnk}{\vec{\mathbf{n}}}
+\newcommand{\vj}{\vec{J}}
+% extra space
+\newcommand{\qq}{\quad\quad}
+% common reference commands
+\newcommand{\eqt}[1]{Eq.~(\ref{#1})}                     % equation
+\newcommand{\fig}[1]{Fig.~\ref{#1}}                      % figure
+\newcommand{\tbl}[1]{Table~\ref{#1}}                     % table
+
+\newcommand{\ud}{\,\mathrm{d}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{center}
+{ \Large Answers to Reviewer \#1}
+\end{center}
+
+\bigskip
+
+\noindent Ms. Ref. No. JCOMP-D-13-01486\\
+Title: Discontinuous Diffusion Synthetic Acceleration for Sn Transport on 2D Arbitrary Polygonal Meshes \\
+Journal of Computational Physics,\\
+
+\bigskip
+\bigskip
+
+{
+\color{blue}
+ Combination of MIP, PWLG and AMG is interesting and could have good applications for radiation transport. The contents are sufficiently novel and interesting to warrant publication. The manuscript is well-written. The authors gave appropriate references to the previous works.
+}
+
+AAAAAAAAAA
+
+\bigskip
+
+{
+\color{blue}
+However, I want the authors address the following issues before a publication:\\
+
+1. The statement that 'polygonal grids allow for a reduced numbers of unknowns' is not complete. It is meaningful only in the condition of not sacrificing the accuracy. The authors need to provide numerical supports or give up the statement completely. The first part in the third paragraph of Introduction is superficial in this sense.
+}
+
+AAAAAAAAAA
+
+\bigskip
+
+
+{
+\color{blue}
+2. The authors indeed provided several different grid types but few important types are missing in my opinion:
+a) a polygon with number of vertices greater than 4 with bad aspect ratios (Section 5.2.4 is only quadrilateral!). The assumption that 'the polygonal cells do not deviate significantly from regular polygons' on Line 157 weakens the conclusion 'effective for cells with high-aspect ratios'. It seems to me the same h perpendicular for all sides for a distorted polygon is not good;
+b) a degenerated polygons with more than one hanging node from AMR.
+The authors imply the solver works with arbitrary shapes of polygons, but I think there ought to be constraints on the grid. For example, any polygonal cell in the grid has to be convex.
+}
+
+
+AAAAAAAAAA
+
+\bigskip
+
+
+{
+\color{blue}
+3. The authors need to carefully examine the control parameters they used for AMG, like the upper bound of the two-grid condition number (line 228), and etc., so that the readers can have a better understanding on the performances of different AMG packages.
+}
+
+AAAAAAAAAA
+
+\bigskip
+
+
+{
+\color{blue}
+4. Missing results of CPU-times and memory usages especially memory consumed by the AMG packages.
+}
+
+
+AAAAAAAAAA
+
+\bigskip
+
+
+{
+\color{blue}
+\noindent
+Some minor problems or typos are listed:
+
+1. GMRes equations are given and mentioned in Introduction but numerical results are not presented;
+
+2. MIP appeared in Abstract is not defined;
+
+3. Line 67 an incomplete sentence;
+
+4. Add 'with spatial discretization' after 'Equation (1)' above Eq. (3);
+
+5. Line 81, L is the streaming plus collision operator;
+
+6. Check the grammar on Line 177;
+
+7. Line 192-194, what is the different between n gamma and gamma?
+
+8. Line 205-206, what is the subscript k?
+
+9. To my knowledge, Gauss-Legendre-Chebyshev is a production quadrature, then why is there only one parameter Sn?
+
+10. In the results section, what quantity those iteration tolerances are applied on?
+
+11. Line 295, remove extra 'of';
+
+12. Line 298, typo PGC should be PCG;
+
+13. Line 340-341, what is the 'additional elementary matrices'?
+
+14. Line 343, remove extra 'for'.}
+
+
+
+\begin{enumerate}
+\item Changed.
+\item Corrected.
+\item Corrected.
+\item Corrected.
+\end{enumerate}
+
+\noindent 
+Thank you for pointing these out.
+
+\end{document}
+
