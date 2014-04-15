@@ -8,4 +8,7 @@
 *.inp
 *.dvi
 *.tmp
+*.spl
+c.tex
+c.pdf
 Area 51
