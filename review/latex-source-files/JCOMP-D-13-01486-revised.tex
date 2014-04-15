@@ -25,7 +25,7 @@
 \setlength{\oddsidemargin}{0cm}
 \setlength{\headsep}{5pt} 
 
-\newcommand\bn{\boldsymbol{\nabla}}
+\newcommand\grad{\boldsymbol{\nabla}}
 \newcommand\bo{\boldsymbol{\Omega}}
 \newcommand\br{\mathbf{r}}
 \newcommand\la{\left\langle}
@@ -47,6 +47,11 @@
 
 \newcommand{\sn}{\ensuremath{S_n}\xspace}
 \newcommand{\tf}{b_i}
+%\renewcommand\grad{\vec{\nabla}}
+%\newcommand\vn{\vec{n}}
+%\renewcommand\bo{\vec{\Omega}}
+%\renewcommand\br{\vec{r}}
+\newcommand\vn{\bs{n}}
 
 \newtheorem{algorithm}{Algorithm}[section]
 
@@ -305,7 +310,7 @@ Given an angular quadrature set $\{\bo _m,w_m\}_{1\leq m \leq M}$, the one-group
 \sn transport equation with isotropic source and isotropic scattering is:
 %
 \begin{equation}
-  \( \bo_m\cdot \bn + \Sigma_t(\br) \) \psi_m (\br) = \frac{1}{4\pi} \left( \Sigma_s
+  \( \bo_m\cdot \grad + \Sigma_t(\br) \) \psi_m (\br) = \frac{1}{4\pi} \left( \Sigma_s
   (\br) \phi(\br) + S (\br) \right), \ \textrm{ for } \br \in \mc{D},\
   1 \leq m \leq M,
   \label{transport_sn}
@@ -323,8 +328,8 @@ defined and numerically evaluated as follows:
 %
 For brevity, we assume only incoming boundary conditions, that is, $\psi_m(\br_b) =
 \psi_m^{inc}(\br_b)$ for any point on the inflow boundary: $\br_b \in \partial \mc{D}_m^-
-= \{\partial \mc{D} \textrm{ such that }\bo_m \cdot \bs{n}_b <0\}$, with
-$\bs{n}_b = \bs{n}(\br_b)$ the outward unit normal vector at $\br_b$. 
+= \{\partial \mc{D} \textrm{ such that }\bo_m \cdot \vn_b <0\}$, with
+$\vn_b = \vn(\br_b)$ the outward unit normal vector at $\br_b$. 
 Equation~\textup {(\ref {transport_sn})} with spatial discretization can be written in a compact form using operators:
 %
 \begin{align}
@@ -386,9 +391,9 @@ a given streaming direction $\bo_m$, the discontinuous finite
 element formulation, on a given spatial cell $K$, is given by:
 %
 \begin{equation}
-  -\int_{K} \(\psi_m \bo_m \cdot \bn \tf + \Sigma_t \Psi_m \tf \)\ d\br +
-  \int_{\partial K^+} \bo_m \cdot \bs{n} \Psi_m \tf \ d\br = \int_{K} q\, \tf \ d\br +
-  \int_{\partial K^{-}} |\bo_m \cdot \bs{n}| \psi_m^{\uparrow}\, \tf \ d\br,
+  -\int_{K} \(\psi_m \bo_m \cdot \grad \tf + \Sigma_t \Psi_m \tf \)\ d\br +
+  \int_{\partial K^+} \bo_m \cdot \vn \Psi_m \tf \ d\br = \int_{K} q\, \tf \ d\br +
+  \int_{\partial K^{-}} |\bo_m \cdot \vn| \psi_m^{\uparrow}\, \tf \ d\br,
   \label{transport_int}
 \end{equation}
 %
@@ -495,7 +500,7 @@ Consider the following diffusion update equation:
 %
 \begin{align}
   \label{eq:dsa}
-  \left(-\bn \cdot \mathrm{D} \bn  + \Sigma_a \right) \delta \phi &= Q_0 &\textrm{ for }\br \in
+  \left(-\grad \cdot \mathrm{D} \grad  + \Sigma_a \right) \delta \phi &= Q_0 &\textrm{ for }\br \in
   \mc{D}\\
   \label{eq:dsa-bc}
   \frac{1}{4}\delta \phi - \frac{1}{2} \mathrm{D} \partial_n \delta \phi & = 0 &\textrm{ for }
@@ -513,37 +518,37 @@ where $\mathrm{D}$ is the diffusion coefficient and $\Sigma_a$ is the absorption
 For DSA, the volumetric source term is given by the scattering due to the difference in scalar flux
 between two iterations, $Q_0=\Sigma_s\(\Phi^{(\ell+1/2)}-\Phi^{(\ell)}\)$, 
 %
-%$J^{inc} = \sum_{\bo_m\cdot\bs{n}_b >0} w_m 
-%|\bo_m \cdot \bs{n}_b| \delta \psi_d$, 
+%$J^{inc} = \sum_{\bo_m\cdot\vn_b >0} w_m 
+%|\bo_m \cdot \vn_b| \delta \psi_d$, 
 %
 and the known incoming angular flux boundary condition from the transport problem translates into the Robin-type
-vacuum boundary condition given in Equation~\textup {(\ref {eq:dsa-bc})}, where $\partial_{n} = \bs{n}\cdot \bn$
-and $\bs{n}$ is the outer normal unit vector on the domain's boundary, $\partial \mc{D}$. 
+vacuum boundary condition given in Equation~\textup {(\ref {eq:dsa-bc})}, where $\partial_{n} = \vn\cdot \grad$
+and $\vn$ is the outer normal unit vector on the domain's boundary, $\partial \mc{D}$. 
 %
 %where
-%$\bs{n}_e$ is the normal unit vector associated with a given edge $e$ (on the
-%boundary $\bs{n}_e = \bs{n}_b$). 
+%$\vn_e$ is the normal unit vector associated with a given edge $e$ (on the
+%boundary $\vn_e = \vn_b$). 
 %The only difference between IP and MIP is the
 %penalty factor $\kappa_e^{IP}$ used for IP is replaced by a new penalty factor
 %$\kappa_e^{MIP}$. Therefore, 
 %
 The MIP weak form for the DSA update equation is given by:
 \begin{equation}
-a(\delta \phi,\phi^*) = l(\phi^*)
+a(\delta \phi,b_i) = l(b_i)
 \label{mip}
 \end{equation}
 %
 with the bilinear (matrix) form:
 \begin{equation}
 \begin{split}
-a(\delta \phi,\phi^*) =& \(\Sigma_a \delta \phi,\phi^*\)_{\mc{D}}
-  + (\mathrm{D}\bn\delta \phi,\bn\phi^*)_{\mc{D}} 
-	+ \( \kappa_e^{MIP} \jmp{\delta \phi}, \jmp{\phi^*}      \)_{E_h^i} 
-	+ \( \jmp{\delta \phi}, \mvl{\mathrm{D}\partial_n\phi^*} \)_{E_h^i} \\	
-& + \( \mvl{\mathrm{D}\partial_n \delta \phi},\jmp{\phi^*} \)_{E_h^i} 
-  + \(\kappa_e^{MIP} \delta \phi,\phi^*\)_{\partial \mc{D}^d} 
-	- \frac{1}{2} \(\delta \phi,\mathrm{D} \partial_n\phi^*\)_{\partial \mc{D}^d} 
-	- \frac{1}{2} \(\mathrm{D} \partial_n\delta \phi,\phi^*\)_{\partial \mc{D}^d}
+a(\delta \phi,b_i) =& \(\Sigma_a \delta \phi,b_i\)_{\mc{D}}
+  + (\mathrm{D}\grad\delta \phi,\grad b_i)_{\mc{D}} 
+	+ \( \kappa_e^{MIP} \jmp{\delta \phi}, \jmp{b_i}      \)_{E_h^i} 
+	+ \( \jmp{\delta \phi}, \mvl{\mathrm{D}\partial_nb_i} \)_{E_h^i} \\	
+& + \( \mvl{\mathrm{D}\partial_n \delta \phi},\jmp{b_i} \)_{E_h^i} 
+  + \(\kappa_e^{MIP} \delta \phi,b_i\)_{\partial \mc{D}^d} 
+	- \frac{1}{2} \(\delta \phi,\mathrm{D} \partial_nb_i\)_{\partial \mc{D}^d} 
+	- \frac{1}{2} \(\mathrm{D} \partial_n\delta \phi,b_i\)_{\partial \mc{D}^d}
 \label{mip_b}
 \end{split}
 \end{equation}
@@ -551,7 +556,7 @@ a(\delta \phi,\phi^*) =& \(\Sigma_a \delta \phi,\phi^*\)_{\mc{D}}
 and the linear (right-hand-side) form
 %
 \begin{equation}
-l(\phi^*) = (Q_0,\phi^*)_{\mc{D}}\ . % + (J^{inc},\phi^*)_{\partial \mc{D}^r} .
+l(b_i) = (Q_0,b_i)_{\mc{D}}\ . % + (J^{inc},b_i)_{\partial \mc{D}^r} .
 \label{mip_l}
 \end{equation}
 %
@@ -562,7 +567,7 @@ the integral over all interior edges is $(f,g)_{E_h^i}=\sum_{e\in E_h^i}(f,g)_e$
 $(f,g)_e = \int_e fg\ ds$. In the above, 
  $\mathbb{T}_h$ denotes the partition of domain
 $\mc{D}$ into non-overlapping elements $K$, $E_h^i$ is the set of interior
-edges, $\delta \phi$ is the numerical solution for the diffusion correction, and $\phi^*$ is any test function.
+edges, $\delta \phi$ is the numerical solution for the diffusion correction, and $b_i$ is any test function.
 Any entry $A_{ij}$ of matrix $\bs{A}$ is simply given by $A_{ij}= a(b_j,b_i)$. The resulting matrix $\bs{A}$ is SPD
 \cite{Arnold1982,arnold2000discontinuous} and thus can be solved using a preconditioned conjugate gradient technique.
 %
@@ -580,11 +585,11 @@ respectively.
 The definition of the left/right values along a given edge $e$ is
 %
 \begin{equation}
-u^{\pm}= \lim_{s\rightarrow 0^{\pm}}u(\bs{r}+s\bs{n}_e) ,
+u^{\pm}= \lim_{s\rightarrow 0^{\pm}}u(\bs{r}+s\vn_e) ,
 \end{equation}
 %
-where $\bs{n}_e$ is the normal unit vector associated with the given edge $e$
-(on the boundary $\bs{n}_e$ is the external normal).
+where $\vn_e$ is the normal unit vector associated with the given edge $e$
+(on the boundary $\vn_e$ is the external normal).
 %
 The MIP penalty coefficient is given by
 %
@@ -610,7 +615,7 @@ orthogonal to the edge $e$.
 %but by assuming that the angular dependence satisfies a diffusion expansion,
 %the angular correction can be computed using:
 %\begin{equation}
-  %\varepsilon_d = \frac{1}{4\pi}(\phi-3\mathrm{D}\bn\phi\cdot \bo_d)
+  %\varepsilon_d = \frac{1}{4\pi}(\phi-3\mathrm{D}\grad\phi\cdot \bo_d)
 %\end{equation}
 %This correction can be used when some of the boundary conditions are periodic
 %or reflective.
@@ -652,7 +657,17 @@ $\frac{\textrm{area}}{L_e}$ & $4\times
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\textcolor{red}{elementary matrices}
+Matrix $\bs{A}$, given by Equation~\textup {(\ref {mip_b})}, can be assembled by looping over cells $K$
+and edges $e$. The elementary cell mass and stiffness matrices are $\(\Sigma_a b_i,b_j\)_K$
+and $(\mathrm{D}\grad b_i,\grad b_j)_K$, respectively. Note that since the DFEM trial spaces
+are identical between the \sn transport equations and the DSA equations, only the computation of the
+elementary stiffness matrix needs to be implemented. The elementary edge matrices are of the form
+$(b_i,b_j)_e$, $(\partial_n b_i,b_j)_e$, and $(b_i,\partial_n b_j)_e$: the first matrix (a 1D mass matrix) 
+is already needed at the \sn transport solve level to compute the upwind flux contribution; only the 
+second matrix needs to be implemented for the DSA solve (the third edge matrix is simply the transpose of 
+the second one). In conclusion, only a few additional matrices need to be coded at the cell level to
+discretize the MIP-DSA equations using discontinuous finite elements.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
