@@ -68,7 +68,7 @@ Journal of Computational Physics,\\
  Combination of MIP, PWLG and AMG is interesting and could have good applications for radiation transport. The contents are sufficiently novel and interesting to warrant publication. The manuscript is well-written. The authors gave appropriate references to the previous works.
 }
 
-AAAAAAAAAA
+Thank you.
 
 \bigskip
 
@@ -79,7 +79,7 @@ However, I want the authors address the following issues before a publication:\\
 1. The statement that 'polygonal grids allow for a reduced numbers of unknowns' is not complete. It is meaningful only in the condition of not sacrificing the accuracy. The authors need to provide numerical supports or give up the statement completely. The first part in the third paragraph of Introduction is superficial in this sense.
 }
 
-AAAAAAAAAA
+We agree. We had this ``information'' first-hand from Marv Adams but asked him about a Reference to back-up this statement. It turns out we have no numerical results to support this conjecture so far. The testbed code we developed for this paper does not implement LD nor can handle a mix of LD and BLD discretized cells which would also be required. Thus, we have followed your suggestion to give up the statement completely but will keep in mind that this study needs to be carried out. 
 
 \bigskip
 
@@ -93,7 +93,7 @@ The authors imply the solver works with arbitrary shapes of polygons, but I thin
 }
 
 
-AAAAAAAAAA
+BRUNO
 
 \bigskip
 
@@ -103,7 +103,7 @@ AAAAAAAAAA
 3. The authors need to carefully examine the control parameters they used for AMG, like the upper bound of the two-grid condition number (line 228), and etc., so that the readers can have a better understanding on the performances of different AMG packages.
 }
 
-AAAAAAAAAA
+BRUNO
 
 \bigskip
 
@@ -114,7 +114,7 @@ AAAAAAAAAA
 }
 
 
-AAAAAAAAAA
+ME
 
 \bigskip
 
@@ -155,10 +155,19 @@ Some minor problems or typos are listed:
 
 
 \begin{enumerate}
-\item Changed.
+\item BRUNO add table
 \item Corrected.
 \item Corrected.
+\item Added.
 \item Corrected.
+\item BRUNO, ref 26.
+\item I think both should be $n_\gamma$, Bruno?
+\item It is the triangular GLC quadrature. We have added reference to it.
+\item BRUNO
+\item Corrected.
+\item Corrected.
+\item Added a paragraph at the end of Section 3, so that the statement in the conclusion is clearer.
+\item We didn't find an extra 'for'.
 \end{enumerate}
 
 \noindent 
