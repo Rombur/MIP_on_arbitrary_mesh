@@ -700,9 +700,10 @@ aggregation-based algebraic multigrid library written in Fortran 90.
 %
 The first multigrid methods developed were geometric multigrid techniques, used as 
 stand-alone solvers. In many applications, they achieve the so-called 
-``textbook multigrid efficiency'', i.e., ``the solution to the governing 
-system of equations [is attained] in a computational work that is a small 
-multiple of the operation counts associated with discretizing the system'' 
+``textbook multigrid efficiency'', i.e., ``the solutions to the governing 
+system of equations are attained in a computational work which is a small 
+(less than 10) multiple of the operation count in the discretized system of
+equations'' 
 \cite{textbook_eff}. However, in many other applications, multigrid methods, 
 and particularly algebraic multigrid methods, may not achieve such efficiency, 
 \cite{k_cycle} and, in such cases, they are often used as preconditioner for 
