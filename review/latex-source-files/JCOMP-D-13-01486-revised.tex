@@ -985,7 +985,10 @@ about the same number of iterations (two orders of magnitude less than unprecond
 %%a pre- and post-smoother in the ML package of Trilinos and that the same function
 %%is once again the bottleneck of the method.
 %
-The different linear solvers are compared for the polygonal grid in Table~\ref {comparison_homog_poly}.
+The different linear solvers are compared for the polygonal grid in Table~\ref
+{comparison_homog_poly_si}. In Table~\ref{comparison_homog_poly_gmres}, the SI
+solver is replaced by GMRes, {\it GMRes iterations} is the number of iterations
+needed to solve the problem.
 We note that using different spatial cell types in the same grid does not affect
 the performance of MIP-DSA or that of its preconditioners.
 
@@ -1058,7 +1061,8 @@ the performance of MIP-DSA or that of its preconditioners.
 %
 \begin{table}[!htbp]
   \begin{center}
-    \caption{Comparison of different preconditioners for the homogeneous test problem (polygonal cells).}
+    \caption{Comparison of different preconditioners for the homogeneous test
+    problem (polygonal cells) using SI as solver.}
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
@@ -1071,7 +1075,23 @@ the performance of MIP-DSA or that of its preconditioners.
 %Total calculation (s) & 42666.7 & 1060.53 & 1447.53 & 382.275 & 384.422 & 216.946 \\
       \hline
     \end{tabular}
-    \label{comparison_homog_poly}
+    \label{comparison_homog_poly_si}
+  \end{center}
+\end{table}
+%
+\begin{table}[!htbp]
+  \begin{center}
+    \caption{Comparison of different preconditioners for the homogeneous test
+    problem (polygonal cells) using GMRes as solver.}
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+      \hline
+      & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
+      \hline
+      GMRes iterations   & 266    & 12      & 12      & 12      & 12      & 12 \\
+      CG iterations   & NA     & 28653   & 10274   & 407     & 390     & 351\\
+      \hline
+    \end{tabular}
+    \label{comparison_homog_poly_gmres}
   \end{center}
 \end{table}
 
