@@ -936,7 +936,10 @@ and that the maximum spectral radius shows little sensitivity to the aspect rati
 \subsection{Performance of MIP-DSA Implemented in a PWLD $S_n$ Transport Code}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The MIP-DSA scheme has been implemented in a 2D \sn code that employs a PWLD discretization
-for arbitrary polygonal grids. Several test cases are presented.
+for arbitrary polygonal grids. Several test cases are presented. It is important
+to note that all the tests use convex polygonal cells because of the implementation of
+the sweeping algorithm. In \cite{pwld_3}, the PWLD discretization was shown to
+give accurate results even for non-convex polygonal cells.
 
 \subsubsection{Homogeneous Test Cases}  \label{sec_homog}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -944,7 +947,7 @@ for arbitrary polygonal grids. Several test cases are presented.
 We compare the different linear solvers employed for MIP-DSA using a homogeneous medium, $100cm
 \times 100cm$, $\Sigma_t = 1cm^{-1}$ and $\Sigma_s = 0.999cm^{-1}$, with
 vacuum boundary conditions and a unit source of intensity $1cm^{-3}s^{-1}$. We
-use an $S_8$ angular quadrature. A relative tolerance of  $10^{-8}$ is used for the Source Iteration solver
+use an $S_8$ angular quadrature. A relative tolerance of $10^{-8}$ is used for the Source Iteration solver
 while the MIP-DSA solvers employs a relative tolerance of $10^{-10}$. 
 The domain is discretized using two different meshes:
 \begin{enumerate}
@@ -1305,6 +1308,40 @@ preconditioner.
     \label{table_ar_100}
   \end{center}
 \end{table}                  
+
+\subsubsection{Test Case with Degenerated Polygons}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this test, we show that MIP and PWLD are efficient even highly degenerated
+polygons. The domain is $10cm \times 10cm$, $\Sigma_t = 1cm^{-1}$ and
+$\Sigma_s=0.99999cm^{-1}$. There is an isotropic incoming flux of intensity
+$10cm^{-2}s^{-1}$ on the bottom boundary, vacuum on the top boundary, and the
+left and right boundaries are reflective. There is no source and we use an $S_8$
+angular quadrature. A relative tolerance of $10^{-6}$ is used for the Source
+Iteration solver while the MIP-DSA solvers employs a relative of $10^{-8}$.
+The mesh is composed of 10 rectangular cells: the first cell has 5
+sides, the second cell has 7 sides, the third cell has 9 sides, the fourth cell
+has 11 sides, the fifth cell has 13 sides, the sixth cell has 15 sides, the
+seventh cell has 17 sides, the eighth cell has 19 sides, the ninth cell has 21
+sides, and the tenth cell has 23 sides. For a total of 140 degrees of freedom. 
+Part of the mesh is shown in Figure~\ref {fig_degenerated_polygons}.
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.2\textwidth]{degenerated_polygons}
+  \caption{Mesh of degenerated polygons.}
+  \label{fig_degenerated_polygons}
+\end{figure}
+Without DSA, SI needs 17592 iterations to converge whereas it takes only 20
+iterations when MIP is used. As expected for this problem, the scalar flux
+decreases linearly see Figure~\ref {fig_no_dsa}.
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=0.3\textwidth]{no_dsa}
+  \caption{Scalar flux on a mesh of degenerated polygons.}
+  \label{fig_no_dsa}
+\end{figure}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
