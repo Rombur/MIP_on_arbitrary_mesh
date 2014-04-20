@@ -763,7 +763,7 @@ However, if coarsening is too slow, more memory may be required to solve the pro
 \subsection{The ML Package of Trilinos}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 When using a smoothed aggregation scheme, the smoothed interpolation operators
-$\bs{P}_k$ are the transpose of the coarsening operators
+$\bs{P}_k$, where $k$ is the level in the multigrid, are the transpose of the coarsening operators
 $\bs{R}_k=\bs{P}_k^T$. Therefore, when the $\bs{P}_k$ matrices are built, the
 coarsening operator is also known. First, the graph of the matrix is
 constructed: if element $(i,j)$ or $(j,i)$ of the matrix is non-zero, an edge
@@ -874,7 +874,9 @@ linear solvers: Conjugate Gradient (CG); Conjugate Gradient
 Preconditioned with Symmetric Gauss-Seidel (PCG-SGS); Conjugate Gradient
 Preconditioned with ML using Uncoupled aggregation (PCG-ML/U);
 Conjugate Gradient Preconditioned with ML using MIS aggregation (PCG-ML/MIS);
-and Conjugate Gradient Preconditioned with AGMG (AGMG). 
+and Conjugate Gradient Preconditioned with AGMG (AGMG). Unless stated otherwise, ML is
+used with all the parameters set to the values corresponding to the "SA"
+options. AGMG is used with default parameters.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Fourier Analyses}
@@ -948,7 +950,11 @@ We compare the different linear solvers employed for MIP-DSA using a homogeneous
 \times 100cm$, $\Sigma_t = 1cm^{-1}$ and $\Sigma_s = 0.999cm^{-1}$, with
 vacuum boundary conditions and a unit source of intensity $1cm^{-3}s^{-1}$. We
 use an $S_8$ angular quadrature. A relative tolerance of $10^{-8}$ is used for the Source Iteration solver
-while the MIP-DSA solvers employs a relative tolerance of $10^{-10}$. 
+while the MIP-DSA solvers employs a relative tolerance of $10^{-10}$. The
+relative tolerance used by the Source Iteration solver is compared to
+$\frac{\|\Phi^{(l+1)}-\Phi^{(l)}\|_2}{\|\Phi^{(l+1)}\|_2}$. When a Krylov solver
+is used, the relative tolerance is compared to
+$\frac{\|\textrm{residual}\|2}{\|\textrm{right hand side}\|_2}$.
 The domain is discretized using two different meshes:
 \begin{enumerate}
   \item A quadrilateral grid composed of 49263 quadrilateral
