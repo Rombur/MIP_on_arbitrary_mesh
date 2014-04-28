@@ -108,7 +108,11 @@ We were limited to convex cells because our transport sweep algorithm did not al
 The AMG algorithms (Trilinos ML and AGMG) was used with their default options. Unless stated otherwise, ML is
 used with all the parameters set to the values corresponding to the ``SA'' (smoothed aggregation) options. 
 \textcolor{red}{Bruno: you said this was the recommended options for diffusion problem. Can you confirm that and maybe give me a reference for that, in the manual or online?} 
-AGMG is used with default parameters. \textcolor{red}{do they mention anything, in papers or int he manual, about what are recommended options for diffusion? I'd like to reply with a few more sentence to the reviewer's question. Thanks}
+AGMG is used with default parameters. Added that ``SA'' is recommended for
+symmetric positive definite systems. \textcolor{red}{do they mention anything, in papers or int he manual, about what are recommended options for diffusion? I'd like to reply with a few more sentence to the reviewer's question. Thanks}
+To change the parameters, you need to change them in the code and recompile
+everything... The default parameters are always recommended except if you are an
+''expert''.
 
 
 \bigskip

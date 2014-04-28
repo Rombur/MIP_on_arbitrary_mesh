@@ -876,7 +876,8 @@ Preconditioned with ML using Uncoupled aggregation (PCG-ML/U);
 Conjugate Gradient Preconditioned with ML using MIS aggregation (PCG-ML/MIS);
 and Conjugate Gradient Preconditioned with AGMG (AGMG). Unless stated otherwise, ML is
 used with all the parameters set to the values corresponding to the "SA"
-options. AGMG is used with default parameters.
+option. This is the option recommended for symmetric positive definite or nearly
+symmetric positive definite systems \cite{ml_guide}. AGMG is used with default parameters.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Fourier Analyses}
@@ -1336,12 +1337,21 @@ The mesh is shown in Figure~\ref {fig_degenerated_polygons}.
 \end{figure}
 Without DSA, SI needs 17,592 iterations to converge whereas it takes only 20
 iterations when MIP-DSA is employed. The scalar flux solution is shown on 
-Figure~\ref {fig_no_dsa}.
+Figure~\ref {fig_no_dsa} and the contour lines of the scalar flux are shown on Figure~\ref
+{fig_counter}.
 \begin{figure}[!htbp]
-  \centering
-  \includegraphics[width=0.5\textwidth]{no_dsa}
-  \caption{Scalar flux on a mesh of degenerated polygons.}
-  \label{fig_no_dsa}
+  \begin{subfigure}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{no_dsa}
+    \caption{Scalar flux on a mesh of degenerated polygons.}
+    \label{fig_no_dsa}
+  \end{subfigure}
+  \begin{subfigure}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{contour}
+    \caption{Counter lines of the scalar flux on a mesh of degenerated polygons.}
+    \label{fig_contour}
+  \end{subfigure}
 \end{figure}
 
 
