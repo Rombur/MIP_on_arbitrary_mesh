@@ -973,34 +973,39 @@ The domain is discretized using two different meshes:
 %
 The meshes and the numerical solutions are given in Figures~\ref {homog_test_quads} and~ \ref {homog_test_polys}.
 In Table~\ref {comparison_homog_quad}, results obtained with the different linear solvers for MIP-DSA 
-are compared for the quadrilateral grid.
-In Table~\ref {comparison_homog_quad}, {\it SI iterations} is the number of iterations  
-needed to solve the problem 
-%{\it Precond init} is the time, in
-%seconds, needed to initialize the preconditioner used by CG, {\it MIP calculation}
-%is the total time, in seconds, spent solving DSA during the calculation, 
-and {\it CG iterations} is the total number of CG iterations used to solve MIP.
-%, and {\it Total
-%calculation} is the time, in seconds, needed to solve the problem. 
-We note that the accelerated transport solves only require 24 SI iterations, regardless of the linear solver
+are compared for the quadrilateral grid. Table~\ref{comparison_homog_poly_si} provides the results obtained using the polygonal grid.
+In these tables, 
+{\it SI iterations} is the number of iterations  needed to solve the problem, 
+{\it CG iterations} is the total number of CG iterations used to solve MIP,
+{\it Precond init} is the time, in seconds, needed to initialize the preconditioner used by CG, 
+{\it MIP calculation} is the total time, in seconds, spent solving DSA during the calculation, and 
+{\it Total calculation} is the time, in seconds, needed to solve the problem. 
+
+In the quadrilateral grid case, DSA reduces the number of transport sweeps required from 7,311 to 24.
+The number of accelerated transport iterations is constant, regardless of the linear solver
 employed in MIP-DSA (as expected). Preconditioning CG significantly reduces the number of CG iterations.
 %
 We observe that algebraic multigrid processes, PCG-ML and AGMG, require 
 about the same number of iterations (two orders of magnitude less than unpreconditioned CG). 
-%%However, AMG is significantly faster than PCG-ML. We also note that PCG-SGS iteration is 
-%%slower than one unpreconditioned CG iteration. Profiling of the code reveals that the
-%%bottleneck is the function \emph{Ifpack\_PointRelaxation::ApplyInverseSGS\_FastCrsMatrix} 
-%%of Trilinos. This function applies the forward and the backward substitutions required by SGS.
-%%It is unclear why these substitutions are so costly. Also note that SGS is employed as
-%%a pre- and post-smoother in the ML package of Trilinos and that the same function
-%%is once again the bottleneck of the method.
+However, preconditioned conjugate gradient with AGMG is faster than with ML. For the multigrid preconditioned solves,
+the 24 transport sweeps take about 160 sec; AGMG performed the 24 DSA solves in about 30 sec,
+while ML/U and ML/MIS used about 199 sec, that is, the diffusion solves are more CPU expensive than the
+transport solves with ML while the diffusion solve times are only a fraction of those of the transport solves with AGMG). 
+We also note that one PCG-SGS iteration is slower than one unpreconditioned CG iteration. Profiling of the code reveals that the bottleneck in ML is due to a call to the function \emph{Ifpack\_PointRelaxation::ApplyInverseSGS\_FastCrsMatrix} 
+of Trilinos. This function applies the forward and the backward substitutions required by SGS.
+SGS is employed as a pre- and post-smoother in ML; the lesser performance of the 
+diffusion solves using ML are due to that function. 
+It is unclear why these Gauss-Seidel substitutions are so costly in Ifpack. 
 %
-The different linear solvers are compared for the polygonal grid in Table~\ref
-{comparison_homog_poly_si}. In Table~\ref{comparison_homog_poly_gmres}, the SI
-solver is replaced by GMRes, {\it GMRes iterations} is the number of iterations
-needed to solve the problem.
-We note that using different spatial cell types in the same grid does not affect
-the performance of MIP-DSA or that of its preconditioners.
+The same remarks hold for the polygonal grid: DSA is effective at reducing significantly the number of transport sweeps; the number of DSA solves is constant for any diffusion solve; the AGMG diffusion solve time is a fraction
+of the transport solve time (30 sec versus 185 sec); the ML diffusion solves are not as fast due to a bottleneck in the the SGS function of Ifpack.
+%
+Finally, the different linear solvers are compared for the polygonal grid
+when using GMRes in lieu of SI for the transport solves; see, 
+Table~\ref{comparison_homog_poly_gmres} where {\it GMRes iterations} denotes
+the number of iterations needed to solve the problem. 
+%We note that using different spatial cell types in the same grid does not affect
+%the performance of MIP-DSA or that of its preconditioners.
 
 \begin{figure}[!htbp]
   \centering
@@ -1014,7 +1019,7 @@ the performance of MIP-DSA or that of its preconditioners.
     \includegraphics[width=\textwidth]{quad_solu0001}
     \caption{Zoom}
   \end{subfigure}
-  \caption{Grids and scalar flux solutions for the homogenous test problem using quadrilateral cells.}
+  \caption{Grids and scalar flux solutions for the homogeneous test problem using quadrilateral cells.}
   \label{homog_test_quads}
 \end{figure}
 
@@ -1030,7 +1035,7 @@ the performance of MIP-DSA or that of its preconditioners.
     \includegraphics[width=\textwidth]{poly_solu0001}
     \caption{Zoom}
   \end{subfigure}
-  \caption{Grids and scalar flux solutions for the homogenous test problem  using arbitrary polygonal cells.}
+  \caption{Grids and scalar flux solutions for the homogeneous test problem  using arbitrary polygonal cells.}
   \label{homog_test_polys}
 \end{figure}
 
@@ -1059,10 +1064,11 @@ the performance of MIP-DSA or that of its preconditioners.
       & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
       \hline
       SI iterations   & 7311    & 24      & 24       & 24      & 24      & 24 \\
-   %Precond init (s)   & NA      & NA      & 0.171358 & 1.8255  & 9.56078 & 0.332 \\
-%MIP calculation (s)   & NA      & 1095.7  & 1311.76  & 192.622 & 197.632 & 29.9727 \\
       CG iterations   & NA      & 56649   & 17332    & 630     & 604     & 578 \\
-%Total calculation (s) & 39176.7 & 1264.98 & 1477.95  & 363.202 & 367.841 &  194.568 \\
+\hline
+    Precond init (s)   & NA      & NA      & 0.171358 & 1.8255  & 9.56078 & 0.332 \\
+ MIP calculation (s)   & NA      & 1095.7  & 1311.76  & 192.622 & 197.632 & 29.9727 \\
+ Total calculation (s) & 39176.7 & 1264.98 & 1477.95  & 363.202 & 367.841 &  194.568 \\
       \hline
     \end{tabular}
     \label{comparison_homog_quad}
@@ -1078,11 +1084,11 @@ the performance of MIP-DSA or that of its preconditioners.
       & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
       \hline
       SI iterations   & 7311    & 23      & 23      & 23      & 23      & 23 \\
-   %Precond init (s)   & NA      & NA      & 0.06388 & 1.73379 & 8.0426  & 0.388 \\
-%MIP calculation (s)   & NA      & 877.861 & 1263.31 & 198.63  & 191.989 &
-      %31.242 \\
       CG iterations   & NA      & 46262   & 16712   & 652     & 603     & 555 \\
-%Total calculation (s) & 42666.7 & 1060.53 & 1447.53 & 382.275 & 384.422 & 216.946 \\
+\hline
+   Precond init (s)   & NA      & NA      & 0.06388 & 1.73379 & 8.0426  & 0.388 \\
+MIP calculation (s)   & NA      & 877.861 & 1263.31 & 198.63  & 191.989 & 31.242 \\
+Total calculation (s) & 42666.7 & 1060.53 & 1447.53 & 382.275 & 384.422 & 216.946 \\
       \hline
     \end{tabular}
     \label{comparison_homog_poly_si}
@@ -1097,8 +1103,12 @@ the performance of MIP-DSA or that of its preconditioners.
       \hline
       & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
       \hline
-      GMRes iterations   & 266    & 12      & 12      & 12      & 12      & 12 \\
+      GMRes iterations& 266    & 12      & 12      & 12      & 12      & 12 \\
       CG iterations   & NA     & 28653   & 10274   & 407     & 390     & 351\\
+\hline
+   Precond init (s)   & NA      & NA      & 0.067561& 1.56115 & 7.8932  & 0.0331  \\
+MIP calculation (s)   & NA      & 546.56  & 770.244 & 126.723 & 120.680 & 22.3754 \\
+Total calculation (s) & 1549.17 & 675.319 & 898.149 & 261.121 & 261.937 & 162.47  \\
       \hline
     \end{tabular}
     \label{comparison_homog_poly_gmres}
@@ -1159,13 +1169,11 @@ The different linear solvers for MIP-DSA are compared in Table~\ref {comparison_
       & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG\\
       \hline
       SI iterations & 278     & 17      & 17        & 17       & 17      & 17  \\
-   %Precond init (s) & NA      & NA      & 0.0160661 & 0.368768 & 1.41632 &
-      %0.07  \\
-%MIP calculation (s) & NA      & 58.422  & 126.93    & 33.2225  & 31.3045 &
-      %2.924 \\
       CG iterations & NA      & 12214   & 6679      & 415      & 386     & 248  \\
-%Total calculation (s) & 910.566 & 120.889 & 190.413 & 99.7524  & 97.4666 &
-      %70.6424 \\      
+\hline
+   Precond init (s) & NA      & NA      & 0.0160661 & 0.368768 & 1.41632 &0.07  \\
+MIP calculation (s) & NA      & 58.422  & 126.93    & 33.2225  & 31.3045 &2.924 \\
+Total calculation (s) & 910.566 & 120.889 & 190.413 & 99.7524  & 97.4666 &70.6424 \\      
       \hline
     \end{tabular}
     \label{comparison_hex}
@@ -1244,11 +1252,11 @@ our previous tests. This test case demonstrates that degenerate polygons
        & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
       \hline
    SI iterations & 184     & 19      & 19       & 19      & 19       & 19 \\
-%Precond init (s) & NA      & NA      & 0.043463 & 0.358002 & 1.19301 & 0.0111\\
-%MIP calculation (s) & NA   & 48.1908 & 81.0992  & 25.2699 & 25.0699  & 
-      %2.56198\\
    CG iterations & NA      & 11300   & 4734     & 361     & 361      & 264 \\
-     %Total calculation (s) & 802.985 & 138.825 & 172.423  & 116.018 & 116.517  &  94.1963\\
+\hline
+Precond init (s)     & NA      & NA      & 0.043463 & 0.358002 & 1.19301 & 0.0111\\
+MIP calculation (s)  & NA   & 48.1908 & 81.0992  & 25.2699 & 25.0699  &    2.56198\\
+Total calculation (s)& 802.985 & 138.825 & 172.423  & 116.018 & 116.517  &  94.1963\\
       \hline
     \end{tabular}
     \label{table_amr}
@@ -1282,14 +1290,11 @@ preconditioner.
        & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
       \hline
       SI iterations & 7311      & 21      & 21      & 21       & 21      & 21 \\
-   %Precond init (s) & NA        & NA      & 0.01422 & 0.051373 & 1.13144 &
-      %0.044 \\
-%MIP calculation (s) & NA        & 32.3825 & 73.8422 & 24.0707  & 25.0065 &
-      %1.7114 \\
-      CG iterations & NA        & 8363    & 4853    & 376      & 375     &
-      221\\
-%Total calculation (s) & 7356.96 & 56.8993 & 98.2609 & 50.1247  & 51.5396 &
-      %25.9306 \\
+      CG iterations & NA        & 8363    & 4853    & 376      & 375     & 221\\
+\hline
+   Precond init (s) & NA        & NA      & 0.01422 & 0.051373 & 1.13144 &  0.044 \\
+MIP calculation (s) & NA        & 32.3825 & 73.8422 & 24.0707  & 25.0065 & 1.7114 \\
+Total calculation (s) & 7356.96 & 56.8993 & 98.2609 & 50.1247  & 51.5396 &25.9306 \\
       \hline
     \end{tabular}
     \label{table_ar_1}
@@ -1304,12 +1309,11 @@ preconditioner.
        & No-DSA & CG & PCG-SGS & PCG-ML/U & PCG-ML/MIS & AGMG \\
       \hline
       SI iterations & 7304    & 24      & 24        & 24       & 24      & 24 \\
-   %Precond init (s) & NA      & NA      & 0.0164239 & 0.362463 & 1.03128 & 0.052 \\
-%MIP calculation (s) & NA      & 372.227 & 742.902   & 941.06   & 922.258 &
-      %6.93176 \\
       CG iterations & NA      & 84802   & 43466     & 14180    & 13896   & 821 \\
-%Total calculation (s) & 9035.6 & 414.301 & 784.77   & 985.796  & 966.77  &
-      %44.7032 \\
+\hline
+   Precond init (s) & NA      & NA      & 0.0164239 & 0.362463 & 1.03128 & 0.052 \\
+MIP calculation (s) & NA      & 372.227 & 742.902   & 941.06   & 922.258 &6.93176 \\
+Total calculation (s) & 9035.6 & 414.301 & 784.77   & 985.796  & 966.77  &44.7032 \\
       \hline
     \end{tabular}
     \label{table_ar_100}
