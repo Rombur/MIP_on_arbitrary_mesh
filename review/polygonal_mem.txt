@@ -1,0 +1,968 @@
+Initialization
+Start building the triangulation
+Done building the triangulation
+Start initializing the parameters
+Done initializing the parameters
+Start building the quadratures
+Done building the quadratures
+Start building the dof handler
+Done building the dof handler
+Start solving
+Convergence at iteration 0: 1
+Convergence at iteration 1: 0.019728
+****ENTERING AGMG *************************************************************
+
+****        Number of unknowns:      193991
+****                 Nonzeros :     3469485 (per row:  17.88)
+
+****SETUP: Coarsening by multiple pairwise aggregation
+****  Rmk: Setup performed assuming the matrix symmetric
+****       Quality threshold (BlockD):  8.00 ;  Strong diag. dom. trs: 1.29
+****         Maximal number of passes:  2  ; Target coarsening factor: 4.00
+****                      Threshold for rows with large pos. offdiag.: 0.45
+
+****                      Level:           2
+****        Number of variables:       62577          (reduction ratio: 3.10)
+****                   Nonzeros:     1285981 (per row:20.6; red. ratio: 2.70)
+
+****                      Level:           3
+****        Number of variables:       19191          (reduction ratio: 3.26)
+****                   Nonzeros:      291851 (per row:15.2; red. ratio: 4.41)
+
+****                      Level:           4
+****        Number of variables:        5815          (reduction ratio: 3.30)
+****                   Nonzeros:       60391 (per row:10.4; red. ratio: 4.83)
+
+****                      Level:           5
+****        Number of variables:        1718          (reduction ratio: 3.38)
+****                   Nonzeros:       13592 (per row: 7.9; red. ratio: 4.44)
+****        Exact factorization:       0.187 equiv. CG iterations
+
+****                  Grid complexity:     1.46
+****              Operator complexity:     1.48
+****  Theoretical Weighted complexity:     2.28 (K-cycle at each level)
+****    Effective Weighted complexity:     2.28 (V-cycle enforced where needed)
+
+****         memory used (peak):     2.54 real(8) words per nnz (   67.10 Mb)
+****     memory still allocated:     2.27 real(8) words per nnz (   60.03 Mb)
+****       Setup time (Elapsed):     3.64E-01 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.26E+02        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.18E+03        Relat. res.= 0.68E+01
+****  Iter=    2        Resid= 0.57E+02        Relat. res.= 0.22E+01
+****  Iter=    3        Resid= 0.17E+02        Relat. res.= 0.65E+00
+****  Iter=    4        Resid= 0.60E+01        Relat. res.= 0.23E+00
+****  Iter=    5        Resid= 0.20E+01        Relat. res.= 0.76E-01
+****  Iter=    6        Resid= 0.71E+00        Relat. res.= 0.27E-01
+****  Iter=    7        Resid= 0.26E+00        Relat. res.= 0.98E-02
+****  Iter=    8        Resid= 0.99E-01        Relat. res.= 0.38E-02
+****  Iter=    9        Resid= 0.37E-01        Relat. res.= 0.14E-02
+****  Iter=   10        Resid= 0.14E-01        Relat. res.= 0.52E-03
+****  Iter=   11        Resid= 0.51E-02        Relat. res.= 0.20E-03
+****  Iter=   12        Resid= 0.19E-02        Relat. res.= 0.71E-04
+****  Iter=   13        Resid= 0.71E-03        Relat. res.= 0.27E-04
+****  Iter=   14        Resid= 0.28E-03        Relat. res.= 0.11E-04
+****  Iter=   15        Resid= 0.10E-03        Relat. res.= 0.39E-05
+****  Iter=   16        Resid= 0.37E-04        Relat. res.= 0.14E-05
+****  Iter=   17        Resid= 0.14E-04        Relat. res.= 0.53E-06
+****  Iter=   18        Resid= 0.52E-05        Relat. res.= 0.20E-06
+****  Iter=   19        Resid= 0.19E-05        Relat. res.= 0.71E-07
+****  Iter=   20        Resid= 0.65E-06        Relat. res.= 0.25E-07
+****  Iter=   21        Resid= 0.24E-06        Relat. res.= 0.93E-08
+****  Iter=   22        Resid= 0.95E-07        Relat. res.= 0.36E-08
+****  Iter=   23        Resid= 0.36E-07        Relat. res.= 0.14E-08
+****  Iter=   24        Resid= 0.14E-07        Relat. res.= 0.53E-09
+****  Iter=   25        Resid= 0.58E-08        Relat. res.= 0.22E-09
+****  Iter=   26        Resid= 0.23E-08        Relat. res.= 0.89E-10
+****  - Convergence reached in   26 iterations -
+
+****     level 2   #call=    26   #cycle=    46   mean=   1.77    max=  2
+****     level 3   #call=    46   #cycle=    92   mean=   2.00    max=  2
+****     level 4   #call=    92   #cycle=   184   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   125.75
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.54E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.28E+02        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.21E+02        Relat. res.= 0.73E+00
+****  Iter=    2        Resid= 0.56E+01        Relat. res.= 0.20E+00
+****  Iter=    3        Resid= 0.14E+01        Relat. res.= 0.51E-01
+****  Iter=    4        Resid= 0.43E+00        Relat. res.= 0.15E-01
+****  Iter=    5        Resid= 0.13E+00        Relat. res.= 0.47E-02
+****  Iter=    6        Resid= 0.41E-01        Relat. res.= 0.14E-02
+****  Iter=    7        Resid= 0.13E-01        Relat. res.= 0.45E-03
+****  Iter=    8        Resid= 0.45E-02        Relat. res.= 0.16E-03
+****  Iter=    9        Resid= 0.16E-02        Relat. res.= 0.56E-04
+****  Iter=   10        Resid= 0.56E-03        Relat. res.= 0.20E-04
+****  Iter=   11        Resid= 0.21E-03        Relat. res.= 0.73E-05
+****  Iter=   12        Resid= 0.78E-04        Relat. res.= 0.28E-05
+****  Iter=   13        Resid= 0.28E-04        Relat. res.= 0.99E-06
+****  Iter=   14        Resid= 0.10E-04        Relat. res.= 0.35E-06
+****  Iter=   15        Resid= 0.35E-05        Relat. res.= 0.13E-06
+****  Iter=   16        Resid= 0.13E-05        Relat. res.= 0.45E-07
+****  Iter=   17        Resid= 0.44E-06        Relat. res.= 0.16E-07
+****  Iter=   18        Resid= 0.15E-06        Relat. res.= 0.53E-08
+****  Iter=   19        Resid= 0.56E-07        Relat. res.= 0.20E-08
+****  Iter=   20        Resid= 0.21E-07        Relat. res.= 0.75E-09
+****  Iter=   21        Resid= 0.78E-08        Relat. res.= 0.28E-09
+****  Iter=   22        Resid= 0.29E-08        Relat. res.= 0.10E-09
+****  Iter=   23        Resid= 0.11E-08        Relat. res.= 0.40E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    41   mean=   1.78    max=  2
+****     level 3   #call=    41   #cycle=    82   mean=   2.00    max=  2
+****     level 4   #call=    82   #cycle=   164   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   111.63
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.36E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.16E+02        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.99E+01        Relat. res.= 0.61E+00
+****  Iter=    2        Resid= 0.26E+01        Relat. res.= 0.16E+00
+****  Iter=    3        Resid= 0.66E+00        Relat. res.= 0.41E-01
+****  Iter=    4        Resid= 0.20E+00        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.62E-01        Relat. res.= 0.38E-02
+****  Iter=    6        Resid= 0.19E-01        Relat. res.= 0.12E-02
+****  Iter=    7        Resid= 0.61E-02        Relat. res.= 0.37E-03
+****  Iter=    8        Resid= 0.21E-02        Relat. res.= 0.13E-03
+****  Iter=    9        Resid= 0.76E-03        Relat. res.= 0.47E-04
+****  Iter=   10        Resid= 0.28E-03        Relat. res.= 0.17E-04
+****  Iter=   11        Resid= 0.10E-03        Relat. res.= 0.64E-05
+****  Iter=   12        Resid= 0.37E-04        Relat. res.= 0.23E-05
+****  Iter=   13        Resid= 0.13E-04        Relat. res.= 0.78E-06
+****  Iter=   14        Resid= 0.46E-05        Relat. res.= 0.28E-06
+****  Iter=   15        Resid= 0.16E-05        Relat. res.= 0.10E-06
+****  Iter=   16        Resid= 0.57E-06        Relat. res.= 0.35E-07
+****  Iter=   17        Resid= 0.20E-06        Relat. res.= 0.12E-07
+****  Iter=   18        Resid= 0.74E-07        Relat. res.= 0.45E-08
+****  Iter=   19        Resid= 0.29E-07        Relat. res.= 0.18E-08
+Convergence at iteration 2: 0.00731067
+Convergence at iteration 3: 0.00365022
+Convergence at iteration 4: 0.00189516
+Convergence at iteration 5: 0.000992644
+****  Iter=   20        Resid= 0.12E-07        Relat. res.= 0.72E-09
+****  Iter=   21        Resid= 0.46E-08        Relat. res.= 0.28E-09
+****  Iter=   22        Resid= 0.18E-08        Relat. res.= 0.11E-09
+****  Iter=   23        Resid= 0.72E-09        Relat. res.= 0.44E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.87E+01        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.51E+01        Relat. res.= 0.58E+00
+****  Iter=    2        Resid= 0.13E+01        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.34E+00        Relat. res.= 0.39E-01
+****  Iter=    4        Resid= 0.10E+00        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.31E-01        Relat. res.= 0.36E-02
+****  Iter=    6        Resid= 0.97E-02        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.30E-02        Relat. res.= 0.35E-03
+****  Iter=    8        Resid= 0.10E-02        Relat. res.= 0.12E-03
+****  Iter=    9        Resid= 0.37E-03        Relat. res.= 0.43E-04
+****  Iter=   10        Resid= 0.14E-03        Relat. res.= 0.16E-04
+****  Iter=   11        Resid= 0.51E-04        Relat. res.= 0.58E-05
+****  Iter=   12        Resid= 0.18E-04        Relat. res.= 0.21E-05
+****  Iter=   13        Resid= 0.63E-05        Relat. res.= 0.72E-06
+****  Iter=   14        Resid= 0.23E-05        Relat. res.= 0.26E-06
+****  Iter=   15        Resid= 0.81E-06        Relat. res.= 0.93E-07
+****  Iter=   16        Resid= 0.29E-06        Relat. res.= 0.33E-07
+****  Iter=   17        Resid= 0.10E-06        Relat. res.= 0.12E-07
+****  Iter=   18        Resid= 0.38E-07        Relat. res.= 0.44E-08
+****  Iter=   19        Resid= 0.15E-07        Relat. res.= 0.17E-08
+****  Iter=   20        Resid= 0.61E-08        Relat. res.= 0.70E-09
+****  Iter=   21        Resid= 0.24E-08        Relat. res.= 0.27E-09
+****  Iter=   22        Resid= 0.96E-09        Relat. res.= 0.11E-09
+****  Iter=   23        Resid= 0.37E-09        Relat. res.= 0.42E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.46E+01        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.27E+01        Relat. res.= 0.58E+00
+****  Iter=    2        Resid= 0.70E+00        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.18E+00        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.53E-01        Relat. res.= 0.11E-01
+****  Iter=    5        Resid= 0.16E-01        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.50E-02        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.16E-02        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.53E-03        Relat. res.= 0.12E-03
+****  Iter=    9        Resid= 0.19E-03        Relat. res.= 0.41E-04
+****  Iter=   10        Resid= 0.70E-04        Relat. res.= 0.15E-04
+****  Iter=   11        Resid= 0.26E-04        Relat. res.= 0.56E-05
+****  Iter=   12        Resid= 0.95E-05        Relat. res.= 0.20E-05
+****  Iter=   13        Resid= 0.32E-05        Relat. res.= 0.70E-06
+****  Iter=   14        Resid= 0.12E-05        Relat. res.= 0.26E-06
+****  Iter=   15        Resid= 0.42E-06        Relat. res.= 0.92E-07
+****  Iter=   16        Resid= 0.15E-06        Relat. res.= 0.33E-07
+****  Iter=   17        Resid= 0.56E-07        Relat. res.= 0.12E-07
+****  Iter=   18        Resid= 0.21E-07        Relat. res.= 0.46E-08
+****  Iter=   19        Resid= 0.86E-08        Relat. res.= 0.19E-08
+****  Iter=   20        Resid= 0.35E-08        Relat. res.= 0.75E-09
+****  Iter=   21        Resid= 0.13E-08        Relat. res.= 0.29E-09
+****  Iter=   22        Resid= 0.53E-09        Relat. res.= 0.11E-09
+****  Iter=   23        Resid= 0.20E-09        Relat. res.= 0.43E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.24E+01        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.14E+01        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.37E+00        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.93E-01        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.28E-01        Relat. res.= 0.11E-01
+****  Iter=    5        Resid= 0.85E-02        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.26E-02        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.81E-03        Relat. res.= 0.33E-03
+****  Iter=    8        Resid= 0.28E-03        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.99E-04        Relat. res.= 0.41E-04
+****  Iter=   10        Resid= 0.36E-04        Relat. res.= 0.15E-04
+****  Iter=   11        Resid= 0.14E-04        Relat. res.= 0.56E-05
+****  Iter=   12        Resid= 0.49E-05        Relat. res.= 0.20E-05
+****  Iter=   13        Resid= 0.17E-05        Relat. res.= 0.69E-06
+****  Iter=   14        Resid= 0.62E-06        Relat. res.= 0.26E-06
+****  Iter=   15        Resid= 0.22E-06        Relat. res.= 0.92E-07
+****  Iter=   16        Resid= 0.82E-07        Relat. res.= 0.34E-07
+****  Iter=   17        Resid= 0.30E-07        Relat. res.= 0.12E-07
+****  Iter=   18        Resid= 0.12E-07        Relat. res.= 0.47E-08
+****  Iter=   19        Resid= 0.48E-08        Relat. res.= 0.20E-08
+****  Iter=   20        Resid= 0.19E-08        Relat. res.= 0.79E-09
+****  Iter=   21        Resid= 0.73E-09        Relat. res.= 0.30E-09
+****  Iter=   22        Resid= 0.28E-09        Relat. res.= 0.12E-09
+****  Iter=   23        Resid= 0.11E-09        Relat. res.= 0.44E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.13E+01        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.74E+00        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.19E+00        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.49E-01        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.15E-01        Relat. res.= 0.11E-01
+****  Iter=    5        Resid= 0.45E-02        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.14E-02        Relat. res.= 0.11E-02
+Convergence at iteration 6: 0.000521361
+Convergence at iteration 7: 0.000274139
+Convergence at iteration 8: 0.000144229
+****  Iter=    7        Resid= 0.43E-03        Relat. res.= 0.33E-03
+****  Iter=    8        Resid= 0.15E-03        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.52E-04        Relat. res.= 0.40E-04
+****  Iter=   10        Resid= 0.19E-04        Relat. res.= 0.15E-04
+****  Iter=   11        Resid= 0.71E-05        Relat. res.= 0.56E-05
+****  Iter=   12        Resid= 0.26E-05        Relat. res.= 0.20E-05
+****  Iter=   13        Resid= 0.89E-06        Relat. res.= 0.69E-06
+****  Iter=   14        Resid= 0.33E-06        Relat. res.= 0.26E-06
+****  Iter=   15        Resid= 0.12E-06        Relat. res.= 0.93E-07
+****  Iter=   16        Resid= 0.44E-07        Relat. res.= 0.34E-07
+****  Iter=   17        Resid= 0.16E-07        Relat. res.= 0.13E-07
+****  Iter=   18        Resid= 0.63E-08        Relat. res.= 0.49E-08
+****  Iter=   19        Resid= 0.26E-08        Relat. res.= 0.20E-08
+****  Iter=   20        Resid= 0.10E-08        Relat. res.= 0.82E-09
+****  Iter=   21        Resid= 0.39E-09        Relat. res.= 0.31E-09
+****  Iter=   22        Resid= 0.15E-09        Relat. res.= 0.12E-09
+****  Iter=   23        Resid= 0.56E-10        Relat. res.= 0.44E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.68E+00        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.39E+00        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.10E+00        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.26E-01        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.77E-02        Relat. res.= 0.11E-01
+****  Iter=    5        Resid= 0.24E-02        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.73E-03        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.23E-03        Relat. res.= 0.33E-03
+****  Iter=    8        Resid= 0.76E-04        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.27E-04        Relat. res.= 0.40E-04
+****  Iter=   10        Resid= 0.10E-04        Relat. res.= 0.15E-04
+****  Iter=   11        Resid= 0.38E-05        Relat. res.= 0.56E-05
+****  Iter=   12        Resid= 0.14E-05        Relat. res.= 0.20E-05
+****  Iter=   13        Resid= 0.47E-06        Relat. res.= 0.70E-06
+****  Iter=   14        Resid= 0.17E-06        Relat. res.= 0.26E-06
+****  Iter=   15        Resid= 0.64E-07        Relat. res.= 0.94E-07
+****  Iter=   16        Resid= 0.24E-07        Relat. res.= 0.35E-07
+****  Iter=   17        Resid= 0.88E-08        Relat. res.= 0.13E-07
+****  Iter=   18        Resid= 0.34E-08        Relat. res.= 0.51E-08
+****  Iter=   19        Resid= 0.14E-08        Relat. res.= 0.21E-08
+****  Iter=   20        Resid= 0.57E-09        Relat. res.= 0.84E-09
+****  Iter=   21        Resid= 0.21E-09        Relat. res.= 0.31E-09
+****  Iter=   22        Resid= 0.81E-10        Relat. res.= 0.12E-09
+****  Iter=   23        Resid= 0.30E-10        Relat. res.= 0.44E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.36E+00        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.20E+00        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.54E-01        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.14E-01        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.41E-02        Relat. res.= 0.11E-01
+****  Iter=    5        Resid= 0.12E-02        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.38E-03        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.12E-03        Relat. res.= 0.33E-03
+****  Iter=    8        Resid= 0.40E-04        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.14E-04        Relat. res.= 0.40E-04
+****  Iter=   10        Resid= 0.53E-05        Relat. res.= 0.15E-04
+****  Iter=   11        Resid= 0.20E-05        Relat. res.= 0.56E-05
+****  Iter=   12        Resid= 0.72E-06        Relat. res.= 0.20E-05
+****  Iter=   13        Resid= 0.25E-06        Relat. res.= 0.70E-06
+****  Iter=   14        Resid= 0.92E-07        Relat. res.= 0.26E-06
+****  Iter=   15        Resid= 0.34E-07        Relat. res.= 0.95E-07
+****  Iter=   16        Resid= 0.13E-07        Relat. res.= 0.35E-07
+****  Iter=   17        Resid= 0.47E-08        Relat. res.= 0.13E-07
+****  Iter=   18        Resid= 0.19E-08        Relat. res.= 0.52E-08
+****  Iter=   19        Resid= 0.77E-09        Relat. res.= 0.22E-08
+****  Iter=   20        Resid= 0.30E-09        Relat. res.= 0.86E-09
+****  Iter=   21        Resid= 0.11E-09        Relat. res.= 0.32E-09
+****  Iter=   22        Resid= 0.43E-10        Relat. res.= 0.12E-09
+****  Iter=   23        Resid= 0.16E-10        Relat. res.= 0.45E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.19E+00        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.11E+00        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.28E-01        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.72E-02        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.21E-02        Relat. res.= 0.11E-01
+****  Iter=    5        Resid= 0.66E-03        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.20E-03        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.63E-04        Relat. res.= 0.33E-03
+****  Iter=    8        Resid= 0.21E-04        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.76E-05        Relat. res.= 0.40E-04
+****  Iter=   10        Resid= 0.28E-05        Relat. res.= 0.15E-04
+****  Iter=   11        Resid= 0.10E-05        Relat. res.= 0.56E-05
+****  Iter=   12        Resid= 0.38E-06        Relat. res.= 0.20E-05
+****  Iter=   13        Resid= 0.13E-06        Relat. res.= 0.70E-06
+****  Iter=   14        Resid= 0.49E-07        Relat. res.= 0.26E-06
+****  Iter=   15        Resid= 0.18E-07        Relat. res.= 0.97E-07
+****  Iter=   16        Resid= 0.68E-08        Relat. res.= 0.36E-07
+****  Iter=   17        Resid= 0.25E-08        Relat. res.= 0.14E-07
+****  Iter=   18        Resid= 0.10E-08        Relat. res.= 0.54E-08
+****  Iter=   19        Resid= 0.42E-09        Relat. res.= 0.22E-08
+****  Iter=   20        Resid= 0.16E-09        Relat. res.= 0.87E-09
+****  Iter=   21        Resid= 0.61E-10        Relat. res.= 0.32E-09
+****  Iter=   22        Resid= 0.23E-10        Relat. res.= 0.12E-09
+****  Iter=   23        Resid= 0.84E-11        Relat. res.= 0.45E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+Convergence at iteration 9: 7.59082e-05
+Convergence at iteration 10: 3.99615e-05
+Convergence at iteration 11: 2.10421e-05
+Convergence at iteration 12: 1.1082e-05
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.99E-01        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.57E-01        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.15E-01        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.38E-02        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.11E-02        Relat. res.= 0.11E-01
+****  Iter=    5        Resid= 0.35E-03        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.11E-03        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.33E-04        Relat. res.= 0.33E-03
+****  Iter=    8        Resid= 0.11E-04        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.40E-05        Relat. res.= 0.40E-04
+****  Iter=   10        Resid= 0.15E-05        Relat. res.= 0.15E-04
+****  Iter=   11        Resid= 0.55E-06        Relat. res.= 0.56E-05
+****  Iter=   12        Resid= 0.20E-06        Relat. res.= 0.20E-05
+****  Iter=   13        Resid= 0.70E-07        Relat. res.= 0.71E-06
+****  Iter=   14        Resid= 0.26E-07        Relat. res.= 0.26E-06
+****  Iter=   15        Resid= 0.96E-08        Relat. res.= 0.98E-07
+****  Iter=   16        Resid= 0.36E-08        Relat. res.= 0.37E-07
+****  Iter=   17        Resid= 0.14E-08        Relat. res.= 0.14E-07
+****  Iter=   18        Resid= 0.54E-09        Relat. res.= 0.55E-08
+****  Iter=   19        Resid= 0.22E-09        Relat. res.= 0.23E-08
+****  Iter=   20        Resid= 0.87E-10        Relat. res.= 0.89E-09
+****  Iter=   21        Resid= 0.32E-10        Relat. res.= 0.33E-09
+****  Iter=   22        Resid= 0.12E-10        Relat. res.= 0.12E-09
+****  Iter=   23        Resid= 0.44E-11        Relat. res.= 0.45E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.52E-01        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.30E-01        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.79E-02        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.20E-02        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.60E-03        Relat. res.= 0.11E-01
+****  Iter=    5        Resid= 0.18E-03        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.56E-04        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.17E-04        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.59E-05        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.21E-05        Relat. res.= 0.40E-04
+****  Iter=   10        Resid= 0.77E-06        Relat. res.= 0.15E-04
+****  Iter=   11        Resid= 0.29E-06        Relat. res.= 0.56E-05
+****  Iter=   12        Resid= 0.11E-06        Relat. res.= 0.20E-05
+****  Iter=   13        Resid= 0.37E-07        Relat. res.= 0.71E-06
+****  Iter=   14        Resid= 0.14E-07        Relat. res.= 0.27E-06
+****  Iter=   15        Resid= 0.51E-08        Relat. res.= 0.99E-07
+****  Iter=   16        Resid= 0.19E-08        Relat. res.= 0.37E-07
+****  Iter=   17        Resid= 0.73E-09        Relat. res.= 0.14E-07
+****  Iter=   18        Resid= 0.29E-09        Relat. res.= 0.56E-08
+****  Iter=   19        Resid= 0.12E-09        Relat. res.= 0.23E-08
+****  Iter=   20        Resid= 0.47E-10        Relat. res.= 0.90E-09
+****  Iter=   21        Resid= 0.17E-10        Relat. res.= 0.33E-09
+****  Iter=   22        Resid= 0.65E-11        Relat. res.= 0.12E-09
+****  Iter=   23        Resid= 0.24E-11        Relat. res.= 0.45E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.27E-01        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.16E-01        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.41E-02        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.11E-02        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.32E-03        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.96E-04        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.30E-04        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.92E-05        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.31E-05        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.11E-05        Relat. res.= 0.40E-04
+****  Iter=   10        Resid= 0.41E-06        Relat. res.= 0.15E-04
+****  Iter=   11        Resid= 0.15E-06        Relat. res.= 0.56E-05
+****  Iter=   12        Resid= 0.56E-07        Relat. res.= 0.20E-05
+****  Iter=   13        Resid= 0.20E-07        Relat. res.= 0.71E-06
+****  Iter=   14        Resid= 0.73E-08        Relat. res.= 0.27E-06
+****  Iter=   15        Resid= 0.27E-08        Relat. res.= 0.10E-06
+****  Iter=   16        Resid= 0.10E-08        Relat. res.= 0.38E-07
+****  Iter=   17        Resid= 0.39E-09        Relat. res.= 0.14E-07
+****  Iter=   18        Resid= 0.16E-09        Relat. res.= 0.57E-08
+****  Iter=   19        Resid= 0.64E-10        Relat. res.= 0.23E-08
+****  Iter=   20        Resid= 0.25E-10        Relat. res.= 0.91E-09
+****  Iter=   21        Resid= 0.92E-11        Relat. res.= 0.33E-09
+****  Iter=   22        Resid= 0.34E-11        Relat. res.= 0.13E-09
+****  Iter=   23        Resid= 0.12E-11        Relat. res.= 0.46E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.14E-01        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.83E-02        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.22E-02        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.55E-03        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.17E-03        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.51E-04        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.16E-04        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.49E-05        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.16E-05        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.59E-06        Relat. res.= 0.41E-04
+****  Iter=   10        Resid= 0.22E-06        Relat. res.= 0.15E-04
+****  Iter=   11        Resid= 0.81E-07        Relat. res.= 0.56E-05
+****  Iter=   12        Resid= 0.30E-07        Relat. res.= 0.21E-05
+Convergence at iteration 13: 5.83743e-06
+Convergence at iteration 14: 3.07535e-06
+Convergence at iteration 15: 1.62044e-06
+Convergence at iteration 16: 8.53946e-07
+****  Iter=   13        Resid= 0.10E-07        Relat. res.= 0.72E-06
+****  Iter=   14        Resid= 0.39E-08        Relat. res.= 0.27E-06
+****  Iter=   15        Resid= 0.15E-08        Relat. res.= 0.10E-06
+****  Iter=   16        Resid= 0.55E-09        Relat. res.= 0.38E-07
+****  Iter=   17        Resid= 0.21E-09        Relat. res.= 0.15E-07
+****  Iter=   18        Resid= 0.83E-10        Relat. res.= 0.58E-08
+****  Iter=   19        Resid= 0.34E-10        Relat. res.= 0.24E-08
+****  Iter=   20        Resid= 0.13E-10        Relat. res.= 0.92E-09
+****  Iter=   21        Resid= 0.49E-11        Relat. res.= 0.34E-09
+****  Iter=   22        Resid= 0.18E-11        Relat. res.= 0.13E-09
+****  Iter=   23        Resid= 0.66E-12        Relat. res.= 0.46E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.76E-02        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.44E-02        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.12E-02        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.29E-03        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.88E-04        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.27E-04        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.83E-05        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.26E-05        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.86E-06        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.31E-06        Relat. res.= 0.41E-04
+****  Iter=   10        Resid= 0.11E-06        Relat. res.= 0.15E-04
+****  Iter=   11        Resid= 0.43E-07        Relat. res.= 0.56E-05
+****  Iter=   12        Resid= 0.16E-07        Relat. res.= 0.21E-05
+****  Iter=   13        Resid= 0.55E-08        Relat. res.= 0.72E-06
+****  Iter=   14        Resid= 0.21E-08        Relat. res.= 0.27E-06
+****  Iter=   15        Resid= 0.77E-09        Relat. res.= 0.10E-06
+****  Iter=   16        Resid= 0.29E-09        Relat. res.= 0.39E-07
+****  Iter=   17        Resid= 0.11E-09        Relat. res.= 0.15E-07
+****  Iter=   18        Resid= 0.44E-10        Relat. res.= 0.58E-08
+****  Iter=   19        Resid= 0.18E-10        Relat. res.= 0.24E-08
+****  Iter=   20        Resid= 0.70E-11        Relat. res.= 0.92E-09
+****  Iter=   21        Resid= 0.26E-11        Relat. res.= 0.34E-09
+****  Iter=   22        Resid= 0.96E-12        Relat. res.= 0.13E-09
+****  Iter=   23        Resid= 0.35E-12        Relat. res.= 0.46E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   160   mean=   2.00    max=  2
+
+****  Equiv. number of CG iter.:   110.36
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.40E-02        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.23E-02        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.61E-03        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.15E-03        Relat. res.= 0.38E-01
+****  Iter=    4        Resid= 0.47E-04        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.14E-04        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.44E-05        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.14E-05        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.45E-06        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.17E-06        Relat. res.= 0.42E-04
+****  Iter=   10        Resid= 0.64E-07        Relat. res.= 0.16E-04
+****  Iter=   11        Resid= 0.24E-07        Relat. res.= 0.60E-05
+****  Iter=   12        Resid= 0.85E-08        Relat. res.= 0.21E-05
+****  Iter=   13        Resid= 0.31E-08        Relat. res.= 0.78E-06
+****  Iter=   14        Resid= 0.12E-08        Relat. res.= 0.31E-06
+****  Iter=   15        Resid= 0.45E-09        Relat. res.= 0.11E-06
+****  Iter=   16        Resid= 0.17E-09        Relat. res.= 0.41E-07
+****  Iter=   17        Resid= 0.68E-10        Relat. res.= 0.17E-07
+****  Iter=   18        Resid= 0.27E-10        Relat. res.= 0.68E-08
+****  Iter=   19        Resid= 0.11E-10        Relat. res.= 0.26E-08
+****  Iter=   20        Resid= 0.41E-11        Relat. res.= 0.10E-08
+****  Iter=   21        Resid= 0.16E-11        Relat. res.= 0.39E-09
+****  Iter=   22        Resid= 0.59E-12        Relat. res.= 0.15E-09
+****  Iter=   23        Resid= 0.20E-12        Relat. res.= 0.51E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   159   mean=   1.99    max=  2
+
+****  Equiv. number of CG iter.:   110.32
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.21E-02        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.12E-02        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.32E-03        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.82E-04        Relat. res.= 0.39E-01
+****  Iter=    4        Resid= 0.25E-04        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.75E-05        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.23E-05        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.72E-06        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.24E-06        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.89E-07        Relat. res.= 0.42E-04
+****  Iter=   10        Resid= 0.34E-07        Relat. res.= 0.16E-04
+****  Iter=   11        Resid= 0.13E-07        Relat. res.= 0.60E-05
+****  Iter=   12        Resid= 0.45E-08        Relat. res.= 0.21E-05
+****  Iter=   13        Resid= 0.17E-08        Relat. res.= 0.79E-06
+****  Iter=   14        Resid= 0.66E-09        Relat. res.= 0.31E-06
+****  Iter=   15        Resid= 0.24E-09        Relat. res.= 0.11E-06
+****  Iter=   16        Resid= 0.89E-10        Relat. res.= 0.42E-07
+****  Iter=   17        Resid= 0.36E-10        Relat. res.= 0.17E-07
+****  Iter=   18        Resid= 0.14E-10        Relat. res.= 0.68E-08
+****  Iter=   19        Resid= 0.56E-11        Relat. res.= 0.26E-08
+****  Iter=   20        Resid= 0.22E-11        Relat. res.= 0.10E-08
+****  Iter=   21        Resid= 0.84E-12        Relat. res.= 0.40E-09
+****  Iter=   22        Resid= 0.31E-12        Relat. res.= 0.15E-09
+****  Iter=   23        Resid= 0.11E-12        Relat. res.= 0.51E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   159   mean=   1.99    max=  2
+
+****  Equiv. number of CG iter.:   110.32
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+Convergence at iteration 17: 4.50077e-07
+Convergence at iteration 18: 2.37246e-07
+Convergence at iteration 19: 1.25073e-07
+****  Iter=    0        Resid= 0.11E-02        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.64E-03        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.17E-03        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.43E-04        Relat. res.= 0.39E-01
+****  Iter=    4        Resid= 0.13E-04        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.40E-05        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.12E-05        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.38E-06        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.13E-06        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.47E-07        Relat. res.= 0.42E-04
+****  Iter=   10        Resid= 0.18E-07        Relat. res.= 0.16E-04
+****  Iter=   11        Resid= 0.67E-08        Relat. res.= 0.60E-05
+****  Iter=   12        Resid= 0.24E-08        Relat. res.= 0.21E-05
+****  Iter=   13        Resid= 0.88E-09        Relat. res.= 0.79E-06
+****  Iter=   14        Resid= 0.35E-09        Relat. res.= 0.31E-06
+****  Iter=   15        Resid= 0.13E-09        Relat. res.= 0.11E-06
+****  Iter=   16        Resid= 0.47E-10        Relat. res.= 0.42E-07
+****  Iter=   17        Resid= 0.19E-10        Relat. res.= 0.17E-07
+****  Iter=   18        Resid= 0.77E-11        Relat. res.= 0.69E-08
+****  Iter=   19        Resid= 0.30E-11        Relat. res.= 0.27E-08
+****  Iter=   20        Resid= 0.12E-11        Relat. res.= 0.10E-08
+****  Iter=   21        Resid= 0.44E-12        Relat. res.= 0.40E-09
+****  Iter=   22        Resid= 0.17E-12        Relat. res.= 0.15E-09
+****  Iter=   23        Resid= 0.57E-13        Relat. res.= 0.51E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   159   mean=   1.99    max=  2
+
+****  Equiv. number of CG iter.:   110.32
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.59E-03        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.34E-03        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.89E-04        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.23E-04        Relat. res.= 0.39E-01
+****  Iter=    4        Resid= 0.69E-05        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.21E-05        Relat. res.= 0.35E-02
+****  Iter=    6        Resid= 0.65E-06        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.20E-06        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.67E-07        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.25E-07        Relat. res.= 0.42E-04
+****  Iter=   10        Resid= 0.95E-08        Relat. res.= 0.16E-04
+****  Iter=   11        Resid= 0.35E-08        Relat. res.= 0.60E-05
+****  Iter=   12        Resid= 0.13E-08        Relat. res.= 0.21E-05
+****  Iter=   13        Resid= 0.47E-09        Relat. res.= 0.79E-06
+****  Iter=   14        Resid= 0.19E-09        Relat. res.= 0.31E-06
+****  Iter=   15        Resid= 0.67E-10        Relat. res.= 0.11E-06
+****  Iter=   16        Resid= 0.25E-10        Relat. res.= 0.42E-07
+****  Iter=   17        Resid= 0.10E-10        Relat. res.= 0.17E-07
+****  Iter=   18        Resid= 0.41E-11        Relat. res.= 0.69E-08
+****  Iter=   19        Resid= 0.16E-11        Relat. res.= 0.27E-08
+****  Iter=   20        Resid= 0.62E-12        Relat. res.= 0.10E-08
+****  Iter=   21        Resid= 0.24E-12        Relat. res.= 0.40E-09
+****  Iter=   22        Resid= 0.88E-13        Relat. res.= 0.15E-09
+****  Iter=   23        Resid= 0.30E-13        Relat. res.= 0.51E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   159   mean=   1.99    max=  2
+
+****  Equiv. number of CG iter.:   110.32
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.31E-03        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.18E-03        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.47E-04        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.12E-04        Relat. res.= 0.39E-01
+****  Iter=    4        Resid= 0.36E-05        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.11E-05        Relat. res.= 0.36E-02
+****  Iter=    6        Resid= 0.34E-06        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.11E-06        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.35E-07        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.13E-07        Relat. res.= 0.42E-04
+****  Iter=   10        Resid= 0.50E-08        Relat. res.= 0.16E-04
+****  Iter=   11        Resid= 0.19E-08        Relat. res.= 0.60E-05
+****  Iter=   12        Resid= 0.66E-09        Relat. res.= 0.21E-05
+****  Iter=   13        Resid= 0.25E-09        Relat. res.= 0.80E-06
+****  Iter=   14        Resid= 0.98E-10        Relat. res.= 0.32E-06
+****  Iter=   15        Resid= 0.36E-10        Relat. res.= 0.11E-06
+****  Iter=   16        Resid= 0.13E-10        Relat. res.= 0.43E-07
+****  Iter=   17        Resid= 0.55E-11        Relat. res.= 0.18E-07
+****  Iter=   18        Resid= 0.22E-11        Relat. res.= 0.70E-08
+****  Iter=   19        Resid= 0.84E-12        Relat. res.= 0.27E-08
+****  Iter=   20        Resid= 0.33E-12        Relat. res.= 0.10E-08
+****  Iter=   21        Resid= 0.12E-12        Relat. res.= 0.40E-09
+****  Iter=   22        Resid= 0.47E-13        Relat. res.= 0.15E-09
+****  Iter=   23        Resid= 0.16E-13        Relat. res.= 0.51E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   159   mean=   1.99    max=  2
+
+****  Equiv. number of CG iter.:   110.32
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.16E-03        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.94E-04        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.25E-04        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.64E-05        Relat. res.= 0.39E-01
+****  Iter=    4        Resid= 0.19E-05        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.58E-06        Relat. res.= 0.36E-02
+****  Iter=    6        Resid= 0.18E-06        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.56E-07        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.19E-07        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.70E-08        Relat. res.= 0.42E-04
+****  Iter=   10        Resid= 0.26E-08        Relat. res.= 0.16E-04
+****  Iter=   11        Resid= 0.99E-09        Relat. res.= 0.60E-05
+****  Iter=   12        Resid= 0.35E-09        Relat. res.= 0.21E-05
+****  Iter=   13        Resid= 0.13E-09        Relat. res.= 0.80E-06
+****  Iter=   14        Resid= 0.52E-10        Relat. res.= 0.32E-06
+****  Iter=   15        Resid= 0.19E-10        Relat. res.= 0.11E-06
+****  Iter=   16        Resid= 0.71E-11        Relat. res.= 0.43E-07
+****  Iter=   17        Resid= 0.29E-11        Relat. res.= 0.18E-07
+****  Iter=   18        Resid= 0.12E-11        Relat. res.= 0.70E-08
+Convergence at iteration 20: 6.59444e-08
+Convergence at iteration 21: 3.47729e-08
+Convergence at iteration 22: 1.8338e-08
+Convergence at iteration 23: 9.67178e-09
+Initialization time: 25.0002
+Calculation time: 290.016
+Building MIP time: 2.22533
+Solving MIP time: 32.5334
+Total elapsed time: 315.016
+****  Iter=   19        Resid= 0.44E-12        Relat. res.= 0.27E-08
+****  Iter=   20        Resid= 0.17E-12        Relat. res.= 0.11E-08
+****  Iter=   21        Resid= 0.66E-13        Relat. res.= 0.40E-09
+****  Iter=   22        Resid= 0.25E-13        Relat. res.= 0.15E-09
+****  Iter=   23        Resid= 0.84E-14        Relat. res.= 0.51E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   159   mean=   1.99    max=  2
+
+****  Equiv. number of CG iter.:   110.32
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.87E-04        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.50E-04        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.13E-04        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.34E-05        Relat. res.= 0.39E-01
+****  Iter=    4        Resid= 0.10E-05        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.31E-06        Relat. res.= 0.36E-02
+****  Iter=    6        Resid= 0.95E-07        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.30E-07        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.98E-08        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.37E-08        Relat. res.= 0.42E-04
+****  Iter=   10        Resid= 0.14E-08        Relat. res.= 0.16E-04
+****  Iter=   11        Resid= 0.52E-09        Relat. res.= 0.60E-05
+****  Iter=   12        Resid= 0.19E-09        Relat. res.= 0.21E-05
+****  Iter=   13        Resid= 0.69E-10        Relat. res.= 0.80E-06
+****  Iter=   14        Resid= 0.28E-10        Relat. res.= 0.32E-06
+****  Iter=   15        Resid= 0.10E-10        Relat. res.= 0.12E-06
+****  Iter=   16        Resid= 0.37E-11        Relat. res.= 0.43E-07
+****  Iter=   17        Resid= 0.15E-11        Relat. res.= 0.18E-07
+****  Iter=   18        Resid= 0.61E-12        Relat. res.= 0.71E-08
+****  Iter=   19        Resid= 0.24E-12        Relat. res.= 0.27E-08
+****  Iter=   20        Resid= 0.92E-13        Relat. res.= 0.11E-08
+****  Iter=   21        Resid= 0.35E-13        Relat. res.= 0.40E-09
+****  Iter=   22        Resid= 0.13E-13        Relat. res.= 0.15E-09
+****  Iter=   23        Resid= 0.45E-14        Relat. res.= 0.51E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   159   mean=   1.99    max=  2
+
+****  Equiv. number of CG iter.:   110.32
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.46E-04        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.26E-04        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.69E-05        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.18E-05        Relat. res.= 0.39E-01
+****  Iter=    4        Resid= 0.54E-06        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.16E-06        Relat. res.= 0.36E-02
+****  Iter=    6        Resid= 0.50E-07        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.16E-07        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.52E-08        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.19E-08        Relat. res.= 0.43E-04
+****  Iter=   10        Resid= 0.74E-09        Relat. res.= 0.16E-04
+****  Iter=   11        Resid= 0.28E-09        Relat. res.= 0.60E-05
+****  Iter=   12        Resid= 0.98E-10        Relat. res.= 0.21E-05
+****  Iter=   13        Resid= 0.37E-10        Relat. res.= 0.80E-06
+****  Iter=   14        Resid= 0.15E-10        Relat. res.= 0.32E-06
+****  Iter=   15        Resid= 0.53E-11        Relat. res.= 0.12E-06
+****  Iter=   16        Resid= 0.20E-11        Relat. res.= 0.43E-07
+****  Iter=   17        Resid= 0.82E-12        Relat. res.= 0.18E-07
+****  Iter=   18        Resid= 0.32E-12        Relat. res.= 0.71E-08
+****  Iter=   19        Resid= 0.12E-12        Relat. res.= 0.27E-08
+****  Iter=   20        Resid= 0.48E-13        Relat. res.= 0.11E-08
+****  Iter=   21        Resid= 0.18E-13        Relat. res.= 0.40E-09
+****  Iter=   22        Resid= 0.69E-14        Relat. res.= 0.15E-09
+****  Iter=   23        Resid= 0.24E-14        Relat. res.= 0.52E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    80   mean=   2.00    max=  2
+****     level 4   #call=    80   #cycle=   159   mean=   1.99    max=  2
+
+****  Equiv. number of CG iter.:   110.32
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.35E+00 seconds
+
+****SOLUTION: flexible conjugate gradient iterations (FCG(1))
+****     AMG preconditioner with 1 Gauss-Seidel pre-and post-smoothing step(s)
+****         at each level
+****  Iter=    0        Resid= 0.24E-04        Relat. res.= 0.10E+01
+****  Iter=    1        Resid= 0.14E-04        Relat. res.= 0.57E+00
+****  Iter=    2        Resid= 0.37E-05        Relat. res.= 0.15E+00
+****  Iter=    3        Resid= 0.94E-06        Relat. res.= 0.39E-01
+****  Iter=    4        Resid= 0.28E-06        Relat. res.= 0.12E-01
+****  Iter=    5        Resid= 0.86E-07        Relat. res.= 0.36E-02
+****  Iter=    6        Resid= 0.27E-07        Relat. res.= 0.11E-02
+****  Iter=    7        Resid= 0.83E-08        Relat. res.= 0.34E-03
+****  Iter=    8        Resid= 0.27E-08        Relat. res.= 0.11E-03
+****  Iter=    9        Resid= 0.10E-08        Relat. res.= 0.43E-04
+****  Iter=   10        Resid= 0.39E-09        Relat. res.= 0.16E-04
+****  Iter=   11        Resid= 0.15E-09        Relat. res.= 0.60E-05
+****  Iter=   12        Resid= 0.52E-10        Relat. res.= 0.22E-05
+****  Iter=   13        Resid= 0.19E-10        Relat. res.= 0.81E-06
+****  Iter=   14        Resid= 0.78E-11        Relat. res.= 0.32E-06
+****  Iter=   15        Resid= 0.28E-11        Relat. res.= 0.12E-06
+****  Iter=   16        Resid= 0.11E-11        Relat. res.= 0.44E-07
+****  Iter=   17        Resid= 0.43E-12        Relat. res.= 0.18E-07
+****  Iter=   18        Resid= 0.17E-12        Relat. res.= 0.71E-08
+****  Iter=   19        Resid= 0.66E-13        Relat. res.= 0.27E-08
+****  Iter=   20        Resid= 0.26E-13        Relat. res.= 0.11E-08
+****  Iter=   21        Resid= 0.10E-13        Relat. res.= 0.42E-09
+****  Iter=   22        Resid= 0.38E-14        Relat. res.= 0.16E-09
+****  Iter=   23        Resid= 0.13E-14        Relat. res.= 0.53E-10
+****  - Convergence reached in   23 iterations -
+
+****     level 2   #call=    23   #cycle=    40   mean=   1.74    max=  2
+****     level 3   #call=    40   #cycle=    79   mean=   1.98    max=  2
+****     level 4   #call=    79   #cycle=   157   mean=   1.99    max=  2
+
+****  Equiv. number of CG iter.:   110.07
+****   memory used for solution:     2.62 real(8) words per nnz (   69.30 Mb)
+****    Solution time (Elapsed):     1.34E+00 seconds
+
+****LEAVING AGMG * (MEMORY RELEASED) ******************************************
