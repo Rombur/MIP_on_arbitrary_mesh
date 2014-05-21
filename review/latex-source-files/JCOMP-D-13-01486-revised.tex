@@ -875,9 +875,11 @@ Preconditioned with Symmetric Gauss-Seidel (PCG-SGS); Conjugate Gradient
 Preconditioned with ML using Uncoupled aggregation (PCG-ML/U);
 Conjugate Gradient Preconditioned with ML using MIS aggregation (PCG-ML/MIS);
 and Conjugate Gradient Preconditioned with AGMG (AGMG). Unless stated otherwise, ML is
-used with all the parameters set to the values corresponding to the "SA"
+used with all the parameters set to the values corresponding to the ``SA''
 option. This is the option recommended for symmetric positive definite or nearly
 symmetric positive definite systems \cite{ml_guide}. AGMG is used with default parameters.
+Note that the diffusion solves employing CG, PCG-SGS, PCG-ML/U, and PCG-ML/MIS are all carried
+out through calls to the Trilinos library.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Fourier Analyses}
@@ -966,44 +968,45 @@ The domain is discretized using two different meshes:
     octagons, for a total of 55,909 cells and 193,991 degrees of freedom. This grid was obtained 
 		from the same triangular grid as before. This time, vertices were removed and the triangles 
 		containing them were merged into polygons. Since an arbitrary number of triangles may contain 
-		a given point, deleting a vertex leads to various polygonal types. This
-    example allows us to test MIP and the different preconditioners on a
-    mesh composed of different cell types.
+		a given point, deleting a vertex leads to various polygonal types. The purpose 
+    of this example is to test MIP and the different preconditioners on a
+    grid composed of different polygonal cell types.
 \end{enumerate}
 %
 The meshes and the numerical solutions are given in Figures~\ref {homog_test_quads} and~ \ref {homog_test_polys}.
-In Table~\ref {comparison_homog_quad}, results obtained with the different linear solvers for MIP-DSA 
+In Table~\ref {comparison_homog_quad}, results obtained with the different linear solvers for the MIP-DSA equation
 are compared for the quadrilateral grid. Table~\ref{comparison_homog_poly_si} provides the results obtained using the polygonal grid.
 In these tables, 
-{\it SI iterations} is the number of iterations  needed to solve the problem, 
-{\it CG iterations} is the total number of CG iterations used to solve MIP,
+{\it SI iterations} is the number of Source Iterations needed to solve the transport problem, 
+{\it CG iterations} is the total number of CG iterations used to solve MIP-DSA,
 {\it Precond init} is the time, in seconds, needed to initialize the preconditioner used by CG, 
 {\it MIP calculation} is the total time, in seconds, spent solving DSA during the calculation, and 
 {\it Total calculation} is the time, in seconds, needed to solve the problem. 
 
-In the quadrilateral grid case, DSA reduces the number of transport sweeps required from 7,311 to 24.
-The number of accelerated transport iterations is constant, regardless of the linear solver
+In the quadrilateral grid case, DSA reduces the number of transport sweeps from 7,311 to 24.
+The number of accelerated transport iterations (here 24) is constant, regardless of the linear solver
 employed in MIP-DSA (as expected). Preconditioning CG significantly reduces the number of CG iterations.
 %
-We observe that algebraic multigrid processes, PCG-ML and AGMG, require 
+We observe that algebraic multigrid approaches, PCG-ML and AGMG, require 
 about the same number of iterations (two orders of magnitude less than unpreconditioned CG). 
 However, preconditioned conjugate gradient with AGMG is faster than with ML. For the multigrid preconditioned solves,
-the 24 transport sweeps take about 160 sec; AGMG performed the 24 DSA solves in about 30 sec,
-while ML/U and ML/MIS used about 199 sec, that is, the diffusion solves are more CPU expensive than the
-transport solves with ML while the diffusion solve times are only a fraction of those of the transport solves with AGMG). 
-We also note that one PCG-SGS iteration is slower than one unpreconditioned CG iteration. Profiling of the code reveals that the bottleneck in ML is due to a call to the function \emph{Ifpack\_PointRelaxation::ApplyInverseSGS\_FastCrsMatrix} 
+the 24 transport sweeps take about 160 sec; AGMG performs the 24 DSA solves in about 30 sec,
+while ML/U and ML/MIS use about 199 sec; that is, the diffusion solves are more CPU expensive than the
+transport solves with ML while the diffusion solve runtime is only a fraction of those of the transport solves with AGMG. 
+We also note that one iteration of PCG-SGS is slower than one unpreconditioned CG iteration. Profiling of the code 
+reveals that the bottleneck in ML is due to a call to the function \emph{Ifpack\_PointRelaxation::ApplyInverseSGS\_FastCrsMatrix} 
 of Trilinos. This function applies the forward and the backward substitutions required by SGS.
-SGS is employed as a pre- and post-smoother in ML; the lesser performance of the 
-diffusion solves using ML are due to that function. 
+SGS is employed as a pre- and post-smoother in ML and the lesser performance of the 
+diffusion solves using ML is also due to that function. 
 It is unclear why these Gauss-Seidel substitutions are so costly in Ifpack. 
 %
-The same remarks hold for the polygonal grid: DSA is effective at reducing significantly the number of transport sweeps; the number of DSA solves is constant for any diffusion solve; the AGMG diffusion solve time is a fraction
+The same remarks hold for the polygonal grid: DSA is effective at significantly reducing the number of transport sweeps; the number of transport sweeps is constant for any diffusion solve; the AGMG diffusion solve time is a fraction
 of the transport solve time (30 sec versus 185 sec); the ML diffusion solves are not as fast due to a bottleneck in the the SGS function of Ifpack.
 %
 Finally, the different linear solvers are compared for the polygonal grid
 when using GMRes in lieu of SI for the transport solves; see, 
 Table~\ref{comparison_homog_poly_gmres} where {\it GMRes iterations} denotes
-the number of iterations needed to solve the problem. 
+the number of GMRes iterations needed to solve the problem. 
 %We note that using different spatial cell types in the same grid does not affect
 %the performance of MIP-DSA or that of its preconditioners.
 
