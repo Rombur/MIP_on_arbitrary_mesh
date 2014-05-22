@@ -79,7 +79,7 @@ However, I want the authors address the following issues before a publication:\\
 1. The statement that 'polygonal grids allow for a reduced numbers of unknowns' is not complete. It is meaningful only in the condition of not sacrificing the accuracy. The authors need to provide numerical supports or give up the statement completely. The first part in the third paragraph of Introduction is superficial in this sense.
 }
 
-We agree. We had this ``information'' first-hand from Marv Adams but asked him about a Reference to back-up this statement. It turns out we have no numerical results to support this conjecture so far. The testbed code we developed for this paper does not implement LD on triangles nor can handle a mix of LD and BLD discretized cells, both of which would also be required to compare against polygonal grids solved with PWLD. Thus, we have followed your suggestion to give up the statement completely but will keep in mind that this study needs to be carried out. 
+We agree. We had this ``information'' first-hand from Marv Adams and asked him about a Reference to back-up this statement. It turns out we have no numerical results to support this conjecture so far. The testbed code we developed for this paper does not implement LD on triangles nor can handle a mix of LD and BLD discretized cells, both of which would be required to compare against polygonal grids solved with PWLD. Thus, we have followed your suggestion to give up the statement completely but will keep in mind that this study needs to be carried out. 
 
 \bigskip
 
@@ -93,9 +93,9 @@ The authors imply the solver works with arbitrary shapes of polygons, but I thin
 }
 
 
-We added a test case with large aspect ratio on mesh consisting of degenerated polygons (rectangle-shaped cells with up to 23 vertices treated as a ``23-gon'' --a polygon with 23 sides). That grid also has many hanging nodes.
+We added a test case with large aspect ratio cell for a mesh consisting of degenerated polygons (rectangle-shaped cells with up to 23 vertices treated as a ``23-gon'' --a polygon with 23 sides). That grid also has many hanging nodes.
 
-We were limited to convex cells because our transport sweep algorithm did not allow for cycles in the graph of the sweep. We added Reference 32 where PWLD was employed to carry out Sn transport sweeps for non-convex polygonal cells. % The DSA solver works on \textcolor{red}{arbitrary} distorted cells.
+We were limited to convex cells because our transport sweep algorithm did not allow for cycles in the graph of the sweep. We added Reference 32 where PWLD was employed to carry out Sn transport sweeps for non-convex polygonal cells. 
 
 \bigskip
 
@@ -106,8 +106,7 @@ We were limited to convex cells because our transport sweep algorithm did not al
 }
 
 The AMG algorithms (Trilinos ML and AGMG) were used with their default options. Unless stated otherwise, ML is
-used with all the parameters set to the values corresponding to the ``SA'' (smoothed aggregation) options. The ML manual recommends ``SA'' symmetric positive definite systems.
-AGMG is used with default parameters. 
+used with all the parameters set to the values corresponding to the ``SA'' (smoothed aggregation) options. The ML manual recommends ``SA'' for symmetric positive definite systems. AGMG is used with default parameters. 
 %The AGMG manual
 %To change the parameters, you need to change them in the code and recompile
 %everything... The default parameters are always recommended except if you are an
@@ -123,7 +122,8 @@ AGMG is used with default parameters.
 }
 
 
-\textcolor{red}{ME}
+We have added CPU times for each test cases. The times are split into: Preconditioner setup (if any), MIP-DSA solve, and Total time. 
+We have added memory usage for the AGMG package (this information was not available in Trilinos).
 %\begin{table}[!htbp]
 %  \begin{center}
 %    \caption{Comparison of different preconditioners for the homogeneous test
@@ -202,8 +202,8 @@ Some minor problems or typos are listed:
 \item Corrected.
 \item Corrected.
 \item Corrected.
-\item Added a paragraph at the end of Section 3, so that the statement in the conclusion is clearer.
-\item We didn't find an extra 'for'.
+\item Added a paragraph at the end of Section 3 so that the statement in the conclusion is clearer.
+\item We did not find an extra 'for'.
 \end{enumerate}
 
 \noindent 
